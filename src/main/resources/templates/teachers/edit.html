@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+<head>
+    <title>Edit Teacher</title>
+</head>
+<body>
+<h1>Edit Teacher</h1>
+<form role="form" action="#" th:action="@{/teachers/{id}(id=${teacher.id})}" th:object="${teacher}" method="post">
+    <div>
+        <label>First Name:</label>
+        <input type="text" th:field="*{firstName}" />
+    </div>
+    <div>
+        <label>Last Name:</label>
+        <input type="text" th:field="*{lastName}" />
+    </div>
+    <div>
+        <label>Phone Number:</label>
+        <input type="text" th:field="*{phoneNumber}" />
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+</body>
+</html>
