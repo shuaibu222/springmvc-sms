@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Create New Teachers</h1>
-    <form th:action="@{/teachers/create}" th:object="$teachers}" method="post">
+    <form th:action="@{/teachers/create}" th:object="${teacher}" method="post">
         <div>
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" th:field="*{firstName}" required />
