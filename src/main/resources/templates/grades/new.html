@@ -8,18 +8,18 @@
 </head>
 <body>
     <h1>Create New Grades</h1>
-    <form th:action="@{/teachers/create}" th:object="${teacher}" method="post">
+    <form th:action="@{/grades/create}" th:object="${grade}" method="post">
         <div>
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" th:field="*{firstName}" required />
+            <label for="range">Range:</label>
+            <input type="text" id="range" th:field="*{range}" required />
         </div>
         <div>
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" th:field="*{lastName}" required />
+            <label for="lastName">Grade:</label>
+            <input type="text" id="grade" th:field="*{grade}" required />
         </div>
         <div>
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
+            <label for="remarks">Remarks:</label>
+            <input type="text" id="remark" th:field="*{remark}" required />
         </div>
         <div>
             <button type="submit">Save</button>

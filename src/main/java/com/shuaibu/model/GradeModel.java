@@ -14,25 +14,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class TeacherModel {
+public class GradeModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    private String dateOfBirth;
-    private String startDate;
-    private String homeAddress;
-    private String state;
-    private String LGA;
-    private String religion;
-    private String section;
-    private String tribe;
-    private String gender;
-    private String profilePicture;
-    private String phoneNumber;
+    private String range;
+    private String grade;
+    private String remark;
 
     
 }
