@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+<head>
+    <title>Create New Sessions</title>
+</head>
+<body>
+    <h1>Create New Sessions</h1>
+    <form th:action="@{/sessions/create}" th:object="${session}" method="post">
+        <div>
+            <label for="sessionName">Session Name:</label>
+            <input type="text" id="sessionName" th:field="*{sessionName}" required />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</body>
+</html>

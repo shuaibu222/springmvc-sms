@@ -44,13 +44,13 @@ public class TeacherController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editTeacherForm(@PathVariable Long id, Model model) {
+    public String updateTeacherForm(@PathVariable Long id, Model model) {
         TeacherDto teacher = teacherService.getTeacherById(id);
         model.addAttribute("teacher", teacher);
         return "teachers/edit";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/update/{id}")
     public String updateTeacher(@PathVariable Long id,
                                 @Valid @ModelAttribute("teacher") TeacherDto teacher, 
                                 BindingResult result, Model model) {

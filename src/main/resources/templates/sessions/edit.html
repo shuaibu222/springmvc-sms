@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+<head>
+    <title>Edit Session</title>
+</head>
+<body>
+<h1>Edit Session</h1>
+<form role="form" method="post" th:action="@{/sessions/update/{id}(id=${academicSession.id})}" th:object="${academicSession}" >
+    <div>
+        <label>Session Name:</label>
+        <input type="text" th:field="*{sessionName}" />
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+</body>
+</html>
