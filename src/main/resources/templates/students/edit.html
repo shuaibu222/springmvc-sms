@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Edit Student</h1>
-<form role="form" action="#" th:action="@{/students/{id}(id=${student.id})}" th:object="${student}" method="post">
+<form role="form" th:action="@{/students/update/{id}(id=${student.id})}" th:object="${student}" method="post">
     <div>
         <label>First Name:</label>
         <input type="text" th:field="*{firstName}" />

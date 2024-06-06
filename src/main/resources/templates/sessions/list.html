@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html 
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <title>Sessions</title>
+</head>
+<body>
+<h1>Sessions List</h1>
+<a href="/sessions/new">Add New Session</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Session Name</th>
+    <tr th:each="academicSession : ${sessions}">
+        <td th:text="${academicSession.id}"></td>
+        <td th:text="${academicSession.sessionName}"></td>
+        <td>
+            <a th:href="@{'/sessions/edit/' + ${academicSession.id}}">Edit</a>
+            <a th:href="@{'/sessions/delete/' + ${academicSession.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
