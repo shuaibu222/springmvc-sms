@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+<head>
+    <title>Create New Section</title>
+</head>
+<body>
+    <h1>Create New Section</h1>
+    <form th:action="@{/sections/create}" th:object="${section}" method="post">
+        <div>
+            <label for="sectionName">Section Name:</label>
+            <input type="text" id="sectionName" th:field="*{sectionName}" required />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</body>
+</html>
