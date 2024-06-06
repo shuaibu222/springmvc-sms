@@ -8,7 +8,7 @@ import com.shuaibu.model.GradeModel;
 public interface GradeService {
     List<GradeDto> getAllGrades();
     GradeDto getGradeById(Long id);
-    GradeModel saveGrade(GradeDto GradeDto);
-    void updateGrade(GradeDto GradeDto);
+    GradeModel saveGrade(GradeDto gradeDto);
+    void updateGrade(GradeDto gradeDto);
     void deleteGrade(Long id);
 }
