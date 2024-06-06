@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+<head>
+    <title>Create New Class</title>
+</head>
+<body>
+    <h1>Create New Class</h1>
+    <form th:action="@{/classes/create}" th:object="${schoolClass}" method="post">
+        <div>
+            <label for="sectionName">Section Name:</label>
+            <input type="text" id="sectionName" th:field="*{sectionName}" required />
+        </div>
+        <div>
+            <label for="className">Class Name:</label>
+            <input type="text" id="className" th:field="*{className}" required />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</body>
+</html>
