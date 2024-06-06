@@ -4,18 +4,18 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     >
 <head>
-    <title>Edit Class</title>
+    <title>Edit Subject</title>
 </head>
 <body>
-<h1>Edit Class</h1>
-<form role="form" method="post" th:action="@{/classes/update/{id}(id=${schoolClass.id})}" th:object="${schoolClass}" >
+<h1>Edit Subject</h1>
+<form role="form" method="post" th:action="@{/subjects/update/{id}(id=${subject.id})}" th:object="${subject}" >
     <div>
-        <label>Section Name:</label>
-        <input type="text" th:field="*{sectionName}" />
+        <label>Subject Name:</label>
+        <input type="text" th:field="*{subjectName}" />
     </div>
     <div>
-        <label>Class Name:</label>
-        <input type="text" th:field="*{className}" />
+        <label>Abbreviation:</label>
+        <input type="text" th:field="*{abbr}" />
     </div>
     <div>
         <button type="submit">Update</button>

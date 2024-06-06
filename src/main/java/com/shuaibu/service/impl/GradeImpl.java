@@ -23,8 +23,8 @@ public class GradeImpl implements GradeService {
 
     @Override
     public List<GradeDto> getAllGrades() {
-        List<GradeModel> sessions = gradeRepository.findAll();
-        return sessions.stream().map(grade -> mapToDto(grade)).collect(Collectors.toList());
+        List<GradeModel> grades = gradeRepository.findAll();
+        return grades.stream().map(grade -> mapToDto(grade)).collect(Collectors.toList());
     }
 
     @Override
