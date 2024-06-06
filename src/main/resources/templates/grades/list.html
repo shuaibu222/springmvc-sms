@@ -4,27 +4,27 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
-    <title>Teachers</title>
+    <title>Grading System</title>
 </head>
 <body>
-<h1>Teachers List</h1>
-<a href="/teachers/new">Add New Teacher</a>
+<h1>Gradings List</h1>
+<a href="/grades/new">Add New Grade</a>
 <table>
     <tr>
         <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Phone Number</th>
+        <th>Marks(s) Range</th>
+        <th>Grade</th>
+        <th>Remarks</th>
         <th>Actions</th>
     </tr>
-    <tr th:each="teacher : ${teachers}">
-        <td th:text="${teacher.id}"></td>
-        <td th:text="${teacher.firstName}"></td>
-        <td th:text="${teacher.lastName}"></td>
-        <td th:text="${teacher.phoneNumber}"></td>
+    <tr th:each="grade : ${grades}">
+        <td th:text="${grade.id}"></td>
+        <td th:text="${grade.range}"></td>
+        <td th:text="${grade.grade}"></td>
+        <td th:text="${grade.remark}"></td>
         <td>
-            <a th:href="@{'/teachers/edit/' + ${teacher.id}}">Edit</a>
-            <a th:href="@{'/teachers/delete/' + ${teacher.id}}">Delete</a>
+            <a th:href="@{'/grades/edit/' + ${grade.id}}">Edit</a>
+            <a th:href="@{'/grades/delete/' + ${grade.id}}">Delete</a>
         </td>
     </tr>
 </table>

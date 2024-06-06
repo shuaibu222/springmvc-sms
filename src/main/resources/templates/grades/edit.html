@@ -4,22 +4,22 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     >
 <head>
-    <title>Edit Teacher</title>
+    <title>Edit Grade</title>
 </head>
 <body>
-<h1>Edit Teacher</h1>
-<form role="form" action="#" th:action="@{/teachers/update/{id}(id=${teacher.id})}" th:object="${teacher}" method="post">
+<h1>Edit Grade</h1>
+<form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
     <div>
-        <label>First Name:</label>
-        <input type="text" th:field="*{firstName}" />
+        <label>Range:</label>
+        <input type="text" th:field="*{range}" />
     </div>
     <div>
-        <label>Last Name:</label>
-        <input type="text" th:field="*{lastName}" />
+        <label>Grades:</label>
+        <input type="text" th:field="*{grade}" />
     </div>
     <div>
-        <label>Phone Number:</label>
-        <input type="text" th:field="*{phoneNumber}" />
+        <label>Remarks:</label>
+        <input type="text" th:field="*{remark}" />
     </div>
     <div>
         <button type="submit">Update</button>
