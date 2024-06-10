@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html 
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <title>Results</title>
+</head>
+<body>
+<h1>Result List</h1>
+<a href="/results/new">Add New Result</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Section Name</th>
+        <th>1st C.A</th>
+        <th>2nd C.A</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="result : ${results}">
+        <td th:text="${result.id}"></td>
+        <td th:text="${result.name}"></td>
+        <td th:text="${result.section}"></td>
+        <td th:text="${result.firstCA}"></td>
+        <td th:text="${result.secondCA}"></td>
+        <td>
+            <a th:href="@{'/results/edit/' + ${result.id}}">Edit</a>
+            <a th:href="@{'/results/delete/' + ${result.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

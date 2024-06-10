@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+<head>
+    <title>Create New Result</title>
+</head>
+<body>
+    <h1>Create New Result</h1>
+    <form th:action="@{/results/create}" th:object="${result}" method="post">
+        <div>
+            <label for="name">Student Name:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+        </div>
+        <div>
+            <label for="section">Section Name:</label>
+            <input type="text" id="section" th:field="*{section}" required />
+        </div>
+        <div>
+            <label for="firstCA">1st C.A:</label>
+            <input type="text" id="firstCA" th:field="*{firstCA}" required />
+        </div>
+        <div>
+            <label for="secondCA">2nd C.A:</label>
+            <input type="text" id="secondCA" th:field="*{secondCA}" required />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</body>
+</html>
