@@ -2,27 +2,30 @@
 <html 
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
 >
 <head>
     <title>Classes</title>
 </head>
 <body>
-<h1>Class List</h1>
-<a href="/classes/new">Add New Class</a>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Section Name</th>
-        <th>Class Name</th>
-    <tr th:each="schoolClass : ${schoolClasses}">
-        <td th:text="${schoolClass.id}"></td>
-        <td th:text="${schoolClass.sectionName}"></td>
-        <td th:text="${schoolClass.className}"></td>
-        <td>
-            <a th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>
-            <a th:href="@{'/classes/delete/' + ${schoolClass.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
+    <section>
+        <h1>Class List</h1>
+        <a href="/classes/new">Add New Class</a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Section Name</th>
+                <th>Class Name</th>
+            <tr th:each="schoolClass : ${schoolClasses}">
+                <td th:text="${schoolClass.id}"></td>
+                <td th:text="${schoolClass.sectionName}"></td>
+                <td th:text="${schoolClass.className}"></td>
+                <td>
+                    <a th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>
+                    <a th:href="@{'/classes/delete/' + ${schoolClass.id}}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </section>
 </body>
 </html>

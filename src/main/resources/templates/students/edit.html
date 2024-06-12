@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html 
-    xmlns:th="http://www.thymeleaf.org"
+<html
+    xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    >
+    layout:decorate="~{layout}"
+>
 <head>
     <title>Edit Student</title>
 </head>
 <body>
-<h1>Edit Student</h1>
-<form role="form" th:action="@{/students/update/{id}(id=${student.id})}" th:object="${student}" method="post">
-    <div>
-        <label>First Name:</label>
-        <input type="text" th:field="*{firstName}" />
-    </div>
-    <div>
-        <label>Last Name:</label>
-        <input type="text" th:field="*{lastName}" />
-    </div>
-    <div>
-        <label>Phone Number:</label>
-        <input type="text" th:field="*{phoneNumber}" />
-    </div>
-    <div>
-        <button type="submit">Update</button>
-    </div>
-</form>
+    <section layout:fragment="body">
+        <h1>Edit Student</h1>
+        <form role="form" th:action="@{/students/update/{id}(id=${student.id})}" th:object="${student}" method="post">
+            <div>
+                <label>First Name:</label>
+                <input type="text" th:field="*{firstName}" />
+            </div>
+            <div>
+                <label>Last Name:</label>
+                <input type="text" th:field="*{lastName}" />
+            </div>
+            <div>
+                <label>Phone Number:</label>
+                <input type="text" th:field="*{phoneNumber}" />
+            </div>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </section>
 </body>
 </html>

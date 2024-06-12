@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html 
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
 >
 <head>
     <title>Subjects</title>
 </head>
 <body>
-<h1>Subject List</h1>
-<a href="/subjects/new">Add New Subject</a>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Subject Name</th>
-        <th>Abbreviation</th>
-    <tr th:each="subject : ${subjects}">
-        <td th:text="${subject.id}"></td>
-        <td th:text="${subject.subjectName}"></td>
-        <td th:text="${subject.abbr}"></td>
-        <td>
-            <a th:href="@{'/subjects/edit/' + ${subject.id}}">Edit</a>
-            <a th:href="@{'/subjects/delete/' + ${subject.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
+    <section layout:fragment="body">
+        <h1>Subject List</h1>
+        <a href="/subjects/new">Add New Subject</a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Subject Name</th>
+                <th>Abbreviation</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="subject : ${subjects}">
+                <td th:text="${subject.id}"></td>
+                <td th:text="${subject.subjectName}"></td>
+                <td th:text="${subject.abbr}"></td>
+                <td>
+                    <a th:href="@{'/subjects/edit/' + ${subject.id}}">Edit</a>
+                    <a th:href="@{'/subjects/delete/' + ${subject.id}}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </section>
 </body>
 </html>

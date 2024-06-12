@@ -2,31 +2,34 @@
 <html 
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:fragment="~{layout}"
 >
 <head>
     <title>Grading System</title>
 </head>
 <body>
-<h1>Gradings List</h1>
-<a href="/grades/new">Add New Grade</a>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Marks(s) Range</th>
-        <th>Grade</th>
-        <th>Remarks</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="grade : ${grades}">
-        <td th:text="${grade.id}"></td>
-        <td th:text="${grade.range}"></td>
-        <td th:text="${grade.grade}"></td>
-        <td th:text="${grade.remark}"></td>
-        <td>
-            <a th:href="@{'/grades/edit/' + ${grade.id}}">Edit</a>
-            <a th:href="@{'/grades/delete/' + ${grade.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
+    <section layout:fragment="body">
+        <h1>Gradings List</h1>
+        <a href="/grades/new">Add New Grade</a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Marks(s) Range</th>
+                <th>Grade</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="grade : ${grades}">
+                <td th:text="${grade.id}"></td>
+                <td th:text="${grade.range}"></td>
+                <td th:text="${grade.grade}"></td>
+                <td th:text="${grade.remark}"></td>
+                <td>
+                    <a th:href="@{'/grades/edit/' + ${grade.id}}">Edit</a>
+                    <a th:href="@{'/grades/delete/' + ${grade.id}}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </section>
 </body>
 </html>

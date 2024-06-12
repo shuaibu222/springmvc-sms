@@ -2,28 +2,31 @@
 <html 
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
     >
 <head>
     <title>Edit Grade</title>
 </head>
 <body>
-<h1>Edit Grade</h1>
-<form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
-    <div>
-        <label>Range:</label>
-        <input type="text" th:field="*{range}" />
-    </div>
-    <div>
-        <label>Grades:</label>
-        <input type="text" th:field="*{grade}" />
-    </div>
-    <div>
-        <label>Remarks:</label>
-        <input type="text" th:field="*{remark}" />
-    </div>
-    <div>
-        <button type="submit">Update</button>
-    </div>
-</form>
+    <section layout:fragment="body">
+        <h1>Edit Grade</h1>
+        <form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
+            <div>
+                <label>Range:</label>
+                <input type="text" th:field="*{range}" />
+            </div>
+            <div>
+                <label>Grades:</label>
+                <input type="text" th:field="*{grade}" />
+            </div>
+            <div>
+                <label>Remarks:</label>
+                <input type="text" th:field="*{remark}" />
+            </div>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </section>
 </body>
 </html>

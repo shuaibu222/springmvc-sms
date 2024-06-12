@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html 
+</html
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    >
+    layout:decorate="~{layout}"
+>
 <head>
     <title>Edit Subject</title>
 </head>
 <body>
-<h1>Edit Subject</h1>
-<form role="form" method="post" th:action="@{/subjects/update/{id}(id=${subject.id})}" th:object="${subject}" >
-    <div>
-        <label>Subject Name:</label>
-        <input type="text" th:field="*{subjectName}" />
-    </div>
-    <div>
-        <label>Abbreviation:</label>
-        <input type="text" th:field="*{abbr}" />
-    </div>
-    <div>
-        <button type="submit">Update</button>
-    </div>
-</form>
+    <section layout:fragment="body">
+        <h1>Edit Subject</h1>
+        <form role="form" method="post" th:action="@{/subjects/update/{id}(id=${subject.id})}" th:object="${subject}">
+            <div>
+                <label>Subject Name:</label>
+                <input type="text" th:field="*{subjectName}" />
+            </div>
+            <div>
+                <label>Abbreviation:</label>
+                <input type="text" th:field="*{abbr}" />
+            </div>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </section>
 </body>
 </html>

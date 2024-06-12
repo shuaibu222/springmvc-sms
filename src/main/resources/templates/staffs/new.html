@@ -4,11 +4,11 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     >
 <head>
-    <title>Create New Teachers</title>
+    <title>Create New Staff</title>
 </head>
 <body>
-    <h1>Create New Teachers</h1>
-    <form th:action="@{/teachers/create}" th:object="${teacher}" method="post">
+    <h1>Create New Staff</h1>
+    <form th:action="@{/staff/create}" th:object="${staff}" method="post">
         <div>
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" th:field="*{firstName}" required />
