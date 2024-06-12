@@ -1,9 +1,14 @@
 package com.shuaibu.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class TeacherModel {
+public class StaffModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +39,19 @@ public class TeacherModel {
     private String profilePicture;
     private String phoneNumber;
 
-    
+    @ManyToMany
+    @JoinTable(
+        name = "teacher_subjects",
+        joinColumns = @JoinColumn(name = "teacher_id"),
+        inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private List<SubjectModel> subjectModels;
+
+    @ManyToMany
+    @JoinTable(
+        name = "teacher_classes",
+        joinColumns = @JoinColumn(name = "teacher_id"),
+        inverseJoinColumns = @JoinColumn(name = "school_class_id")
+    )
+    private List<SchoolClassModel> schoolClassModels;
 }

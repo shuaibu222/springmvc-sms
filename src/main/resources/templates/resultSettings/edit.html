@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+<head>
+    <title>Edit Result Setting</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <h1>Edit Result Setting</h1>
+        <form role="form" th:action="@{/resultSettings/update/{id}(id=${resultSetting.id})}" th:object="${resultSetting}" method="post">
+            <div>
+                <label for="section">Section Name:</label>
+                <input type="text" id="section" th:field="*{section}" required />
+            </div>
+            <div>
+                <label for="firstCA">1st C.A:</label>
+                <input type="text" id="firstCA" th:field="*{firstCA}" required />
+            </div>
+            <div>
+                <label for="secondCA">2nd C.A:</label>
+                <input type="text" id="secondCA" th:field="*{secondCA}" required />
+            </div>
+            <div>
+                <label for="thirdCA">3rd C.A:</label>
+                <input type="text" id="thirdCA" th:field="*{thirdCA}" />
+            </div>
+            <div>
+                <label for="fourthCA">4th C.A:</label>
+                <input type="text" id="fourthCA" th:field="*{fourthCA}" />
+            </div>
+            <div>
+                <label for="exam">Exam:</label>
+                <input type="text" id="exam" th:field="*{exam}" required />
+            </div>
+            <div>
+                <label for="total">Total:</label>
+                <input type="text" id="total" th:field="*{total}" required />
+            </div>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

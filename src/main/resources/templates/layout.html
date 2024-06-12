@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org"
+>
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">SMS</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- Add navigation items here -->
+        <div class="navbar-brand">SMS Dashboard</div>
+        <ul class="navbar-menu">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/students">Students</a></li>
+            <li><a href="/teachers">Teachers</a></li>
+            <li><a href="/grades">Grades</a></li>
+            <li><a href="/results">Results</a></li>
+            <li><a href="/subjects">Subjects</a></li>
+            <!-- Add more links as needed -->
+        </ul>
+    </nav>
+    <div class="content-wrapper">
+        <aside class="sidebar">
+            <!-- Add sidebar items here -->
+            <ul class="sidebar-menu">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/students">Students</a></li>
+                <li><a href="/sections">Sections</a></li>
+                <li><a href="/classes">Classes</a></li>
+                <li><a href="/grades">Grades</a></li>
+                <li><a href="/results">Results</a></li>
+                <li><a href="/subjects">Subjects</a></li>
+                <li><a href="/resultSettings">Result Settings</a></li>
+                <li><a href="/sessions">Academic Sessions</a></li>
+                <li><a href="/staffs">Staffs</a></li>
+                <!-- Add more links as needed -->
+            </ul>
+        </aside>
+        <main class="main-content" layout:fragment="body">
+            <!-- Main content will be injected here -->
+        </main>
+    </div>
+</body>
+</html>

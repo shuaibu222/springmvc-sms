@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html 
-    xmlns:th="http://www.thymeleaf.org"
+<html
+    xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    >
+    layout:decorate="~{layout}"
+>
 <head>
     <title>Edit Result</title>
 </head>
 <body>
-<h1>Edit Result</h1>
-<form role="form" th:action="@{/results/update/{id}(id=${result.id})}" th:object="${result}" method="post">
-    <div>
-        <label>Student Name:</label>
-        <input type="text" th:field="*{name}" required />
-    </div>
-    <div>
-        <label>Section Name:</label>
-        <input type="text" th:field="*{section}" required />
-    </div>
-    <div>
-        <label>1st C.A:</label>
-        <input type="text" th:field="*{firstCA}" required />
-    </div>
-    <div>
-        <label>2nd C.A:</label>
-        <input type="text" th:field="*{secondCA}" required />
-    </div>
-    <div>
-        <button type="submit">Update</button>
-    </div>
-</form>
+    <section layout:fragment="body">
+        <h1>Edit Result</h1>
+        <form role="form" th:action="@{/results/update/{id}(id=${result.id})}" th:object="${result}" method="post">
+            <div>
+                <label>Student Name:</label>
+                <input type="text" th:field="*{name}" required />
+            </div>
+            <div>
+                <label>Section Name:</label>
+                <input type="text" th:field="*{section}" required />
+            </div>
+            <div>
+                <label>1st C.A:</label>
+                <input type="text" th:field="*{firstCA}" required />
+            </div>
+            <div>
+                <label>2nd C.A:</label>
+                <input type="text" th:field="*{secondCA}" required />
+            </div>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </section>
 </body>
 </html>

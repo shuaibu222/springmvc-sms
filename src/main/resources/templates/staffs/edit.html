@@ -4,11 +4,11 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     >
 <head>
-    <title>Edit Teacher</title>
+    <title>Edit Staff</title>
 </head>
 <body>
-<h1>Edit Teacher</h1>
-<form role="form" action="#" th:action="@{/teachers/update/{id}(id=${teacher.id})}" th:object="${teacher}" method="post">
+<h1>Edit Staff</h1>
+<form role="form" action="#" th:action="@{/staffs/update/{id}(id=${staff.id})}" th:object="${staff}" method="post">
     <div>
         <label>First Name:</label>
         <input type="text" th:field="*{firstName}" />
