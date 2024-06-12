@@ -2,28 +2,31 @@
 <html 
     xmlns:th="http://thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
     >
 <head>
     <title>Create New Staff</title>
 </head>
 <body>
-    <h1>Create New Staff</h1>
-    <form th:action="@{/staff/create}" th:object="${staff}" method="post">
-        <div>
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" th:field="*{firstName}" required />
-        </div>
-        <div>
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" th:field="*{lastName}" required />
-        </div>
-        <div>
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
-        </div>
-        <div>
-            <button type="submit">Save</button>
-        </div>
-    </form>
+    <section layout:fragment="body">
+        <h1>Create New Staff</h1>
+        <form th:action="@{/staff/create}" th:object="${staff}" method="post">
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" th:field="*{firstName}" required />
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" th:field="*{lastName}" required />
+            </div>
+            <div>
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </section>
 </body>
 </html>
