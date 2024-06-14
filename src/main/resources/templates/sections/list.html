@@ -9,21 +9,29 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Sections List</h1>
-        <a href="/sections/new">Add New Section</a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Section Name</th>
-            <tr th:each="section : ${sections}">
-                <td th:text="${section.id}"></td>
-                <td th:text="${section.sectionName}"></td>
-                <td>
-                    <a th:href="@{'/sections/edit/' + ${section.id}}">Edit</a>
-                    <a th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
-                </td>
-            </tr>
-        </table>
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Sections List</h1>
+                <a href="/sections/new">Add New Section</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Section Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr th:each="section : ${sections}">
+                        <td th:text="${section.id}"></td>
+                        <td th:text="${section.sectionName}"></td>
+                        <td>
+                            <a th:href="@{'/sections/edit/' + ${section.id}}">Edit</a>
+                            <a th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
     </section>
 </body>
 </html>

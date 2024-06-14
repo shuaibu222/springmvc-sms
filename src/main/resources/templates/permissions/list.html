@@ -5,28 +5,28 @@
         layout:decorate="~{layout}"
 >
 <head>
-    <title>Sessions</title>
+    <title>Permission List</title>
 </head>
 <body>
     <section layout:fragment="body">
         <article class="list-page">
             <div class="list-header">
-                <h1>Sessions List</h1>
-                <a href="/sessions/new">Add New Session</a>
+                <h1>Permissions List</h1>
+                <a href="/permissions/new">Add New Permission</a>
             </div>
             <div class="table-container">
                 <table>
                     <tr>
                         <th>ID</th>
-                        <th>Session Name</th>
+                        <th>Permission Name</th>
                         <th>Actions</th>
                     </tr>
-                    <tr th:each="academicSession : ${sessions}">
-                        <td th:text="${academicSession.id}"></td>
-                        <td th:text="${academicSession.sessionName}"></td>
+                    <tr th:each="permission : ${permissions}">
+                        <td th:text="${permission.id}"></td>
+                        <td th:text="${permission.permissionName}"></td>
                         <td>
-                            <a th:href="@{'/sessions/edit/' + ${academicSession.id}}">Edit</a>
-                            <a th:href="@{'/sessions/delete/' + ${academicSession.id}}">Delete</a>
+                            <a th:href="@{'/permissions/edit/' + ${permission.id}}">Edit</a>
+                            <a th:href="@{'/permissions/delete/' + ${permission.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

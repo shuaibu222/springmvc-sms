@@ -9,35 +9,41 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Result Setting List</h1>
-        <a href="/resultSettings/new">Add New Result Setting</a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Section Name</th>
-                <th>1st C.A</th>
-                <th>2nd C.A</th>
-                <th>3rd C.A</th>
-                <th>4th C.A</th>
-                <th>Exam</th>
-                <th>Total</th>
-                <th>Actions</th>
-            </tr>
-            <tr th:each="resultSetting : ${resultSettings}">
-                <td th:text="${resultSetting.id}"></td>
-                <td th:text="${resultSetting.section}"></td>
-                <td th:text="${resultSetting.firstCA}"></td>
-                <td th:text="${resultSetting.secondCA}"></td>
-                <td th:text="${resultSetting.thirdCA}"></td>
-                <td th:text="${resultSetting.fourthCA}"></td>
-                <td th:text="${resultSetting.exam}"></td>
-                <td th:text="${resultSetting.total}"></td>
-                <td>
-                    <a th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
-                    <a th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
-                </td>
-            </tr>
-        </table>
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Results Setting List</h1>
+                <a href="/resultSettings/new">Add New Results Setting</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Section Name</th>
+                        <th>1st C.A</th>
+                        <th>2nd C.A</th>
+                        <th>3rd C.A</th>
+                        <th>4th C.A</th>
+                        <th>Exam</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr th:each="resultSetting : ${resultSettings}">
+                        <td th:text="${resultSetting.id}"></td>
+                        <td th:text="${resultSetting.section}"></td>
+                        <td th:text="${resultSetting.firstCA}"></td>
+                        <td th:text="${resultSetting.secondCA}"></td>
+                        <td th:text="${resultSetting.thirdCA}"></td>
+                        <td th:text="${resultSetting.fourthCA}"></td>
+                        <td th:text="${resultSetting.exam}"></td>
+                        <td th:text="${resultSetting.total}"></td>
+                        <td>
+                            <a th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
+                            <a th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
     </section>
 </body>
 </html>

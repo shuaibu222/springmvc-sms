@@ -5,22 +5,18 @@
     layout:decorate="~{layout}"
     >
 <head>
-    <title>Edit Grade</title>
+    <title>Edit User</title>
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Edit Grade</h1>
-        <form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
+        <h1>Edit User</h1>
+        <form role="form" action="#" th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post">
             <div>
-                <label>Range:</label>
-                <input type="text" th:field="*{range}" />
+                <label>Username:</label>
+                <input type="text" th:field="*{user}" />
             </div>
             <div>
-                <label>Grades:</label>
-                <input type="text" th:field="*{grade}" />
-            </div>
-            <div>
-                <label>Remarks:</label>
+                <label>Password:</label>
                 <input type="text" th:field="*{remark}" />
             </div>
             <div>

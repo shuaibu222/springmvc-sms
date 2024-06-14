@@ -10,7 +10,6 @@ import com.shuaibu.model.SchoolClassModel;
 import com.shuaibu.service.SchoolClassService;
 
 import jakarta.validation.Valid;
-
 @Controller
 @RequestMapping("/classes")
 public class SchoolClassController {

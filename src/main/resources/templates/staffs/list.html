@@ -9,27 +9,33 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Staffs List</h1>
-        <a href="/staffs/new">Add New Staff</a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Phone Number</th>
-                <th>Actions</th>
-            </tr>
-            <tr th:each="staff : ${staffs}">
-                <td th:text="${staff.id}"></td>
-                <td th:text="${staff.firstName}"></td>
-                <td th:text="${staff.lastName}"></td>
-                <td th:text="${staff.phoneNumber}"></td>
-                <td>
-                    <a th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>
-                    <a th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>
-                </td>
-            </tr>
-        </table>
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Staffs List</h1>
+                <a href="/staffs/new">Add New Staff</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr th:each="staff : ${staffs}">
+                        <td th:text="${staff.id}"></td>
+                        <td th:text="${staff.firstName}"></td>
+                        <td th:text="${staff.lastName}"></td>
+                        <td th:text="${staff.phoneNumber}"></td>
+                        <td>
+                            <a th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>
+                            <a th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
     </section>
 </body>
 </html>
