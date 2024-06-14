@@ -8,24 +8,32 @@
     <title>Classes</title>
 </head>
 <body>
-    <section>
-        <h1>Class List</h1>
-        <a href="/classes/new">Add New Class</a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Section Name</th>
-                <th>Class Name</th>
-            <tr th:each="schoolClass : ${schoolClasses}">
-                <td th:text="${schoolClass.id}"></td>
-                <td th:text="${schoolClass.sectionName}"></td>
-                <td th:text="${schoolClass.className}"></td>
-                <td>
-                    <a th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>
-                    <a th:href="@{'/classes/delete/' + ${schoolClass.id}}">Delete</a>
-                </td>
-            </tr>
-        </table>
+    <section layout:fragment="body">
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Class List</h1>
+                <a href="/classes/new">Add New Class</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Section Name</th>
+                        <th>Class Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr th:each="schoolClass : ${schoolClasses}">
+                        <td th:text="${schoolClass.id}"></td>
+                        <td th:text="${schoolClass.sectionName}"></td>
+                        <td th:text="${schoolClass.className}"></td>
+                        <td>
+                            <a th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>
+                            <a th:href="@{'/classes/delete/' + ${schoolClass.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
     </section>
 </body>
 </html>

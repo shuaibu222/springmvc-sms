@@ -9,25 +9,31 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Subject List</h1>
-        <a href="/subjects/new">Add New Subject</a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Subject Name</th>
-                <th>Abbreviation</th>
-                <th>Actions</th>
-            </tr>
-            <tr th:each="subject : ${subjects}">
-                <td th:text="${subject.id}"></td>
-                <td th:text="${subject.subjectName}"></td>
-                <td th:text="${subject.abbr}"></td>
-                <td>
-                    <a th:href="@{'/subjects/edit/' + ${subject.id}}">Edit</a>
-                    <a th:href="@{'/subjects/delete/' + ${subject.id}}">Delete</a>
-                </td>
-            </tr>
-        </table>
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Subjects List</h1>
+                <a href="/subjects/new">Add New Subject</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Subject Name</th>
+                        <th>Abbreviation</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr th:each="subject : ${subjects}">
+                        <td th:text="${subject.id}"></td>
+                        <td th:text="${subject.subjectName}"></td>
+                        <td th:text="${subject.abbr}"></td>
+                        <td>
+                            <a th:href="@{'/subjects/edit/' + ${subject.id}}">Edit</a>
+                            <a th:href="@{'/subjects/delete/' + ${subject.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
     </section>
 </body>
 </html>

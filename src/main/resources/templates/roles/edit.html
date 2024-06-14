@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+    >
+<head>
+    <title>Edit Role</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <h1>Edit Role</h1>
+        <form role="form" action="#" th:action="@{/roles/update/{id}(id=${role.id})}" th:object="${role}" method="post">
+            <div>
+                <label>Role Name:</label>
+                <input type="text" th:field="*{role}" />
+            </div>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

@@ -13,38 +13,45 @@
 </head>
 <body>
     <nav class="navbar">
-        <!-- Add navigation items here -->
         <div class="navbar-brand">SMS Dashboard</div>
+        <button class="toggle-button" id="toggle-button">☰</button>
         <ul class="navbar-menu">
             <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/students">Students</a></li>
-            <li><a href="/teachers">Teachers</a></li>
+            <li><a href="/staffs">Staffs</a></li>
             <li><a href="/grades">Grades</a></li>
             <li><a href="/results">Results</a></li>
             <li><a href="/subjects">Subjects</a></li>
-            <!-- Add more links as needed -->
         </ul>
     </nav>
     <div class="content-wrapper">
-        <aside class="sidebar">
-            <!-- Add sidebar items here -->
+        <aside class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/students">Students</a></li>
                 <li><a href="/sections">Sections</a></li>
                 <li><a href="/classes">Classes</a></li>
+                <li><a href="/subjects">Subjects</a></li>
                 <li><a href="/grades">Grades</a></li>
                 <li><a href="/results">Results</a></li>
-                <li><a href="/subjects">Subjects</a></li>
                 <li><a href="/resultSettings">Result Settings</a></li>
                 <li><a href="/sessions">Academic Sessions</a></li>
                 <li><a href="/staffs">Staffs</a></li>
-                <!-- Add more links as needed -->
+                <li><a href="/users">Users Profile</a></li>
+                <li><a href="/roles">Roles</a></li>
+                <li><a href="/permissions">Permissions</a></li>
             </ul>
         </aside>
         <main class="main-content" layout:fragment="body">
             <!-- Main content will be injected here -->
         </main>
     </div>
+    
+    <script>
+        // JavaScript for toggling sidebar
+        document.getElementById('toggle-button').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

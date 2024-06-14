@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+    >
+<head>
+    <title>Create New Permissions</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <h1>Create New Permission</h1>
+        <form th:action="@{/permissions/create}" th:object="${permission}" method="post">
+            <div>
+                <label for="lastName">Permission Name:</label>
+                <input type="text" id="permission" th:field="*{permissionName}" required />
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>
