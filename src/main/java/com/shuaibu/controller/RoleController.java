@@ -1,5 +1,7 @@
 package com.shuaibu.controller;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,14 +46,14 @@ public class RoleController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateRoleForm(@PathVariable Long id, Model model) {
+    public String updateRoleForm(@PathVariable UUID id, Model model) {
         RoleDto role = roleService.getRoleById(id);
         model.addAttribute("role", role);
         return "roles/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateRole(@PathVariable Long id,
+    public String updateRole(@PathVariable UUID id,
                                 @Valid @ModelAttribute("role") RoleDto role, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -64,7 +66,7 @@ public class RoleController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteRole(@PathVariable Long id) {
+    public String deleteRole(@PathVariable UUID id) {
         roleService.deleteRole(id);
         return "redirect:/roles";
     }

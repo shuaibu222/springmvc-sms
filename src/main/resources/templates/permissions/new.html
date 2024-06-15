@@ -9,16 +9,18 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Create New Permission</h1>
-        <form th:action="@{/permissions/create}" th:object="${permission}" method="post">
-            <div>
-                <label for="lastName">Permission Name:</label>
-                <input type="text" id="permission" th:field="*{permissionName}" required />
-            </div>
-            <div>
-                <button type="submit">Save</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Create New Permission</h1>
+            <form th:action="@{/permissions/create}" th:object="${permission}" method="post">
+                <div>
+                    <label for="lastName">Permission Name:</label>
+                    <input type="text" id="permission" th:field="*{permissionName}" required />
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

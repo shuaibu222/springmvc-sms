@@ -15,7 +15,7 @@ public class SectionMapper {
     }
 
     public static SectionModel mapToModel(SectionDto sectionDto){
-        SectionModel sectionModel =SectionModel.builder()
+        SectionModel sectionModel = SectionModel.builder()
         .id(sectionDto.getId())
         .sectionName(sectionDto.getSectionName())
         .build();

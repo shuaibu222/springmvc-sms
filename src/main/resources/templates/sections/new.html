@@ -9,16 +9,18 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Create New Section</h1>
-        <form th:action="@{/sections/create}" th:object="${section}" method="post">
-            <div>
-                <label for="sectionName">Section Name:</label>
-                <input type="text" id="sectionName" th:field="*{sectionName}" required />
-            </div>
-            <div>
-                <button type="submit">Save</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Create New Section</h1>
+            <form th:action="@{/sections/create}" th:object="${section}" method="post">
+                <div>
+                    <label for="sectionName">Section Name:</label>
+                    <input type="text" id="sectionName" th:field="*{sectionName}" required />
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

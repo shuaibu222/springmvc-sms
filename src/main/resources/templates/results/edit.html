@@ -9,28 +9,54 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Edit Result</h1>
-        <form role="form" th:action="@{/results/update/{id}(id=${result.id})}" th:object="${result}" method="post">
-            <div>
-                <label>Student Name:</label>
-                <input type="text" th:field="*{name}" required />
-            </div>
-            <div>
-                <label>Section Name:</label>
-                <input type="text" th:field="*{section}" required />
-            </div>
-            <div>
-                <label>1st C.A:</label>
-                <input type="text" th:field="*{firstCA}" required />
-            </div>
-            <div>
-                <label>2nd C.A:</label>
-                <input type="text" th:field="*{secondCA}" required />
-            </div>
-            <div>
-                <button type="submit">Update</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Edit Result</h1>
+            <form role="form" th:action="@{/results/update/{id}(id=${result.id})}" th:object="${result}" method="post">
+                <div>
+                    <label for="name">Student Name:</label>
+                    <input type="text" id="name" th:field="*{name}" required />
+                </div>
+                <div>
+                    <label for="section">Section Name:</label>
+                    <input type="text" id="section" th:field="*{section}" required />
+                </div>
+                <div>
+                    <label for="academicSession">Session Name:</label>
+                    <input type="text" id="academicSession" th:field="*{academicSession}" required />
+                </div>
+                <div>
+                    <label for="regNo">Registration No.:</label>
+                    <input type="text" id="regNo" th:field="*{regNo}" required />
+                </div>
+                <div>
+                    <label for="studentClass">Class:</label>
+                    <input type="text" id="studentClass" th:field="*{studentClass}" required />
+                </div>
+                <div>
+                    <label for="firstCA">1st C.A:</label>
+                    <input type="text" id="firstCA" th:field="*{firstCA}" required />
+                </div>
+                <div>
+                    <label for="secondCA">2nd C.A:</label>
+                    <input type="text" id="secondCA" th:field="*{secondCA}" required />
+                </div>
+                <div>
+                    <label for="term">Term:</label>
+                    <input type="text" id="term" th:field="*{term}" required />
+                </div>
+                <div>
+                    <label for="exam">Exam:</label>
+                    <input type="text" id="exam" th:field="*{exam}" required />
+                </div>
+                <div>
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" th:field="*{subject}" required />
+                </div>
+                <div>
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

@@ -8,6 +8,7 @@ import com.shuaibu.repository.UserRepository;
 import com.shuaibu.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.UserMapper.*;
@@ -28,7 +29,7 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(Long id) {
+    public UserDto getUserById(UUID id) {
         return mapToDto(userRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class UserImpl implements UserService {
     }
     
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
 }

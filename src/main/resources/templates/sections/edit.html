@@ -9,16 +9,18 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Edit Section</h1>
-        <form role="form" method="post" th:action="@{/sections/update/{id}(id=${section.id})}" th:object="${section}" >
-            <div>
-                <label>Section Name:</label>
-                <input type="text" th:field="*{sectionName}" />
-            </div>
-            <div>
-                <button type="submit">Update</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Edit Section</h1>
+            <form role="form" method="post" th:action="@{/sections/update/{id}(id=${section.id})}" th:object="${section}" >
+                <div>
+                    <label>Section Name:</label>
+                    <input type="text" th:field="*{sectionName}" />
+                </div>
+                <div>
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

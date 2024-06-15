@@ -1,5 +1,7 @@
 package com.shuaibu.controller;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,14 +46,14 @@ public class SectionController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateSectionForm(@PathVariable Long id, Model model) {
+    public String updateSectionForm(@PathVariable UUID id, Model model) {
         SectionDto section = sectionService.getSectionById(id);
         model.addAttribute("section", section);
         return "sections/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateSection(@PathVariable Long id,
+    public String updateSection(@PathVariable UUID id,
                                 @Valid @ModelAttribute("section") SectionDto section, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -64,7 +66,7 @@ public class SectionController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteSection(@PathVariable Long id) {
+    public String deleteSection(@PathVariable UUID id) {
         sectionService.deleteSection(id);
         return "redirect:/sections";
     }

@@ -1,6 +1,7 @@
 package com.shuaibu.model;
 
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,8 +21,8 @@ import lombok.NoArgsConstructor;
 public class RoleModel {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String roleName;
 

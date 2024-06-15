@@ -8,6 +8,7 @@ import com.shuaibu.repository.StudentRepository;
 import com.shuaibu.service.StudentService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.StudentMapper.*;
@@ -28,7 +29,7 @@ public class StudentImpl implements StudentService {
     }
 
     @Override
-    public StudentDto getStudentById(Long id) {
+    public StudentDto getStudentById(UUID id) {
         return mapToDto(studentRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class StudentImpl implements StudentService {
     }
     
     @Override
-    public void deleteStudent(Long id) {
+    public void deleteStudent(UUID id) {
         studentRepository.deleteById(id);
     }
 }

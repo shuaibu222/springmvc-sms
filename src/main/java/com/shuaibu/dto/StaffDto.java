@@ -1,6 +1,7 @@
 package com.shuaibu.dto;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.shuaibu.model.SubjectModel;
 
@@ -10,7 +11,7 @@ import lombok.Data;
 @Data
 @Builder
 public class StaffDto {
-    private Long id;
+    private UUID id;
     
     // Todo: Add validation
     private String firstName;
@@ -21,11 +22,12 @@ public class StaffDto {
     private String state;
     private String LGA;
     private String religion;
-    private String section;
+    private String role;
     private String tribe;
     private String gender;
     private String profilePicture;
     private String phoneNumber;
+    
     private List<SubjectModel> subjectModel;
 
 }

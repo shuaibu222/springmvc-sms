@@ -8,6 +8,7 @@ import com.shuaibu.repository.PermissionRepository;
 import com.shuaibu.service.PermissionService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.PermissionMapper.*;
@@ -28,7 +29,7 @@ public class PermissionImpl implements PermissionService {
     }
 
     @Override
-    public PermissionDto getPermissionById(Long id) {
+    public PermissionDto getPermissionById(UUID id) {
         return mapToDto(permissionRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class PermissionImpl implements PermissionService {
     }
     
     @Override
-    public void deletePermission(Long id) {
+    public void deletePermission(UUID id) {
         permissionRepository.deleteById(id);
     }
 }

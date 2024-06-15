@@ -8,6 +8,7 @@ import com.shuaibu.repository.ResultRepository;
 import com.shuaibu.service.ResultService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.ResultMapper.*;
@@ -28,7 +29,7 @@ public class ResultImpl implements ResultService {
     }
 
     @Override
-    public ResultDto getResultById(Long id) {
+    public ResultDto getResultById(UUID id) {
         return mapToDto(resultRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class ResultImpl implements ResultService {
     }
     
     @Override
-    public void deleteResult(Long id) {
+    public void deleteResult(UUID id) {
         resultRepository.deleteById(id);
     }
 }

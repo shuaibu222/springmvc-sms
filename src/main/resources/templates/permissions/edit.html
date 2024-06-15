@@ -9,16 +9,18 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Edit Permission</h1>
-        <form permission="form" action="#" th:action="@{/permissions/update/{id}(id=${permission.id})}" th:object="${permission}" method="post">
-            <div>
-                <label>Permission Name:</label>
-                <input type="text" th:field="*{permissionName}" />
-            </div>
-            <div>
-                <button type="submit">Update</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Edit Permission</h1>
+            <form permission="form" action="#" th:action="@{/permissions/update/{id}(id=${permission.id})}" th:object="${permission}" method="post">
+                <div>
+                    <label>Permission Name:</label>
+                    <input type="text" th:field="*{permissionName}" />
+                </div>
+                <div>
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

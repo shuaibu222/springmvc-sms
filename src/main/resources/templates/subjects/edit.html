@@ -9,20 +9,22 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Edit Subject</h1>
-        <form role="form" method="post" th:action="@{/subjects/update/{id}(id=${subject.id})}" th:object="${subject}">
-            <div>
-                <label>Subject Name:</label>
-                <input type="text" th:field="*{subjectName}" />
-            </div>
-            <div>
-                <label>Abbreviation:</label>
-                <input type="text" th:field="*{abbr}" />
-            </div>
-            <div>
-                <button type="submit">Update</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Edit Subject</h1>
+            <form role="form" method="post" th:action="@{/subjects/update/{id}(id=${subject.id})}" th:object="${subject}">
+                <div>
+                    <label>Subject Name:</label>
+                    <input type="text" th:field="*{subjectName}" />
+                </div>
+                <div>
+                    <label>Abbreviation:</label>
+                    <input type="text" th:field="*{abbr}" />
+                </div>
+                <div>
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

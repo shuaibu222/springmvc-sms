@@ -1,5 +1,7 @@
 package com.shuaibu.controller;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,14 +46,14 @@ public class SessionController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateSessionForm(@PathVariable Long id, Model model) {
+    public String updateSessionForm(@PathVariable UUID id, Model model) {
         SessionDto academicSession = sessionService.getSessionById(id);
         model.addAttribute("academicSession", academicSession);
         return "sessions/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateSession(@PathVariable Long id,
+    public String updateSession(@PathVariable UUID id,
                                 @Valid @ModelAttribute("session") SessionDto session, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -64,7 +66,7 @@ public class SessionController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteSession(@PathVariable Long id) {
+    public String deleteSession(@PathVariable UUID id) {
         sessionService.deleteSession(id);
         return "redirect:/sessions";
     }

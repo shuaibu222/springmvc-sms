@@ -20,14 +20,40 @@
                         <th>ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>Employed Date</th>
+                        <th>Home Address</th>
+                        <th>State</th>
+                        <th>L.G.A</th>
+                        <th>Religion</th>
+                        <th>Role</th>
+                        <th>Tribe</th>
+                        <th>Gender</th>
+                        <th>Profile Picture</th>
                         <th>Phone Number</th>
+                        <th>Subjects</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="staff : ${staffs}">
                         <td th:text="${staff.id}"></td>
                         <td th:text="${staff.firstName}"></td>
                         <td th:text="${staff.lastName}"></td>
+                        <td th:text="${staff.dateOfBirth}"></td>
+                        <td th:text="${staff.startDate}"></td>
+                        <td th:text="${staff.homeAddress}"></td>
+                        <td th:text="${staff.state}"></td>
+                        <td th:text="${staff.LGA}"></td>
+                        <td th:text="${staff.religion}"></td>
+                        <td th:text="${staff.role}"></td>
+                        <td th:text="${staff.tribe}"></td>
+                        <td th:text="${staff.gender}"></td>
+                        <td th:text="${staff.profilePicture}"></td>
                         <td th:text="${staff.phoneNumber}"></td>
+                        <td>
+                            <div th:each="subject : ${staff.subjectModel}">
+                                <span th:text="${subject.subjectName}"></span>
+                            </div>
+                        </td>
                         <td>
                             <a th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>
                             <a th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>

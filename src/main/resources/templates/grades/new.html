@@ -9,24 +9,26 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Create New Grades</h1>
-        <form th:action="@{/grades/create}" th:object="${grade}" method="post">
-            <div>
-                <label for="range">Range:</label>
-                <input type="text" id="range" th:field="*{range}" required />
-            </div>
-            <div>
-                <label for="lastName">Grade:</label>
-                <input type="text" id="grade" th:field="*{grade}" required />
-            </div>
-            <div>
-                <label for="remarks">Remarks:</label>
-                <input type="text" id="remark" th:field="*{remark}" required />
-            </div>
-            <div>
-                <button type="submit">Save</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Create New Grades</h1>
+            <form th:action="@{/grades/create}" th:object="${grade}" method="post">
+                <div>
+                    <label for="range">Range:</label>
+                    <input type="text" id="range" th:field="*{range}" required />
+                </div>
+                <div>
+                    <label for="lastName">Grade:</label>
+                    <input type="text" id="grade" th:field="*{grade}" required />
+                </div>
+                <div>
+                    <label for="remarks">Remarks:</label>
+                    <input type="text" id="remark" th:field="*{remark}" required />
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.shuaibu.model;
 
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,8 +23,8 @@ import lombok.NoArgsConstructor;
 public class StaffModel {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String firstName;
     private String lastName;
@@ -33,7 +34,7 @@ public class StaffModel {
     private String state;
     private String LGA;
     private String religion;
-    private String section;
+    private String role;
     private String tribe;
     private String gender;
     private String profilePicture;

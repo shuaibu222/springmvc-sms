@@ -8,6 +8,7 @@ import com.shuaibu.repository.GradeRepository;
 import com.shuaibu.service.GradeService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.GradeMapper.*;
@@ -28,7 +29,7 @@ public class GradeImpl implements GradeService {
     }
 
     @Override
-    public GradeDto getGradeById(Long id) {
+    public GradeDto getGradeById(UUID id) {
         return mapToDto(gradeRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class GradeImpl implements GradeService {
     }
     
     @Override
-    public void deleteGrade(Long id) {
+    public void deleteGrade(UUID id) {
         gradeRepository.deleteById(id);
     }
 }

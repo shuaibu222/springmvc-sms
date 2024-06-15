@@ -8,6 +8,7 @@ import com.shuaibu.repository.SectionRepository;
 import com.shuaibu.service.SectionService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.SectionMapper.*;
@@ -28,7 +29,7 @@ public class SectionImpl implements SectionService {
     }
 
     @Override
-    public SectionDto getSectionById(Long id) {
+    public SectionDto getSectionById(UUID id) {
         return mapToDto(sectionRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class SectionImpl implements SectionService {
     }
     
     @Override
-    public void deleteSection(Long id) {
+    public void deleteSection(UUID id) {
         sectionRepository.deleteById(id);
     }
 }

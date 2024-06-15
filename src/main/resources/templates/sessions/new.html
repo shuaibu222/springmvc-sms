@@ -9,16 +9,18 @@
 </head>
 <body>
     <section layout:fragment="body">
-    <h1>Create New Session</h1>
-    <form th:action="@{/sessions/create}" th:object="${session}" method="post">
-        <div>
-            <label for="sessionName">Session Name:</label>
-            <input type="text" id="sessionName" th:field="*{sessionName}" required />
-        </div>
-        <div>
-            <button type="submit">Save</button>
-        </div>
-    </form>
-</section>
+        <section class="form-container">
+            <h1>Create New Session</h1>
+            <form th:action="@{/sessions/create}" th:object="${session}" method="post">
+                <div>
+                    <label for="sessionName">Session Name:</label>
+                    <input type="text" id="sessionName" th:field="*{sessionName}" required />
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
+    </section>
 </body>
 </html>

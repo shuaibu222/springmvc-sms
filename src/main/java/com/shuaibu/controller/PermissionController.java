@@ -1,5 +1,7 @@
 package com.shuaibu.controller;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,14 +47,14 @@ public class PermissionController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updatePermissionForm(@PathVariable Long id, Model model) {
+    public String updatePermissionForm(@PathVariable UUID id, Model model) {
         PermissionDto permission = permissionService.getPermissionById(id);
         model.addAttribute("permission", permission);
         return "permissions/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updatePermission(@PathVariable Long id,
+    public String updatePermission(@PathVariable UUID id,
                                 @Valid @ModelAttribute("permission") PermissionDto permission, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -65,7 +67,7 @@ public class PermissionController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deletePermission(@PathVariable Long id) {
+    public String deletePermission(@PathVariable UUID id) {
         permissionService.deletePermission(id);
         return "redirect:/permissions";
     }

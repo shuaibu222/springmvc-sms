@@ -9,24 +9,82 @@
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Create New Student</h1>
-        <form th:action="@{/students/create}" th:object="${student}" method="post">
-            <div>
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" th:field="*{firstName}" required />
-            </div>
-            <div>
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" th:field="*{lastName}" required />
-            </div>
-            <div>
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
-            </div>
-            <div>
-                <button type="submit">Save</button>
-            </div>
-        </form>
+        <section class="form-container">
+            <h1>Create New Student</h1>
+            <form th:action="@{/students/create}" th:object="${student}" method="post">
+                <div>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" th:field="*{firstName}" required />
+                </div>
+                <div>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" th:field="*{lastName}" required />
+                </div>
+                <div>
+                    <label for="regNo">Registration No.:</label>
+                    <input type="text" id="regNo" th:field="*{regNo}" required />
+                </div>
+                <div>
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
+                </div>
+                <div>
+                    <label for="addmissionDate">Addmission Date:</label>
+                    <input type="text" id="addmissionDate" th:field="*{addmissionDate}" required />
+                </div>
+                <div>
+                    <label for="homeAddress">Home Address:</label>
+                    <input type="text" id="homeAddress" th:field="*{homeAddress}" required />
+                </div>
+                <div>
+                    <label for="term">Term Addmitted:</label>
+                    <input type="text" id="term" th:field="*{term}" required />
+                </div>
+                <div>
+                    <label for="state">State:</label>
+                    <input type="text" id="state" th:field="*{state}" required />
+                </div>
+                <div>
+                    <label for="LGA">L.G.A:</label>
+                    <input type="text" id="LGA" th:field="*{LGA}" required />
+                </div>
+                <div>
+                    <label for="religion">Religion:</label>
+                    <input type="text" id="religion" th:field="*{religion}" required />
+                </div>
+                <div>
+                    <label for="section">Section Name:</label>
+                    <input type="text" id="section" th:field="*{section}" required />
+                </div>
+                <div>
+                    <label for="class">Class:</label>
+                    <input type="text" id="class" th:field="*{class}" required />
+                </div>
+                <div>
+                    <label for="sportHouse">Sport House:</label>
+                    <input type="text" id="sportHouse" th:field="*{sportHouse}" required />
+                </div>
+                <div>
+                    <label for="tribe">Tribe:</label>
+                    <input type="text" id="tribe" th:field="*{tribe}" required />
+                </div>
+                <div>
+                    <label for="gender">Gender:</label>
+                    <input type="text" id="gender" th:field="*{gender}" required />
+                </div>
+                <div>
+                    <label for="profilePicture">Profile Picture:</label>
+                    <input type="text" id="profilePicture" th:field="*{profilePicture}" required />
+                </div>
+                <div>
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
     </section>
 </body>
 </html>

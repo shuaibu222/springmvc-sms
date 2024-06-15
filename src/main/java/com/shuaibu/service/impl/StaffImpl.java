@@ -4,13 +4,16 @@ import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.StaffDto;
 import com.shuaibu.model.StaffModel;
+import com.shuaibu.model.SubjectModel;
 import com.shuaibu.repository.StaffRepository;
 import com.shuaibu.service.StaffService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.StaffMapper.*;
+import static com.shuaibu.mapper.SubjectMapper.*;
 
 @Service
 public class StaffImpl implements StaffService {
@@ -28,22 +31,30 @@ public class StaffImpl implements StaffService {
     }
 
     @Override
-    public StaffDto getStaffById(Long id) {
+    public StaffDto getStaffById(UUID id) {
         return mapToDto(staffRepository.findById(id).get());
     }
 
     @Override
     public StaffModel saveStaff(StaffDto staffDto) {
-        return staffRepository.save(mapToModel(staffDto));
+        StaffModel staffModel = mapToModel(staffDto);
+        
+        staffModel.setSubjectModels(staffDto.getSubjectModel());
+        
+        return staffRepository.save(staffModel);
     }
 
     @Override
     public void updateStaff(StaffDto staffDto) {
-        staffRepository.save(mapToModel(staffDto));
+        StaffModel staffModel = mapToModel(staffDto);
+
+        staffModel.setSubjectModels(staffDto.getSubjectModel());
+        
+        staffRepository.save(staffModel);
     }
     
     @Override
-    public void deleteStaff(Long id) {
+    public void deleteStaff(UUID id) {
         staffRepository.deleteById(id);
     }
 }

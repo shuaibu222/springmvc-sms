@@ -8,6 +8,7 @@ import com.shuaibu.repository.RoleRepository;
 import com.shuaibu.service.RoleService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.RoleMapper.*;
@@ -28,7 +29,7 @@ public class RoleImpl implements RoleService {
     }
 
     @Override
-    public RoleDto getRoleById(Long id) {
+    public RoleDto getRoleById(UUID id) {
         return mapToDto(roleRepository.findById(id).get());
     }
 
@@ -43,7 +44,7 @@ public class RoleImpl implements RoleService {
     }
     
     @Override
-    public void deleteRole(Long id) {
+    public void deleteRole(UUID id) {
         roleRepository.deleteById(id);
     }
 }
