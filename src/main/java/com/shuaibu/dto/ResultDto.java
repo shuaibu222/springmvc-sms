@@ -12,7 +12,7 @@ public class ResultDto {
     private UUID id;
     private String name;
     private String section;
-    private String academcSession;
+    private String academicSession;
     private String regNo;
     private String studentClass;
     private String firstCA;

@@ -44,5 +44,5 @@ public class StudentModel {
     private String phoneNumber;
 
     // @ManyToOne()
-    private SectionModel sectionModel;
+    // private SectionModel sectionModel
 }

@@ -23,7 +23,6 @@ public class ResultSettingsModel {
     private UUID id;
 
     private String section;
-    private String regNo;
     private String firstCA;
     private String secondCA;
     private String thirdCA;

@@ -1,5 +1,6 @@
 package com.shuaibu.model;
 
+
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -23,6 +24,5 @@ public class SectionModel {
     private UUID id;
 
     private String sectionName;
-
 
 }

@@ -66,9 +66,9 @@ html {
 
 /* Global styles */
 body {
-    font-family: 'Poppins', Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1rem
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
@@ -277,7 +277,7 @@ form select {
 
 .checkbox-container div label {
     font-size: 0.8rem;
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 
 form button {
