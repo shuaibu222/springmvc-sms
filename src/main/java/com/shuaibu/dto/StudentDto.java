@@ -22,7 +22,7 @@ public class StudentDto {
     private String LGA;
     private String religion;
     private String section;
-    private String studentClass;
+    private UUID studentClass;
     private String sportHouse;
     private String tribe;
     private String gender;

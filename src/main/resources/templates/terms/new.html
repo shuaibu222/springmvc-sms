@@ -5,16 +5,16 @@
     layout:decorate="~{layout}"
     >
 <head>
-    <title>Create New Permissions</title>
+    <title>Create New Terms</title>
 </head>
 <body>
     <section layout:fragment="body">
         <section class="form-container">
-            <h1>Create New Permission</h1>
-            <form th:action="@{/permissions/create}" th:object="${permission}" method="post">
+            <h1>Create New Term</h1>
+            <form th:action="@{/terms/create}" th:object="${term}" method="post">
                 <div>
-                    <label for="lastName">Permission Name:</label>
-                    <input type="text" id="permission" th:field="*{permissionName}" required />
+                    <label for="lastName">Term Name:</label>
+                    <input type="text" id="term" th:field="*{termName}" required />
                 </div>
                 <div>
                     <button type="submit">Save</button>

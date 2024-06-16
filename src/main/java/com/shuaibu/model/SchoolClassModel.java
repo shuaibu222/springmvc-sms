@@ -26,10 +26,6 @@ public class SchoolClassModel {
 
     private String sectionName;
     private String className;
-
-    @ManyToMany(mappedBy = "schoolClassModels")
-    private List<SubjectModel> subjectModels;
-
-    @ManyToMany(mappedBy = "schoolClassModels")
-    private List<StaffModel> staffModels;
+    private List<UUID> subjectModels;
+    private List<UUID> staffModels;
 }

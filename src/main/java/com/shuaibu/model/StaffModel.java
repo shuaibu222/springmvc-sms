@@ -39,20 +39,6 @@ public class StaffModel {
     private String gender;
     private String profilePicture;
     private String phoneNumber;
-
-    @ManyToMany
-    @JoinTable(
-        name = "teacher_subjects",
-        joinColumns = @JoinColumn(name = "teacher_id"),
-        inverseJoinColumns = @JoinColumn(name = "subject_id")
-    )
-    private List<SubjectModel> subjectModels;
-
-    @ManyToMany
-    @JoinTable(
-        name = "teacher_classes",
-        joinColumns = @JoinColumn(name = "teacher_id"),
-        inverseJoinColumns = @JoinColumn(name = "school_class_id")
-    )
-    private List<SchoolClassModel> schoolClassModels;
+    private List<UUID> subjectModels;
+    private List<UUID> schoolClassModels;
 }

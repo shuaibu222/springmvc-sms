@@ -33,16 +33,10 @@ public class StudentModel {
     private String state;
     private String LGA;
     private String religion;
-
-    // @ManyToOne()
-    private String studentClass;
-
+    private UUID studentClass;
     private String sportHouse;
     private String tribe;
     private String gender;
     private String profilePicture;
     private String phoneNumber;
-
-    // @ManyToOne()
-    // private SectionModel sectionModel
 }

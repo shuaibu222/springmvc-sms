@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.shuaibu.model.PermissionModel;
+import com.shuaibu.model.SportHouseModel;
 
 @Repository
-public interface PermissionRepository extends JpaRepository<PermissionModel, UUID> {
+public interface SportHouseRepository extends JpaRepository<SportHouseModel, UUID> {
 }
 

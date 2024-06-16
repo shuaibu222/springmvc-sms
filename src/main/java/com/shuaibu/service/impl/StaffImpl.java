@@ -39,16 +39,12 @@ public class StaffImpl implements StaffService {
     public StaffModel saveStaff(StaffDto staffDto) {
         StaffModel staffModel = mapToModel(staffDto);
         
-        staffModel.setSubjectModels(staffDto.getSubjectModel());
-        
         return staffRepository.save(staffModel);
     }
 
     @Override
     public void updateStaff(StaffDto staffDto) {
         StaffModel staffModel = mapToModel(staffDto);
-
-        staffModel.setSubjectModels(staffDto.getSubjectModel());
         
         staffRepository.save(staffModel);
     }

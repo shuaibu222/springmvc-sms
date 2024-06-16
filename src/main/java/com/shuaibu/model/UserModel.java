@@ -28,20 +28,5 @@ public class UserModel {
 
     private String username;
     private String password;
-    
-    @ManyToMany
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<RoleModel> userRoles;
-
-    @ManyToMany
-    @JoinTable(
-        name = "user_permissions",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "permission_id")
-    )
-    private List<PermissionModel> userPermissions;
+    private List<UUID> userRoles;
 }

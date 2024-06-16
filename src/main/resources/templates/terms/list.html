@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+>
+<head>
+    <title>Term List</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Terms List</h1>
+                <a href="/terms/new">Add New Term</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Term Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr th:each="term : ${terms}">
+                        <td th:text="${term.id}"></td>
+                        <td th:text="${term.termName}"></td>
+                        <td>
+                            <a th:href="@{'/terms/edit/' + ${term.id}}">Edit</a>
+                            <a th:href="@{'/terms/delete/' + ${term.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
+    </section>
+</body>
+</html>

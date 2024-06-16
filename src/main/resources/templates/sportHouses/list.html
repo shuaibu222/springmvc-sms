@@ -5,28 +5,28 @@
         layout:decorate="~{layout}"
 >
 <head>
-    <title>Permission List</title>
+    <title>Sport House List</title>
 </head>
 <body>
     <section layout:fragment="body">
         <article class="list-page">
             <div class="list-header">
-                <h1>Permissions List</h1>
-                <a href="/permissions/new">Add New Permission</a>
+                <h1>Sport Houses List</h1>
+                <a href="/sportHouses/new">Add New Sport House</a>
             </div>
             <div class="table-container">
                 <table>
                     <tr>
                         <th>ID</th>
-                        <th>Permission Name</th>
+                        <th>Sport House Name</th>
                         <th>Actions</th>
                     </tr>
-                    <tr th:each="permission : ${permissions}">
-                        <td th:text="${permission.id}"></td>
-                        <td th:text="${permission.permissionName}"></td>
+                    <tr th:each="sportHouse : ${sportHouses}">
+                        <td th:text="${sportHouse.id}"></td>
+                        <td th:text="${sportHouse.sportHouseName}"></td>
                         <td>
-                            <a th:href="@{'/permissions/edit/' + ${permission.id}}">Edit</a>
-                            <a th:href="@{'/permissions/delete/' + ${permission.id}}">Delete</a>
+                            <a th:href="@{'/sportHouses/edit/' + ${sportHouse.id}}">Edit</a>
+                            <a th:href="@{'/sportHouses/delete/' + ${sportHouse.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

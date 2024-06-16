@@ -21,7 +21,7 @@
                         <th>Last Name</th>
                         <th>Registration No.</th>
                         <th>Date of Birth</th>
-                        <th>Addmission Date</th>
+                        <th>Admission Date</th>
                         <th>Home Address</th>
                         <th>Term</th>
                         <th>State</th>
@@ -36,11 +36,12 @@
                         <th>Actions</th>
                     </tr>
                     <tr th:each="student : ${students}">
+                        <td th:text="${student.id}"></td>
                         <td th:text="${student.firstName}"></td>
                         <td th:text="${student.lastName}"></td>
                         <td th:text="${student.regNo}"></td>
                         <td th:text="${student.dateOfBirth}"></td>
-                        <td th:text="${student.addmissionDate}"></td>
+                        <td th:text="${student.admissionDate}"></td>
                         <td th:text="${student.homeAddress}"></td>
                         <td th:text="${student.term}"></td>
                         <td th:text="${student.state}"></td>
