@@ -1,7 +1,5 @@
 package com.shuaibu.dto;
 
-import java.util.UUID;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ResultSettingsDto {
 
-    private UUID id;    
+    private Long id;    
     private String section;
     private String regNo;
     private String firstCA;

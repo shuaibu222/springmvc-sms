@@ -1,7 +1,5 @@
 package com.shuaibu.controller;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,14 +45,14 @@ public class SportHouseController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateSportHouseForm(@PathVariable UUID id, Model model) {
+    public String updateSportHouseForm(@PathVariable Long id, Model model) {
         SportHouseDto sportHouse = sportHouseService.getSportHouseById(id);
         model.addAttribute("sportHouse", sportHouse);
         return "sportHouses/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateSportHouse(@PathVariable UUID id,
+    public String updateSportHouse(@PathVariable Long id,
                                 @Valid @ModelAttribute("sportHouse") SportHouseDto sportHouse, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -67,7 +65,7 @@ public class SportHouseController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteSportHouse(@PathVariable UUID id) {
+    public String deleteSportHouse(@PathVariable Long id) {
         sportHouseService.deleteSportHouse(id);
         return "redirect:/sportHouses";
     }

@@ -1,14 +1,12 @@
 package com.shuaibu.dto;
 
-import java.util.UUID;
-
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class StudentDto {
-    private UUID id;
+    private Long id;
     
     // Todo: Add validation
     private String firstName;
@@ -22,7 +20,7 @@ public class StudentDto {
     private String LGA;
     private String religion;
     private String section;
-    private UUID studentClass;
+    private Long studentClass;
     private String sportHouse;
     private String tribe;
     private String gender;

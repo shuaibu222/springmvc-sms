@@ -257,6 +257,12 @@ form select {
     outline: none;
 }
 
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form select:focus {
+    border-color: var(--primary-color);
+}
+
 .checkbox-container {
     display: flex;
     flex-direction: column;
@@ -297,6 +303,41 @@ form button {
 form button:hover {
     background: var(--primary-color);
     color: var(--tertiary-color);
+}
+
+/* Grid layout for list page form */
+
+.list-form {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    padding: 1rem;
+}
+
+.form-group {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group select,
+.form-group input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.form-group button {
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 /* Table styles */

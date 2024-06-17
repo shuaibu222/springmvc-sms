@@ -1,7 +1,6 @@
 package com.shuaibu.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,11 +19,11 @@ import lombok.NoArgsConstructor;
 public class SportHouseModel {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String sportHouseName;
-    private List<UUID> houseStudentIds;
+    private List<Long> houseStudentIds;
 
     
 }

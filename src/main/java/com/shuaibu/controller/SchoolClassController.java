@@ -1,6 +1,5 @@
 package com.shuaibu.controller;
 
-import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,14 +44,14 @@ public class SchoolClassController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateSchoolClassForm(@PathVariable UUID id, Model model) {
+    public String updateSchoolClassForm(@PathVariable Long id, Model model) {
         SchoolClassDto schoolClass = schoolClassService.getSchoolClassById(id);
         model.addAttribute("schoolClass", schoolClass);
         return "schoolClasses/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateSchoolClass(@PathVariable UUID id,
+    public String updateSchoolClass(@PathVariable Long id,
                                 @Valid @ModelAttribute("schoolClass") SchoolClassDto schoolClass, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -65,7 +64,7 @@ public class SchoolClassController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteSchoolClass(@PathVariable UUID id) {
+    public String deleteSchoolClass(@PathVariable Long id) {
         schoolClassService.deleteSchoolClass(id);
         return "redirect:/classes";
     }

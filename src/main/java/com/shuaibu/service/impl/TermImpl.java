@@ -8,7 +8,6 @@ import com.shuaibu.repository.TermRepository;
 import com.shuaibu.service.TermService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.TermMapper.*;
@@ -29,7 +28,7 @@ public class TermImpl implements TermService {
     }
 
     @Override
-    public TermDto getTermById(UUID id) {
+    public TermDto getTermById(Long id) {
         return mapToDto(termRepository.findById(id).get());
     }
 
@@ -44,7 +43,7 @@ public class TermImpl implements TermService {
     }
     
     @Override
-    public void deleteTerm(UUID id) {
+    public void deleteTerm(Long id) {
         termRepository.deleteById(id);
     }
 }

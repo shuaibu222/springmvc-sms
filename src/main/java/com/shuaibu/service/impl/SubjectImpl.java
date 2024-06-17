@@ -8,7 +8,6 @@ import com.shuaibu.repository.SubjectRepository;
 import com.shuaibu.service.SubjectService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.SubjectMapper.*;
@@ -29,7 +28,7 @@ public class SubjectImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDto getSubjectById(UUID id) {
+    public SubjectDto getSubjectById(Long id) {
         return mapToDto(subjectRepository.findById(id).get());
     }
 
@@ -44,7 +43,7 @@ public class SubjectImpl implements SubjectService {
     }
     
     @Override
-    public void deleteSubject(UUID id) {
+    public void deleteSubject(Long id) {
         subjectRepository.deleteById(id);
     }
 }

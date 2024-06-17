@@ -1,6 +1,5 @@
 package com.shuaibu.controller;
 
-import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,14 +45,14 @@ public class ResultSettingsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateResultSettingForm(@PathVariable UUID id, Model model) {
+    public String updateResultSettingForm(@PathVariable Long id, Model model) {
         ResultSettingsDto resultSetting = resultSettingsService.getResultSettingById(id);
         model.addAttribute("resultSetting", resultSetting);
         return "resultSettings/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateResultSetting(@PathVariable UUID id,
+    public String updateResultSetting(@PathVariable Long id,
                                 @Valid @ModelAttribute("resultSetting") ResultSettingsDto resultSettingDto, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -66,7 +65,7 @@ public class ResultSettingsController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteResultSetting(@PathVariable UUID id) {
+    public String deleteResultSetting(@PathVariable Long id) {
         resultSettingsService.deleteResultSetting(id);
         return "redirect:/resultSettings";
     }

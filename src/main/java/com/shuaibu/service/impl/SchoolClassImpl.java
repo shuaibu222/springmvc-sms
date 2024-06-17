@@ -8,7 +8,6 @@ import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.service.SchoolClassService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.SchoolClassMapper.*;
@@ -29,7 +28,7 @@ public class SchoolClassImpl implements SchoolClassService {
     }
 
     @Override
-    public SchoolClassDto getSchoolClassById(UUID id) {
+    public SchoolClassDto getSchoolClassById(Long id) {
         return mapToDto(schoolClassRepository.findById(id).get());
     }
 
@@ -44,7 +43,7 @@ public class SchoolClassImpl implements SchoolClassService {
     }
     
     @Override
-    public void deleteSchoolClass(UUID id) {
+    public void deleteSchoolClass(Long id) {
         schoolClassRepository.deleteById(id);
     }
 }

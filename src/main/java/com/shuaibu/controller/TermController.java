@@ -1,7 +1,5 @@
 package com.shuaibu.controller;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,14 +45,14 @@ public class TermController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateTermForm(@PathVariable UUID id, Model model) {
+    public String updateTermForm(@PathVariable Long id, Model model) {
         TermDto term = termService.getTermById(id);
         model.addAttribute("term", term);
         return "terms/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateTerm(@PathVariable UUID id,
+    public String updateTerm(@PathVariable Long id,
                                 @Valid @ModelAttribute("term") TermDto term, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -67,7 +65,7 @@ public class TermController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteTerm(@PathVariable UUID id) {
+    public String deleteTerm(@PathVariable Long id) {
         termService.deleteTerm(id);
         return "redirect:/terms";
     }

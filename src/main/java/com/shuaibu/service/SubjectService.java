@@ -1,15 +1,14 @@
 package com.shuaibu.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.shuaibu.dto.SubjectDto;
 import com.shuaibu.model.SubjectModel;
 
 public interface SubjectService {
     List<SubjectDto> getAllSubjects();
-    SubjectDto getSubjectById(UUID id);
+    SubjectDto getSubjectById(Long id);
     SubjectModel saveSubject(SubjectDto subjectDto);
     void updateSubject(SubjectDto subjectDto);
-    void deleteSubject(UUID id);
+    void deleteSubject(Long id);
 }

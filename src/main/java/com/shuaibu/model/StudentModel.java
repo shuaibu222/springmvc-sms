@@ -1,12 +1,9 @@
 package com.shuaibu.model;
 
-import java.util.UUID;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class StudentModel {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String firstName;
     private String lastName;
@@ -33,7 +30,7 @@ public class StudentModel {
     private String state;
     private String LGA;
     private String religion;
-    private UUID studentClass;
+    private Long studentClass;
     private String sportHouse;
     private String tribe;
     private String gender;

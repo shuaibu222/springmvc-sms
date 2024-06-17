@@ -8,7 +8,6 @@ import com.shuaibu.repository.ResultSettingsRepository;
 import com.shuaibu.service.ResultSettingsService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.ResultSettingsMapper.*;
@@ -29,7 +28,7 @@ public class ResultSettingsImpl implements ResultSettingsService {
     }
 
     @Override
-    public ResultSettingsDto getResultSettingById(UUID id) {
+    public ResultSettingsDto getResultSettingById(Long id) {
         return mapToDto(resultSettingsRepository.findById(id).get());
     }
 
@@ -44,7 +43,7 @@ public class ResultSettingsImpl implements ResultSettingsService {
     }
     
     @Override
-    public void deleteResultSetting(UUID id) {
+    public void deleteResultSetting(Long id) {
         resultSettingsRepository.deleteById(id);
     }
 }

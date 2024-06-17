@@ -1,15 +1,11 @@
 package com.shuaibu.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +19,8 @@ import lombok.NoArgsConstructor;
 public class StaffModel {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String firstName;
     private String lastName;
@@ -39,6 +35,6 @@ public class StaffModel {
     private String gender;
     private String profilePicture;
     private String phoneNumber;
-    private List<UUID> subjectModels;
-    private List<UUID> schoolClassModels;
+    private List<Long> subjectModels;
+    private List<Long> schoolClassModels;
 }

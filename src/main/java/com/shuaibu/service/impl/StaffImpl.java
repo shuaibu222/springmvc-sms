@@ -4,16 +4,13 @@ import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.StaffDto;
 import com.shuaibu.model.StaffModel;
-import com.shuaibu.model.SubjectModel;
 import com.shuaibu.repository.StaffRepository;
 import com.shuaibu.service.StaffService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.StaffMapper.*;
-import static com.shuaibu.mapper.SubjectMapper.*;
 
 @Service
 public class StaffImpl implements StaffService {
@@ -31,7 +28,7 @@ public class StaffImpl implements StaffService {
     }
 
     @Override
-    public StaffDto getStaffById(UUID id) {
+    public StaffDto getStaffById(Long id) {
         return mapToDto(staffRepository.findById(id).get());
     }
 
@@ -50,7 +47,7 @@ public class StaffImpl implements StaffService {
     }
     
     @Override
-    public void deleteStaff(UUID id) {
+    public void deleteStaff(Long id) {
         staffRepository.deleteById(id);
     }
 }

@@ -8,7 +8,6 @@ import com.shuaibu.repository.SessionRepository;
 import com.shuaibu.service.SessionService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.SessionMapper.*;
@@ -29,7 +28,7 @@ public class SessionImpl implements SessionService {
     }
 
     @Override
-    public SessionDto getSessionById(UUID id) {
+    public SessionDto getSessionById(Long id) {
         return mapToDto(sessionRepository.findById(id).get());
     }
 
@@ -44,7 +43,7 @@ public class SessionImpl implements SessionService {
     }
     
     @Override
-    public void deleteSession(UUID id) {
+    public void deleteSession(Long id) {
         sessionRepository.deleteById(id);
     }
 }

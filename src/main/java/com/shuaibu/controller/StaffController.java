@@ -1,17 +1,11 @@
 package com.shuaibu.controller;
 
-import java.util.List;
-import java.util.UUID;
-
-import javax.security.auth.Subject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.shuaibu.dto.StaffDto;
-import com.shuaibu.dto.SubjectDto;
 import com.shuaibu.model.StaffModel;
 import com.shuaibu.model.SubjectModel;
 import com.shuaibu.service.StaffService;
@@ -60,7 +54,7 @@ public class StaffController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateStaffForm(@PathVariable UUID id, Model model) {
+    public String updateStaffForm(@PathVariable Long id, Model model) {
         StaffDto staff = staffService.getStaffById(id);
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("staff", staff);
@@ -68,7 +62,7 @@ public class StaffController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateStaff(@PathVariable UUID id,
+    public String updateStaff(@PathVariable Long id,
                                 @Valid @ModelAttribute("staff") StaffDto staff, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -81,7 +75,7 @@ public class StaffController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteStaff(@PathVariable UUID id) {
+    public String deleteStaff(@PathVariable Long id) {
         staffService.deleteStaff(id);
         return "redirect:/staffs";
     }

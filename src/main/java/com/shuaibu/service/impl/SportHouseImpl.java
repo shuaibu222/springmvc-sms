@@ -8,7 +8,6 @@ import com.shuaibu.repository.SportHouseRepository;
 import com.shuaibu.service.SportHouseService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.SportHouseMapper.*;
@@ -29,7 +28,7 @@ public class SportHouseImpl implements SportHouseService {
     }
 
     @Override
-    public SportHouseDto getSportHouseById(UUID id) {
+    public SportHouseDto getSportHouseById(Long id) {
         return mapToDto(sportHouseRepository.findById(id).get());
     }
 
@@ -44,7 +43,7 @@ public class SportHouseImpl implements SportHouseService {
     }
     
     @Override
-    public void deleteSportHouse(UUID id) {
+    public void deleteSportHouse(Long id) {
         sportHouseRepository.deleteById(id);
     }
 }
