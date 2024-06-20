@@ -8,7 +8,7 @@ import lombok.Data;
 public class ResultSettingsDto {
 
     private Long id;    
-    private String section;
+    private String sectionId;
     private String regNo;
     private String firstCA;
     private String secondCA;

@@ -8,7 +8,6 @@ import com.shuaibu.model.ResultSettingsModel;
 public interface ResultSettingsService {
     List<ResultSettingsDto> getAllResultSettings();
     ResultSettingsDto getResultSettingById(Long id);
-    ResultSettingsModel saveResultSetting(ResultSettingsDto resultSettingsDto);
-    void updateResultSetting(ResultSettingsDto resultSettingsDto);
+    ResultSettingsModel saveOrUpdateResultSetting(ResultSettingsDto resultSettingsDto);
     void deleteResultSetting(Long id);
 }

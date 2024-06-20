@@ -2,14 +2,13 @@ package com.shuaibu.model;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+
 
 @Data
 @Builder
@@ -22,8 +21,12 @@ public class SchoolClassModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String sectionName;
+    private String sectionId;
     private String className;
+
+    @ElementCollection
     private List<Long> subjectModels;
+
+    @ElementCollection
     private List<Long> staffModels;
 }

@@ -14,6 +14,42 @@
                 <h1>Class List</h1>
                 <a href="/classes/new">Add New Class</a>
             </div>
+
+            <!-- Form Section -->
+            <form th:action="@{/classes/create}" th:object="${schoolClass}" class="list-form-layout" method="post">
+                <div class="list-form">
+                    <div>
+                        <label for="section">Section:</label>
+                        <select id="section" th:field="*{sectionId}" th:name="sectionId" required>
+                            <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="className">Class Name:</label>
+                        <input type="text" id="className" th:field="*{className}" required />
+                    </div>
+                    <div class="checkbox-container">
+                        <label>Staffs: </label>
+                        <div th:each="staff : ${staffs}">
+                            <input type="checkbox" th:id="${'staff_' + staff.id}" th:name="staffModels" th:field="*{staffModels}" th:value="${staff.id}" />
+                            <label th:for="${'staff_' + staff.id}" th:text="${staff.firstName + '-' + staff.roleModelIds.getFirst()}"></label>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="checkbox-container">
+                        <label>Subjects: </label>
+                        <div th:each="subject : ${subjects}">
+                            <input type="checkbox" th:id="${'subject_' + subject.id}" th:field="*{subjectModels}" th:name="subjectModels" th:value="${subject.id}" />
+                            <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
             <div class="table-container">
                 <table>
                     <tr>
@@ -24,7 +60,7 @@
                     </tr>
                     <tr th:each="schoolClass : ${schoolClasses}">
                         <td th:text="${schoolClass.id}"></td>
-                        <td th:text="${schoolClass.sectionName}"></td>
+                        <td th:text="${schoolClass.sectionId}"></td>
                         <td th:text="${schoolClass.className}"></td>
                         <td>
                             <a th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>

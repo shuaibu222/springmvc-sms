@@ -23,6 +23,7 @@ public class RoleController {
 
     @GetMapping
     public String listRoles(Model model) {
+        model.addAttribute("role", new RoleModel());
         model.addAttribute("roles", roleService.getAllRoles());
         return "roles/list";
     }
@@ -39,7 +40,7 @@ public class RoleController {
             model.addAttribute("role", role);
             return "roles/new";
         }
-        roleService.saveRole(role);
+        roleService.saveOrUpdateRole(role);
         return "redirect:/roles";
     }
 
@@ -59,7 +60,7 @@ public class RoleController {
             return "roles/edit";
         }
         role.setId(id);
-        roleService.updateRole(role);
+        roleService.saveOrUpdateRole(role);
         return "redirect:/roles";
     }
 

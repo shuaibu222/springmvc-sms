@@ -14,6 +14,90 @@
                 <h1>Staffs List</h1>
                 <a href="/staffs/new">Add New Staff</a>
             </div>
+
+            <!-- Form Section -->
+
+            <form th:action="@{/staffs/create}" class="list-form-layout" th:object="${staff}" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" th:field="*{firstName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" th:field="*{lastName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth:</label>
+                        <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Employed Date:</label>
+                        <input type="text" id="startDate" th:field="*{startDate}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="homeAddress">Home Address:</label>
+                        <input type="text" id="homeAddress" th:field="*{homeAddress}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" th:field="*{state}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="LGA">L.G.A:</label>
+                        <input type="text" id="LGA" th:field="*{LGA}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="religion">Religion:</label>
+                        <input type="text" id="religion" th:field="*{religion}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="tribe">Tribe:</label>
+                        <input type="text" id="tribe" th:field="*{tribe}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <input type="text" id="gender" th:field="*{gender}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePicture">Profile Picture:</label>
+                        <input type="text" id="profilePicture" th:field="*{profilePicture}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
+                    </div>
+                    <div class="checkbox-container">
+                        <label>Roles: </label>
+                        <div th:each="role : ${roles}">
+                            <input type="checkbox" th:id="${'role_' + role.id}" th:name="roleModelIds" th:field="*{roleModelIds}" th:value="${role.id}" />
+                            <label th:for="${'role_' + role.id}" th:text="${role.roleName}"></label>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="checkbox-container">
+                        <label>Classes:</label>
+                        <div th:each="classModel : ${classModels}">
+                            <input type="checkbox" th:id="${'classModel_' + classModel.id}" th:name="classModelIds" th:field="*{classModelIds}" th:value="${classModel.id}" />
+                            <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.className}"></label>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="checkbox-container">
+                        <label>Subjects: </label>
+                        <div th:each="subject : ${subjects}">
+                            <input type="checkbox" th:id="${'subject_' + subject.id}" th:name="subjectModelIds" th:field="*{subjectModelIds}" th:value="${subject.id}" />
+                            <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
+
             <div class="table-container">
                 <table>
                     <tr>
@@ -26,12 +110,10 @@
                         <th>State</th>
                         <th>L.G.A</th>
                         <th>Religion</th>
-                        <th>Role</th>
                         <th>Tribe</th>
                         <th>Gender</th>
                         <th>Profile Picture</th>
                         <th>Phone Number</th>
-                        <th>Subjects</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="staff : ${staffs}">
@@ -44,16 +126,10 @@
                         <td th:text="${staff.state}"></td>
                         <td th:text="${staff.LGA}"></td>
                         <td th:text="${staff.religion}"></td>
-                        <td th:text="${staff.role}"></td>
                         <td th:text="${staff.tribe}"></td>
                         <td th:text="${staff.gender}"></td>
                         <td th:text="${staff.profilePicture}"></td>
                         <td th:text="${staff.phoneNumber}"></td>
-                        <td>
-                            <div th:each="subject : ${staff.subjectModel}">
-                                <span th:text="${subject.subjectName}"></span>
-                            </div>
-                        </td>
                         <td>
                             <a th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>
                             <a th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>

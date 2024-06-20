@@ -20,7 +20,8 @@ public class GradeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String range;
+    private Integer rangeFrom;
+    private Integer rangeTo;
     private String grade;
     private String remark;
 

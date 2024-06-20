@@ -8,7 +8,6 @@ import com.shuaibu.model.RoleModel;
 public interface RoleService {
     List<RoleDto> getAllRoles();
     RoleDto getRoleById(Long id);
-    RoleModel saveRole(RoleDto roleDto);
-    void updateRole(RoleDto roleDto);
+    RoleModel saveOrUpdateRole(RoleDto roleDto);
     void deleteRole(Long id);
 }

@@ -1,49 +1,86 @@
 <!DOCTYPE html>
-<html
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout}"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
     <title>Result Settings</title>
 </head>
 <body>
-    <section layout:fragment="body">
-        <article class="list-page">
-            <div class="list-header">
-                <h1>Results Setting List</h1>
-                <a href="/resultSettings/new">Add New Results Setting</a>
-            </div>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Section Name</th>
-                        <th>1st C.A</th>
-                        <th>2nd C.A</th>
-                        <th>3rd C.A</th>
-                        <th>4th C.A</th>
-                        <th>Exam</th>
-                        <th>Total</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr th:each="resultSetting : ${resultSettings}">
-                        <td th:text="${resultSetting.id}"></td>
-                        <td th:text="${resultSetting.section}"></td>
-                        <td th:text="${resultSetting.firstCA}"></td>
-                        <td th:text="${resultSetting.secondCA}"></td>
-                        <td th:text="${resultSetting.thirdCA}"></td>
-                        <td th:text="${resultSetting.fourthCA}"></td>
-                        <td th:text="${resultSetting.exam}"></td>
-                        <td th:text="${resultSetting.total}"></td>
-                        <td>
-                            <a th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
-                            <a th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </article>
-    </section>
+<section layout:fragment="body">
+    <article class="list-page">
+        <div class="list-header">
+            <h1>Results Setting List</h1>
+            <a href="/resultSettings/new">Add New Results Setting</a>
+        </div>
+
+        <!-- Form Section -->
+            <form th:action="@{/resultSettings/create}" th:object="${resultSetting}" class="list-form-layout" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="section">Section:</label>
+                        <select id="section" th:field="*{sectionId}" required>
+                            <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstCA">First CA:</label>
+                        <input type="text" id="firstCA" th:field="*{firstCA}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="secondCA">Second CA:</label>
+                        <input type="text" id="secondCA" th:field="*{secondCA}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="thirdCA">Third CA:</label>
+                        <input type="text" id="thirdCA" th:field="*{thirdCA}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="fourthCA">Fourth CA:</label>
+                        <input type="text" id="fourthCA" th:field="*{fourthCA}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="exam">Exam:</label>
+                        <input type="text" id="exam" th:field="*{exam}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="total">Total:</label>
+                        <input type="text" id="total" th:field="*{total}" required />
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Section Name</th>
+                    <th>1st C.A</th>
+                    <th>2nd C.A</th>
+                    <th>3rd C.A</th>
+                    <th>4th C.A</th>
+                    <th>Exam</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+                <tr th:each="resultSetting : ${resultSettings}">
+                    <td th:text="${resultSetting.id}"></td>
+                    <td th:text="${resultSetting.sectionId}"></td>
+                    <td th:text="${resultSetting.firstCA}"></td>
+                    <td th:text="${resultSetting.secondCA}"></td>
+                    <td th:text="${resultSetting.thirdCA}"></td>
+                    <td th:text="${resultSetting.fourthCA}"></td>
+                    <td th:text="${resultSetting.exam}"></td>
+                    <td th:text="${resultSetting.total}"></td>
+                    <td>
+                        <a th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
+                        <a th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </article>
+</section>
 </body>
 </html>

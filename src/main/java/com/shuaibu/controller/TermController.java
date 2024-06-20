@@ -23,6 +23,7 @@ public class TermController {
 
     @GetMapping
     public String listTerms(Model model) {
+        model.addAttribute("term", new TermModel());
         model.addAttribute("terms", termService.getAllTerms());
         return "terms/list";
     }

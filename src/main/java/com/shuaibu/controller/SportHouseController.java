@@ -23,6 +23,7 @@ public class SportHouseController {
 
     @GetMapping
     public String listSportHouses(Model model) {
+        model.addAttribute("sportHouse", new SportHouseModel());
         model.addAttribute("sportHouses", sportHouseService.getAllSportHouses());
         return "sportHouses/list";
     }
