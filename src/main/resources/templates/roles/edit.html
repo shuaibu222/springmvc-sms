@@ -14,7 +14,7 @@
             <form role="form" action="#" th:action="@{/roles/update/{id}(id=${role.id})}" th:object="${role}" method="post">
                 <div>
                     <label>Role Name:</label>
-                    <input type="text" th:field="*{role}" />
+                    <input type="text" th:field="*{roleName}" />
                 </div>
                 <div>
                     <button type="submit">Update</button>

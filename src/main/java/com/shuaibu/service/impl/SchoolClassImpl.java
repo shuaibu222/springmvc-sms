@@ -1,5 +1,9 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.model.SectionModel;
+import com.shuaibu.repository.SectionRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SchoolClassDto;
@@ -16,9 +20,11 @@ import static com.shuaibu.mapper.SchoolClassMapper.*;
 public class SchoolClassImpl implements SchoolClassService {
     
     private SchoolClassRepository schoolClassRepository;
+    private SectionRepository sectionRepository;
 
-    public SchoolClassImpl(SchoolClassRepository schoolClassRepository) {
+    public SchoolClassImpl(SchoolClassRepository schoolClassRepository, SectionRepository sectionRepository) {
         this.schoolClassRepository = schoolClassRepository;
+        this.sectionRepository = sectionRepository;
     }
 
     @Override
@@ -33,13 +39,14 @@ public class SchoolClassImpl implements SchoolClassService {
     }
 
     @Override
-    public SchoolClassModel saveSchoolClass(SchoolClassDto schoolClassDto) {
-        return schoolClassRepository.save(mapToModel(schoolClassDto));
-    }
+    public SchoolClassModel saveOrUpdateSchoolClass(SchoolClassDto schoolClassDto) {
 
-    @Override
-    public void updateSchoolClass(SchoolClassDto schoolClassDto) {
-        schoolClassRepository.save(mapToModel(schoolClassDto));
+        SectionModel section = sectionRepository.findById(Long.parseLong(schoolClassDto.getSectionId()))
+                .orElseThrow(() -> new EntityNotFoundException("Section not found with ID: " + schoolClassDto.getSectionId()));
+
+        schoolClassDto.setSectionId(section.getSectionName());
+
+        return schoolClassRepository.save(mapToModel(schoolClassDto));
     }
     
     @Override

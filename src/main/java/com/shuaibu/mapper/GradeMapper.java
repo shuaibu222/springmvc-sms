@@ -8,7 +8,8 @@ public class GradeMapper {
     public static GradeDto mapToDto(GradeModel gradeModel){
         GradeDto gradeDto = GradeDto.builder()
         .id(gradeModel.getId())
-        .range(gradeModel.getRange())
+        .rangeFrom(gradeModel.getRangeFrom())
+        .rangeTo(gradeModel.getRangeTo())
         .grade(gradeModel.getGrade())
         .remark(gradeModel.getRemark())
         .build();
@@ -17,9 +18,10 @@ public class GradeMapper {
     }
 
     public static GradeModel mapToModel(GradeDto gradeDto){
-        GradeModel gradeModel =GradeModel.builder()
+        GradeModel gradeModel = GradeModel.builder()
         .id(gradeDto.getId())
-        .range(gradeDto.getRange())
+        .rangeFrom(gradeDto.getRangeFrom())
+        .rangeTo(gradeDto.getRangeTo())  
         .grade(gradeDto.getGrade())
         .remark(gradeDto.getRemark())
         .build();

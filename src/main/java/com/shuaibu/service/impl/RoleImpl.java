@@ -33,15 +33,10 @@ public class RoleImpl implements RoleService {
     }
 
     @Override
-    public RoleModel saveRole(RoleDto roleDto) {
+    public RoleModel saveOrUpdateRole(RoleDto roleDto) {
         return roleRepository.save(mapToModel(roleDto));
     }
 
-    @Override
-    public void updateRole(RoleDto roleDto) {
-        roleRepository.save(mapToModel(roleDto));
-    }
-    
     @Override
     public void deleteRole(Long id) {
         roleRepository.deleteById(id);

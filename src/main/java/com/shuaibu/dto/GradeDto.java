@@ -9,7 +9,8 @@ public class GradeDto {
     private Long id;
     
     // Todo: Add validation
-    private String range;
+    private Integer rangeFrom;
+    private Integer rangeTo;
     private String grade;
     private String remark;
 

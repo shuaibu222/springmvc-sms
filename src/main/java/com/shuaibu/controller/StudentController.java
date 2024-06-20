@@ -23,6 +23,7 @@ public class StudentController {
 
     @GetMapping
     public String listStudents(Model model) {
+        model.addAttribute("student", new StudentModel());
         model.addAttribute("students", studentService.getAllStudents());
         return "students/list";
     }

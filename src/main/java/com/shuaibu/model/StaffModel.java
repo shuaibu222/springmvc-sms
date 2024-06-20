@@ -2,10 +2,7 @@ package com.shuaibu.model;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +32,13 @@ public class StaffModel {
     private String gender;
     private String profilePicture;
     private String phoneNumber;
-    private List<Long> subjectModels;
-    private List<Long> schoolClassModels;
+
+    @ElementCollection
+    private List<Long> subjectModelIds;
+
+    @ElementCollection
+    private List<Long> classModelIds;
+
+    @ElementCollection
+    private List<Long> roleModelIds;
 }

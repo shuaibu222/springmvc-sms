@@ -13,8 +13,12 @@
             <h1>Edit Grade</h1>
             <form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
                 <div>
-                    <label>Range:</label>
-                    <input type="text" th:field="*{range}" />
+                    <label>From:</label>
+                    <input type="text" th:field="*{rangeFrom}" />
+                </div>
+                <div>
+                    <label>To:</label>
+                    <input type="text" th:field="*{rangeTo}" />
                 </div>
                 <div>
                     <label>Grades:</label>

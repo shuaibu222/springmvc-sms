@@ -24,6 +24,7 @@ public class SectionController {
 
     @GetMapping
     public String listSections(Model model) {
+        model.addAttribute("section", new SectionModel());
         model.addAttribute("sections", sectionService.getAllSections());
         return "sections/list";
     }

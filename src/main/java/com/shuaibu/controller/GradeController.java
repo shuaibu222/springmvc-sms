@@ -23,6 +23,7 @@ public class GradeController {
 
     @GetMapping
     public String listGrades(Model model) {
+        model.addAttribute("grade", new GradeModel());
         model.addAttribute("grades", gradeService.getAllGrades());
         return "grades/list";
     }

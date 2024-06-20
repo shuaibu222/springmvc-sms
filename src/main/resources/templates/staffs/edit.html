@@ -45,10 +45,6 @@
                     <input type="text" id="religion" th:field="*{religion}" required />
                 </div>
                 <div>
-                    <label for="role">Role:</label>
-                    <input type="text" id="role" th:field="*{role}" required />
-                </div>
-                <div>
                     <label for="tribe">Tribe:</label>
                     <input type="text" id="tribe" th:field="*{tribe}" required />
                 </div>
@@ -65,9 +61,26 @@
                     <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
                 </div>
                 <div class="checkbox-container">
-                    <label>Subjects:</label>
+                    <label>Roles: </label>
+                    <div th:each="role : ${roles}">
+                        <input type="checkbox" th:id="${'role_' + role.id}" th:name="role" th:field="*{roleModelIds}" th:value="${role.id}" />
+                        <label th:for="${'role_' + role.id}" th:text="${role.roleName}"></label>
+                        <br/>
+                    </div>
+                </div>
+                <div class="checkbox-container">
+                    <em>*Note: this part is only for teaching staff</em>
+                    <label>Classes:</label>
+                    <div th:each="classModel : ${classModels}">
+                        <input type="checkbox" th:id="${'classModel_' + classModel.id}" th:name="classModelIds" th:field="*{classModelIds}" th:value="${classModel.id}" />
+                        <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.className}"></label>
+                        <br/>
+                    </div>
+                </div>
+                <div class="checkbox-container">
+                    <label>Subjects: </label>
                     <div th:each="subject : ${subjects}">
-                        <input type="checkbox" th:id="${'subject_' + subject.id}" th:name="'subjects'" th:value="${subject.id}" />
+                        <input type="checkbox" th:id="${'subject_' + subject.id}" th:name="subjectModelIds" th:field="*{subjectModelIds}" th:value="${subject.id}" />
                         <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
                         <br/>
                     </div>

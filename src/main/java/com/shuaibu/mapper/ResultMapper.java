@@ -18,6 +18,9 @@ public class ResultMapper {
         .secondCA(resultModel.getSecondCA())
         .exam(resultModel.getExam())
         .subjectId(resultModel.getSubjectId())
+        .total(resultModel.getTotal())
+        .grade(resultModel.getGrade())
+        .remark(resultModel.getRemark())
         .build();
 
         return resultDto;
@@ -36,6 +39,9 @@ public class ResultMapper {
         .secondCA(resultDto.getSecondCA())
         .exam(resultDto.getExam())
         .subjectId(resultDto.getSubjectId())
+        .total(resultDto.getTotal())
+        .grade(resultDto.getGrade())
+        .remark(resultDto.getRemark())
         .build();
 
         return resultModel;

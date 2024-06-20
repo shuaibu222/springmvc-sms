@@ -19,12 +19,12 @@ public class StaffDto {
     private String state;
     private String LGA;
     private String religion;
-    private String role;
     private String tribe;
     private String gender;
     private String profilePicture;
     private String phoneNumber;
-    
     private List<Long> subjectModelIds;
+    private List<Long> classModelIds;
+    private List<Long> roleModelIds;
 
 }

@@ -8,7 +8,6 @@ import com.shuaibu.model.StaffModel;
 public interface StaffService {
     List<StaffDto> getAllStaffs();
     StaffDto getStaffById(Long id);
-    StaffModel saveStaff(StaffDto staffDto);
-    void updateStaff(StaffDto staffDto);
+    StaffModel saveOrUpdateStaff(StaffDto staffDto);
     void deleteStaff(Long id);
 }

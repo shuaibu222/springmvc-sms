@@ -8,7 +8,7 @@ public class ResultSettingsMapper {
     public static ResultSettingsDto mapToDto(ResultSettingsModel resultSettingsModel){
         ResultSettingsDto resultSettingDto = ResultSettingsDto.builder()
         .id(resultSettingsModel.getId())
-        .section(resultSettingsModel.getSection())
+        .sectionId(resultSettingsModel.getSectionId())
         .firstCA(resultSettingsModel.getFirstCA())
         .secondCA(resultSettingsModel.getSecondCA())
         .thirdCA(resultSettingsModel.getThirdCA())
@@ -23,7 +23,7 @@ public class ResultSettingsMapper {
     public static ResultSettingsModel mapToModel(ResultSettingsDto resultSettingDto){
         ResultSettingsModel resultSettingsModel = ResultSettingsModel.builder()
         .id(resultSettingDto.getId())
-        .section(resultSettingDto.getSection())
+        .sectionId(resultSettingDto.getSectionId())
         .firstCA(resultSettingDto.getFirstCA())
         .secondCA(resultSettingDto.getSecondCA())
         .thirdCA(resultSettingDto.getThirdCA())

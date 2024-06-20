@@ -1,6 +1,7 @@
 package com.shuaibu.controller;
 
 
+import com.shuaibu.service.SectionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,20 +18,24 @@ import jakarta.validation.Valid;
 public class ResultSettingsController {
     
     private ResultSettingsService resultSettingsService;
+    private SectionService sectionService;
 
-    public ResultSettingsController(ResultSettingsService resultSettingsService) {
+    public ResultSettingsController(ResultSettingsService resultSettingsService, SectionService sectionService) {
         this.resultSettingsService = resultSettingsService;
+        this.sectionService = sectionService;
     }
 
     @GetMapping
     public String listResultSettings(Model model) {
+        model.addAttribute("resultSetting", new ResultSettingsModel());
+        model.addAttribute("sections", sectionService.getAllSections());
         model.addAttribute("resultSettings", resultSettingsService.getAllResultSettings());
         return "resultSettings/list";
     }
 
     @GetMapping("/new")
     public String createResultSettingForm(Model model) {
-        model.addAttribute("result", new ResultSettingsModel());
+        model.addAttribute("resultSetting", new ResultSettingsModel());
         return "resultSettings/new";
     }
 
@@ -40,7 +45,7 @@ public class ResultSettingsController {
             model.addAttribute("resultSetting", resultSettingDto);
             return "resultSettings/new";
         }
-        resultSettingsService.saveResultSetting(resultSettingDto);
+        resultSettingsService.saveOrUpdateResultSetting(resultSettingDto);
         return "redirect:/resultSettings";
     }
 
@@ -60,7 +65,7 @@ public class ResultSettingsController {
             return "resultSettings/edit";
         }
         resultSettingDto.setId(id);
-        resultSettingsService.updateResultSetting(resultSettingDto);
+        resultSettingsService.saveOrUpdateResultSetting(resultSettingDto);
         return "redirect:/resultSettings";
     }
 

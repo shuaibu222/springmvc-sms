@@ -23,6 +23,7 @@ public class SessionController {
 
     @GetMapping
     public String listSessions(Model model) {
+        model.addAttribute("session", new SessionModel());
         model.addAttribute("sessions", sessionService.getAllSessions());
         return "sessions/list";
     }

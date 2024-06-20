@@ -23,6 +23,7 @@ public class SubjectController {
 
     @GetMapping
     public String listSubjects(Model model) {
+        model.addAttribute("subject", new SubjectModel());
         model.addAttribute("subjects", subjectService.getAllSubjects());
         return "subjects/list";
     }

@@ -13,9 +13,12 @@ public class ResultDto {
     private String academicSessionId;
     private String regNo;
     private String studentClassId;
-    private String firstCA;
-    private String secondCA;
+    private Integer firstCA;
+    private Integer secondCA;
     private String termId;
-    private String exam;
+    private Integer exam;
     private String subjectId;
+    private Integer total;
+    private String grade;
+    private String remark;
 }

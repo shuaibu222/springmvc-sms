@@ -15,64 +15,63 @@
                 <a href="/results/new">Add New Result</a>
             </div>
 
-            <section class="list-form-layout">
-                <form th:action="@{/results/create}" th:object="${result}" class="list-form" method="post">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" th:field="*{name}" required />
+                <form th:action="@{/results/create}" th:object="${result}" class="list-form-layout" method="post">
+                    <div class="list-form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" th:field="*{name}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="section">Section:</label>
+                            <select id="section" th:field="*{sectionId}" required>
+                                <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="academicSession">Academic Session:</label>
+                            <select id="academicSession" th:field="*{academicSessionId}" required>
+                                <option th:each="academicSession : ${academicSessions}" th:value="${academicSession.id}" th:text="${academicSession.sessionName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentClass">Student Class:</label>
+                            <select id="studentClass" th:field="*{studentClassId}" required>
+                                <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.className}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="term">Term:</label>
+                            <select id="term" th:field="*{termId}" required>
+                                <option th:each="term : ${terms}" th:value="${term.id}" th:text="${term.termName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject:</label>
+                            <select id="subject" th:field="*{subjectId}" required>
+                                <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.subjectName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="regNo">Registration Number:</label>
+                            <input type="text" id="regNo" th:field="*{regNo}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="firstCA">First CA:</label>
+                            <input type="text" id="firstCA" th:field="*{firstCA}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="secondCA">Second CA:</label>
+                            <input type="text" id="secondCA" th:field="*{secondCA}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="exam">Exam:</label>
+                            <input type="text" id="exam" th:field="*{exam}" required />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="section">Section:</label>
-                        <select id="section" th:field="*{sectionId}" required>
-                            <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="academicSession">Academic Session:</label>
-                        <select id="academicSession" th:field="*{academicSessionId}" required>
-                            <option th:each="academicSession : ${academicSessions}" th:value="${academicSession.id}" th:text="${academicSession.sessionName}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentClass">Student Class:</label>
-                        <select id="studentClass" th:field="*{studentClassId}" required>
-                            <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.className}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="term">Term:</label>
-                        <select id="term" th:field="*{termId}" required>
-                            <option th:each="term : ${terms}" th:value="${term.id}" th:text="${term.termName}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject:</label>
-                        <select id="subject" th:field="*{subjectId}" required>
-                            <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.subjectName}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="regNo">Registration Number:</label>
-                        <input type="text" id="regNo" th:field="*{regNo}" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="firstCA">First CA:</label>
-                        <input type="text" id="firstCA" th:field="*{firstCA}" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="secondCA">Second CA:</label>
-                        <input type="text" id="secondCA" th:field="*{secondCA}" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="exam">Exam:</label>
-                        <input type="text" id="exam" th:field="*{exam}" required />
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group-btn">
                         <button type="submit">Save</button>
                     </div>
                 </form>
-            </section>
-
 
             <div class="table-container">
                 <table>
@@ -88,6 +87,9 @@
                         <th>Term</th>
                         <th>Exam</th>
                         <th>Subject</th>
+                        <th>Total</th>
+                        <th>Grade</th>
+                        <th>Remark</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="result : ${results}">
@@ -102,6 +104,9 @@
                         <td th:text="${result.termId}"></td>
                         <td th:text="${result.exam}"></td>
                         <td th:text="${result.subjectId}"></td>
+                        <td th:text="${result.total}"></td>
+                        <td th:text="${result.grade}"></td>
+                        <td th:text="${result.remark}"></td>
                         <td>
                             <a th:href="@{'/results/edit/' + ${result.id}}">Edit</a>
                             <a th:href="@{'/results/delete/' + ${result.id}}">Delete</a>

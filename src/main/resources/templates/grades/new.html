@@ -13,11 +13,15 @@
             <h1>Create New Grades</h1>
             <form th:action="@{/grades/create}" th:object="${grade}" method="post">
                 <div>
-                    <label for="range">Range:</label>
-                    <input type="text" id="range" th:field="*{range}" required />
+                    <label>From:</label>
+                    <input type="text" th:field="*{rangeFrom}" required />
                 </div>
                 <div>
-                    <label for="lastName">Grade:</label>
+                    <label>To:</label>
+                    <input type="text" th:field="*{rangeTo}" required />
+                </div>
+                <div>
+                    <label for="grade">Grade:</label>
                     <input type="text" id="grade" th:field="*{grade}" required />
                 </div>
                 <div>

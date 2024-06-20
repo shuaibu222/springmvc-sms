@@ -20,7 +20,7 @@ public class ResultSettingsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String section;
+    private String sectionId;
     private String firstCA;
     private String secondCA;
     private String thirdCA;

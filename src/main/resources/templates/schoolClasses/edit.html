@@ -13,12 +13,30 @@
             <h1>Edit Class</h1>
             <form role="form" method="post" th:action="@{/classes/update/{id}(id=${schoolClass.id})}" th:object="${schoolClass}" >
                 <div>
-                    <label>Section Name:</label>
-                    <input type="text" th:field="*{sectionName}" />
+                    <label for="section">Section:</label>
+                    <select id="section" th:field="*{sectionId}" th:name="sectionId" required>
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
                 </div>
                 <div>
-                    <label>Class Name:</label>
-                    <input type="text" th:field="*{className}" />
+                    <label for="className">Class Name:</label>
+                    <input type="text" id="className" th:field="*{className}" required />
+                </div>
+                <div class="checkbox-container">
+                    <label>Staffs: </label>
+                    <div th:each="staff : ${staffs}">
+                        <input type="checkbox" th:id="${'staff_' + staff.id}" th:name="staffModels" th:field="*{staffModels}" th:value="${staff.id}" />
+                        <label th:for="${'staff_' + staff.id}" th:text="${staff.firstName + '-' + staff.roleModelIds.getFirst()}"></label>
+                        <br/>
+                    </div>
+                </div>
+                <div class="checkbox-container">
+                    <label>Subjects: </label>
+                    <div th:each="subject : ${subjects}">
+                        <input type="checkbox" th:id="${'subject_' + subject.id}" th:field="*{subjectModels}" th:name="subjectModels" th:value="${subject.id}" />
+                        <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
+                        <br/>
+                    </div>
                 </div>
                 <div>
                     <button type="submit">Update</button>
