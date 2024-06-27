@@ -2,6 +2,7 @@
 <html 
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
         layout:decorate="~{layout}"
 >
 <head>
@@ -14,6 +15,20 @@
                 <h1>Sections List</h1>
                 <a href="/sections/new">Add New Section</a>
             </div>
+
+            <form th:action="@{/sections/create}" th:object="${section}" class="list-form-layout" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="sectionName">Section Name:</label>
+                        <input type="text" id="sectionName" th:field="*{sectionName}" required />
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
+
             <div class="table-container">
                 <table>
                     <tr>
@@ -26,7 +41,7 @@
                         <td th:text="${section.sectionName}"></td>
                         <td>
                             <a th:href="@{'/sections/edit/' + ${section.id}}">Edit</a>
-                            <a th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
+                            <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

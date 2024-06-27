@@ -14,6 +14,19 @@
                 <h1>Sport Houses List</h1>
                 <a href="/sportHouses/new">Add New Sport House</a>
             </div>
+
+            <form th:action="@{/sportHouses/create}" th:object="${sportHouse}" class="list-form-layout" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="sportHouse">Sport House Name:</label>
+                        <input type="text" id="sportHouse" th:field="*{sportHouseName}" required />
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
             <div class="table-container">
                 <table>
                     <tr>

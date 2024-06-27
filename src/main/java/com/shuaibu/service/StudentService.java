@@ -8,7 +8,6 @@ import com.shuaibu.model.StudentModel;
 public interface StudentService {
     List<StudentDto> getAllStudents();
     StudentDto getStudentById(Long id);
-    StudentModel saveStudent(StudentDto studentDto);
-    void updateStudent(StudentDto studentDto);
+    StudentModel saveOrUpdateStudent(StudentDto studentDto);
     void deleteStudent(Long id);
 }

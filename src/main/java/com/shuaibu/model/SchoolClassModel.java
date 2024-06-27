@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 @Data
@@ -21,8 +22,9 @@ public class SchoolClassModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String sectionId;
     private String className;
+
+    private String sectionId;
 
     @ElementCollection
     private List<Long> subjectModels;

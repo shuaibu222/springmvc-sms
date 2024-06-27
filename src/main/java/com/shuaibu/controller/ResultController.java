@@ -1,5 +1,6 @@
 package com.shuaibu.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/results")
+@PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
 public class ResultController {
     
     private ResultService resultService;
@@ -46,7 +48,6 @@ public class ResultController {
     public String listResults(Model model) {
         model.addAttribute("results", resultService.getAllResults());
         model.addAttribute("result", new ResultModel());
-
         model.addAttribute("sections", sectionService.getAllSections());
         model.addAttribute("academicSessions", sessionService.getAllSessions());
         model.addAttribute("studentClasses", schoolClassService.getAllSchoolClass());

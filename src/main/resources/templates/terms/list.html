@@ -14,6 +14,19 @@
                 <h1>Terms List</h1>
                 <a href="/terms/new">Add New Term</a>
             </div>
+
+            <form th:action="@{/terms/create}" th:object="${term}" class="list-form-layout" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="term">Term Name:</label>
+                        <input type="text" id="term" th:field="*{termName}" required />
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
             <div class="table-container">
                 <table>
                     <tr>

@@ -26,7 +26,7 @@
                     <label>Staffs: </label>
                     <div th:each="staff : ${staffs}">
                         <input type="checkbox" th:id="${'staff_' + staff.id}" th:name="staffModels" th:field="*{staffModels}" th:value="${staff.id}" />
-                        <label th:for="${'staff_' + staff.id}" th:text="${staff.firstName + '-' + staff.roleModelIds.getFirst()}"></label>
+                        <label th:for="${'staff_' + staff.id}" th:text="${staff.firstName}"></label>
                         <br/>
                     </div>
                 </div>

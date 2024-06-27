@@ -10,8 +10,8 @@ public class SchoolClassMapper {
     public static SchoolClassDto mapToDto(SchoolClassModel schoolClassModel){
         SchoolClassDto schoolClassDto = SchoolClassDto.builder()
                 .id(schoolClassModel.getId())
-                .sectionId(schoolClassModel.getSectionId())
                 .className(schoolClassModel.getClassName())
+                .sectionId(schoolClassModel.getSectionId())
                 .staffModels(schoolClassModel.getStaffModels())
                 .subjectModels(schoolClassModel.getSubjectModels())
                 .build();
@@ -22,8 +22,8 @@ public class SchoolClassMapper {
     public static SchoolClassModel mapToModel(SchoolClassDto schoolClassDto){
         SchoolClassModel schoolClassModel =SchoolClassModel.builder()
                 .id(schoolClassDto.getId())
-                .sectionId(schoolClassDto.getSectionId())
                 .className(schoolClassDto.getClassName())
+                .sectionId(schoolClassDto.getSectionId())
                 .staffModels(schoolClassDto.getStaffModels())
                 .subjectModels(schoolClassDto.getSubjectModels())
                 .build();

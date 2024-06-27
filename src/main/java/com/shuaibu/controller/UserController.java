@@ -11,8 +11,9 @@ import com.shuaibu.service.UserService;
 
 import jakarta.validation.Valid;
 
+import java.util.Collections;
+
 @Controller
-@RequestMapping("/users")
 public class UserController {
     
     private UserService userService;
@@ -21,52 +22,31 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String listUsers(Model model) {
-        model.addAttribute("user", new UserModel());
-        model.addAttribute("users", userService.getAllUsers());
-        return "users/list";
+    @GetMapping("/login")
+    public String createLoginForm() {
+        return "users/login";
     }
 
-    @GetMapping("/new")
-    public String createUserForm(Model model) {
+    @GetMapping("/register")
+    public String createRegisterForm(Model model) {
         model.addAttribute("user", new UserModel());
-        return "users/new";
+        return "users/register";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/register")
     public String saveUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("user", user);
-            return "users/new";
+            return "users/register";
         }
+
+        // Ensure that a role is set, for example:
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(Collections.singleton("ROLE_USER"));
+        }
+
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/login?success";
     }
 
-    @GetMapping("/edit/{id}")
-    public String updateUserForm(@PathVariable Long id, Model model) {
-        UserDto user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "users/edit";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable Long id,
-                                @Valid @ModelAttribute("user") UserDto user, 
-                                BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("user", user);
-            return "users/edit";
-        }
-        user.setId(id);
-        userService.updateUser(user);
-        return "redirect:/users";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return "redirect:/users";
-    }
 }

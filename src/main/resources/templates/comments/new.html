@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+    >
+<head>
+    <title>Create New Comments</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <section class="form-container">
+            <h1>Create New Comments</h1>
+            <form th:action="@{/comments/create}" th:object="${comment}" method="post">
+                <div>
+                    <label>From:</label>
+                    <input type="text" th:field="*{rangeFrom}" required />
+                </div>
+                <div>
+                    <label>To:</label>
+                    <input type="text" th:field="*{rangeTo}" required />
+                </div>
+                <div>
+                    <label for="remarks">Remarks:</label>
+                    <input type="text" id="remark" th:field="*{remark}" required />
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
+    </section>
+</body>
+</html>

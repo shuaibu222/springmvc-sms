@@ -2,8 +2,8 @@ package com.shuaibu.service.impl;
 
 import com.shuaibu.model.SectionModel;
 import com.shuaibu.repository.SectionRepository;
+import com.shuaibu.service.SectionService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SchoolClassDto;
@@ -21,10 +21,12 @@ public class SchoolClassImpl implements SchoolClassService {
     
     private SchoolClassRepository schoolClassRepository;
     private SectionRepository sectionRepository;
+    private SectionService sectionService;
 
-    public SchoolClassImpl(SchoolClassRepository schoolClassRepository, SectionRepository sectionRepository) {
+    public SchoolClassImpl(SchoolClassRepository schoolClassRepository, SectionRepository sectionRepository, SectionService sectionService) {
         this.schoolClassRepository = schoolClassRepository;
         this.sectionRepository = sectionRepository;
+        this.sectionService = sectionService;
     }
 
     @Override
@@ -41,12 +43,19 @@ public class SchoolClassImpl implements SchoolClassService {
     @Override
     public SchoolClassModel saveOrUpdateSchoolClass(SchoolClassDto schoolClassDto) {
 
-        SectionModel section = sectionRepository.findById(Long.parseLong(schoolClassDto.getSectionId()))
+        SectionModel section = sectionRepository.findById(Long.valueOf(schoolClassDto.getSectionId()))
                 .orElseThrow(() -> new EntityNotFoundException("Section not found with ID: " + schoolClassDto.getSectionId()));
 
         schoolClassDto.setSectionId(section.getSectionName());
 
-        return schoolClassRepository.save(mapToModel(schoolClassDto));
+        SchoolClassModel schoolClassModel = schoolClassRepository.save(mapToModel(schoolClassDto));
+
+        // add class to section
+        section.getClassIds().add(schoolClassModel.getId().toString());
+        sectionRepository.save(section);
+
+
+        return schoolClassModel;
     }
     
     @Override
