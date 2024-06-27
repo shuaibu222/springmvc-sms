@@ -22,16 +22,19 @@ public class StudentModel {
 
     private String firstName;
     private String lastName;
+    private String userName;
+    private String password;
     private String regNo;
     private String dateOfBirth;
     private String admissionDate;
     private String homeAddress;
-    private String term;
+    private String termId;
+    private String sectionId;
     private String state;
     private String LGA;
     private String religion;
-    private Long studentClass;
-    private String sportHouse;
+    private String studentClassId;
+    private String sportHouseId;
     private String tribe;
     private String gender;
     private String profilePicture;

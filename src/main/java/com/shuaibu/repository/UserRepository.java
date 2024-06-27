@@ -7,5 +7,6 @@ import com.shuaibu.model.UserModel;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
+    UserModel findByUsername(String username);
 }
 

@@ -1,5 +1,6 @@
 package com.shuaibu.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/sessions")
+@PreAuthorize("hasRole('ADMIN')")
 public class SessionController {
     
     private SessionService sessionService;
@@ -23,7 +25,7 @@ public class SessionController {
 
     @GetMapping
     public String listSessions(Model model) {
-        model.addAttribute("session", new SessionModel());
+        model.addAttribute("academicSession", new SessionModel());
         model.addAttribute("sessions", sessionService.getAllSessions());
         return "sessions/list";
     }

@@ -2,7 +2,7 @@
 <html 
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    xmlns:sec="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
 >
 <head th:fragment="header">
     <meta charset="utf-8">
@@ -16,35 +16,42 @@
     <nav class="navbar">
         <div class="navbar-brand">SMS Dashboard</div>
         <button class="toggle-button" id="toggle-button">☰</button>
-        <ul class="navbar-menu">
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/students">Students</a></li>
-            <li><a href="/staffs">Staffs</a></li>
-            <li><a href="/grades">Grades</a></li>
-            <li><a href="/results">Results</a></li>
-            <li><a href="/subjects">Subjects</a></li>
-        </ul>
+        <form th:action="@{/logout}" class="navbar-menu" method="post">
+            <button type="submit">Logout</button>
+        </form>
     </nav>
     <div class="content-wrapper">
         <aside class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
-                <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="/students"><i class="fas fa-user-graduate"></i> Students</a></li>
-                <li><a href="/sections"><i class="fas fa-layer-group"></i> Sections</a></li>
-                <li><a href="/classes"><i class="fas fa-school"></i> Classes</a></li>
-                <li><a href="/grades"><i class="fa fa-clipboard-list"></i> Grades</a></li>
-                <li><a href="/results"><i class="fas fa-chart-line"></i> Results</a></li>
-                <li><a href="/subjects"><i class="fas fa-book"></i> Subjects</a></li>
-                <li><a href="/resultSettings"><i class="fas fa-cog"></i> Result Settings</a></li>
-                <li><a href="/sessions"><i class="fas fa-calendar-alt"></i> Academic Sessions</a></li>
-                <li><a href="/staffs"><i class="fas fa-users"></i> Staffs</a></li>
-                <li><a href="/users"><i class="fas fa-user-circle"></i> Users Profile</a></li>
-                <li><a href="/roles"><i class="fas fa-user-tag"></i> Roles</a></li>
-                <li><a href="/terms"><i class="fa fa-graduation-cap"></i> Terms</a></li>
-                <li><a href="/sportHouses"><i class="fa fa-running"></i> Sport Houses</a></li>
-                <li><a href="/attendance"><i class="fas fa-clipboard-list"></i> Attendance</a></li>
-                <li><a href="/comments"><i class="fas fa-comments"></i> Comments</a></li>
-                <li><a href="/resultChecking"><i class="fa fa-file-alt"></i> Result Checking</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/students"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/sections"><i class="fas fa-layer-group"></i> Sections</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/classes"><i class="fas fa-school"></i> Classes</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/grades"><i class="fa fa-clipboard-list"></i> Grades</a></li>
+                <li>
+                    <a sec:authorize="hasRole('ADMIN') or hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <ul class="submenu">
+                        <li th:each="section : ${sections}">
+                            <a href="#" class="has-submenu"><i class="fas fa-chevron-right"></i> <span th:text="${section.sectionName}"></span></a>
+                            <ul class="submenu">
+                                <li th:each="classId : ${section.classIds}">
+                                    <a th:href="@{'/results/' + ${section.sectionName} + '/' + ${classId}}" th:text="${section.sectionName + ' ' + classId}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/subjects"><i class="fas fa-book"></i> Subjects</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/resultSettings"><i class="fas fa-cog"></i> Result Settings</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/sessions"><i class="fas fa-calendar-alt"></i> Academic Sessions</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/staffs"><i class="fas fa-users"></i> Staffs</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/users"><i class="fas fa-user-circle"></i> Users Profile</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/roles"><i class="fas fa-user-tag"></i> Roles</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/terms"><i class="fa fa-graduation-cap"></i> Terms</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/sportHouses"><i class="fa fa-running"></i> Sport Houses</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/attendance"><i class="fas fa-clipboard-list"></i> Attendance</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT') or hasRole('STAFF')" href="/comments"><i class="fas fa-comments"></i> Result Comments</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/resultChecking"><i class="fa fa-file-alt"></i> Result Checking</a></li>
                 <li><a href="/awards"><i class="fas fa-trophy"></i> Awards</a></li>
                 <li><a href="/settings"><i class="fas fa-cogs"></i> Settings</a></li>
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -59,6 +66,19 @@
         // JavaScript for toggling sidebar
         document.getElementById('toggle-button').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // JavaScript for toggling submenus
+        document.querySelectorAll('.has-submenu').forEach(function(menu) {
+            menu.addEventListener('click', function(event) {
+                event.preventDefault();
+                let submenu = menu.nextElementSibling;
+                submenu.classList.toggle('active');
+                let dropdownIcon = menu.querySelector('.dropdown-icon');
+                if (dropdownIcon) {
+                    dropdownIcon.classList.toggle('rotate');
+                }
+            });
         });
     </script>
 </body>

@@ -129,25 +129,16 @@ button:hover {
 }
 
 .navbar-menu {
-    list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
 }
 
-.navbar-menu li {
-    margin-left: 1rem;
+.navbar-menu button {
+    margin-top: 0;
+    padding: 0.4rem 0.8rem;
 }
 
-.navbar-menu a {
-    color: var(--tertiary-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.navbar-menu a:hover {
-    color: var(--secondary-color);
-}
 
 /* Sidebar styles */
 .content-wrapper {
@@ -168,12 +159,11 @@ button:hover {
 }
 
 .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     list-style: none;
     padding: 0;
-}
-
-.sidebar-menu li {
-    margin-bottom: 1rem;
 }
 
 .sidebar-menu a {
@@ -194,6 +184,50 @@ button:hover {
 .sidebar-menu a:hover {
     color: var(--secondary-color);
 }
+
+
+/* Dropdown menu styles */
+.has-submenu {
+    position: relative;
+}
+
+.has-submenu .dropdown-icon {
+    font-size: 0.7rem;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.submenu {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease; /* Transition for smooth opening */
+    overflow: hidden;
+    max-height: 0; /* Initially hidden */
+}
+
+.submenu li {
+    padding: 0.3rem; /* Add padding to submenu items */
+    margin-bottom: 0.2rem;
+    margin-left: 1.1rem;
+}
+
+.submenu li a i {
+    font-size: 0.7rem;
+}
+
+.submenu .dropdown-icon {
+    margin-left: auto;
+}
+
+.submenu.active {
+    display: block;
+    max-height: 700px; /* Large value for smooth animation */
+    padding-top: 0.5rem;
+}
+
+
 
 /* Main content styles */
 .main-content {

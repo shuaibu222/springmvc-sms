@@ -5,19 +5,23 @@
     layout:decorate="~{layout}"
     >
 <head>
-    <title>Edit User</title>
+    <title>Edit Comment</title>
 </head>
 <body>
     <section layout:fragment="body">
         <section class="form-container">
-            <h1>Edit User</h1>
-            <form role="form" action="#" th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+            <h1>Edit Comment</h1>
+            <form role="form" action="#" th:action="@{/comments/update/{id}(id=${comment.id})}" th:object="${comment}" method="post">
                 <div>
-                    <label>Username:</label>
-                    <input type="text" th:field="*{user}" />
+                    <label>From:</label>
+                    <input type="text" th:field="*{rangeFrom}" />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>To:</label>
+                    <input type="text" th:field="*{rangeTo}" />
+                </div>
+                <div>
+                    <label>Remarks:</label>
                     <input type="text" th:field="*{remark}" />
                 </div>
                 <div>

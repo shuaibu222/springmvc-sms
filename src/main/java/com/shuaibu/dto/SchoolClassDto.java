@@ -1,5 +1,6 @@
 package com.shuaibu.dto;
 
+import com.shuaibu.model.SectionModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,8 +11,8 @@ import java.util.List;
 public class SchoolClassDto {
     private Long id;
 
-    private String sectionId;
     private String className;
+    private String sectionId;
     private List<Long> subjectModels;
     private List<Long> staffModels;
 }

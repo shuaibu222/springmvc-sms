@@ -28,6 +28,14 @@
                         <input type="text" id="lastName" th:field="*{lastName}" required />
                     </div>
                     <div class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input type="text" id="userName" th:field="*{userName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" th:field="*{password}" required />
+                    </div>
+                    <div class="form-group">
                         <label for="dateOfBirth">Date of Birth:</label>
                         <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
                     </div>
@@ -66,14 +74,6 @@
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number:</label>
                         <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
-                    </div>
-                    <div class="checkbox-container">
-                        <label>Roles: </label>
-                        <div th:each="role : ${roles}">
-                            <input type="checkbox" th:id="${'role_' + role.id}" th:name="roleModelIds" th:field="*{roleModelIds}" th:value="${role.id}" />
-                            <label th:for="${'role_' + role.id}" th:text="${role.roleName}"></label>
-                            <br/>
-                        </div>
                     </div>
                     <div class="checkbox-container">
                         <label>Classes:</label>

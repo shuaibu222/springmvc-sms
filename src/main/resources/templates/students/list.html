@@ -2,6 +2,7 @@
 <html 
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
     layout:decorate="~{layout}">
 <head>
     <title>Students</title>
@@ -13,6 +14,95 @@
                 <h1>Students List</h1>
                 <a href="/students/new">Add New Student</a>
             </div>
+
+            <form role="form" th:action="@{/students/create}" class="list-form-layout" th:object="${student}" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" th:field="*{firstName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" th:field="*{lastName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input type="text" id="userName" th:field="*{userName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" th:field="*{password}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth:</label>
+                        <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="admissionDate">Admission Date:</label>
+                        <input type="text" id="admissionDate" th:field="*{admissionDate}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="homeAddress">Home Address:</label>
+                        <input type="text" id="homeAddress" th:field="*{homeAddress}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="termId">Term:</label>
+                        <select id="termId" th:field="*{termId}" th:name="termId" required>
+                            <option th:each="termId : ${termIds}" th:value="${termId.id}" th:text="${termId.termName}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sectionId">Section:</label>
+                        <select id="sectionId" th:field="*{sectionId}" th:name="sectionId" required>
+                            <option th:each="sectionId : ${sectionIds}" th:value="${sectionId.id}" th:text="${sectionId.sectionName}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" th:field="*{state}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="LGA">L.G.A:</label>
+                        <input type="text" id="LGA" th:field="*{LGA}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="religion">Religion:</label>
+                        <input type="text" id="religion" th:field="*{religion}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="studentClassId">Class:</label>
+                        <select id="studentClassId" th:field="*{studentClassId}" th:name="studentClassId" required>
+                            <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.className}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sportHouseId">Sport House:</label>
+                        <select id="sportHouseId" th:field="*{sportHouseId}" th:name="sportHouseId" required>
+                            <option th:each="sportHouseId : ${sportHouseIds}" th:value="${sportHouseId.id}" th:text="${sportHouseId.sportHouseName}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tribe">Tribe:</label>
+                        <input type="text" id="tribe" th:field="*{tribe}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <input type="text" id="gender" th:field="*{gender}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePicture">Profile Picture:</label>
+                        <input type="text" id="profilePicture" th:field="*{profilePicture}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
             <div class="table-container">
                 <table>
                     <tr>
@@ -33,7 +123,7 @@
                         <th>Gender</th>
                         <th>Profile Picture</th>
                         <th>Phone Number</th>
-                        <th>Actions</th>
+                        <th sec:authorize="hasRole('ADMIN')">Actions</th>
                     </tr>
                     <tr th:each="student : ${students}">
                         <td th:text="${student.id}"></td>
@@ -43,17 +133,17 @@
                         <td th:text="${student.dateOfBirth}"></td>
                         <td th:text="${student.admissionDate}"></td>
                         <td th:text="${student.homeAddress}"></td>
-                        <td th:text="${student.term}"></td>
+                        <td th:text="${student.termId}"></td>
                         <td th:text="${student.state}"></td>
                         <td th:text="${student.LGA}"></td>
                         <td th:text="${student.religion}"></td>
-                        <td th:text="${student.studentClass}"></td>
-                        <td th:text="${student.sportHouse}"></td>
+                        <td th:text="${student.studentClassId}"></td>
+                        <td th:text="${student.sportHouseId}"></td>
                         <td th:text="${student.tribe}"></td>
                         <td th:text="${student.gender}"></td>
                         <td th:text="${student.profilePicture}"></td>
                         <td th:text="${student.phoneNumber}"></td>
-                        <td>
+                        <td sec:authorize="hasRole('ADMIN')">
                             <a th:href="@{'/students/edit/' + ${student.id}}">Edit</a>
                             <a th:href="@{'/students/delete/' + ${student.id}}">Delete</a>
                         </td>

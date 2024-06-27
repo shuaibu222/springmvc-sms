@@ -13,7 +13,7 @@
             <h1>Create New Term</h1>
             <form th:action="@{/terms/create}" th:object="${term}" method="post">
                 <div>
-                    <label for="lastName">Term Name:</label>
+                    <label for="term">Term Name:</label>
                     <input type="text" id="term" th:field="*{termName}" required />
                 </div>
                 <div>

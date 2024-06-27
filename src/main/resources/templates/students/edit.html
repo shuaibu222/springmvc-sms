@@ -20,16 +20,24 @@
                     <label for="lastName">Last Name:</label>
                     <input type="text" id="lastName" th:field="*{lastName}" required />
                 </div>
-                <div>
-                    <label for="regNo">Registration No.:</label>
-                    <input type="text" id="regNo" th:field="*{regNo}" required />
+                <div class="form-group">
+                    <label for="userName">User Name:</label>
+                    <input type="text" id="userName" th:field="*{userName}" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" th:field="*{password}" required />
                 </div>
                 <div>
                     <label for="dateOfBirth">Date of Birth:</label>
                     <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
                 </div>
                 <div>
-                    <label for="admissionDate">Addmission Date:</label>
+                    <label for="regNo">Registration No.:</label>
+                    <input type="text" id="regNo" th:field="*{regNo}" required />
+                </div>
+                <div>
+                    <label for="admissionDate">Admission Date:</label>
                     <input type="text" id="admissionDate" th:field="*{admissionDate}" required />
                 </div>
                 <div>
@@ -37,8 +45,16 @@
                     <input type="text" id="homeAddress" th:field="*{homeAddress}" required />
                 </div>
                 <div>
-                    <label for="term">Term Addmitted:</label>
-                    <input type="text" id="term" th:field="*{term}" required />
+                    <label for="termId">Term:</label>
+                    <select id="termId" th:field="*{termId}" th:name="termId" required>
+                        <option th:each="termId : ${termIds}" th:value="${termId.id}" th:text="${termId.termName}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label for="sectionId">Section:</label>
+                    <select id="sectionId" th:field="*{sectionId}" th:name="sectionId" required>
+                        <option th:each="sectionId : ${sectionIds}" th:value="${sectionId.id}" th:text="${sectionId.sectionName}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="state">State:</label>
@@ -53,12 +69,16 @@
                     <input type="text" id="religion" th:field="*{religion}" required />
                 </div>
                 <div>
-                    <label for="class">Class:</label>
-                    <input type="text" id="class" th:field="*{class}" required />
+                    <label for="studentClassId">Class:</label>
+                    <select id="studentClassId" th:field="*{studentClassId}" th:name="studentClassId" required>
+                        <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.className}"></option>
+                    </select>
                 </div>
                 <div>
-                    <label for="sportHouse">Sport House:</label>
-                    <input type="text" id="sportHouse" th:field="*{sportHouse}" required />
+                    <label for="sportHouseId">Sport House:</label>
+                    <select id="sportHouseId" th:field="*{sportHouseId}" th:name="sportHouseId" required>
+                        <option th:each="sportHouseId : ${sportHouseIds}" th:value="${sportHouseId.id}" th:text="${sportHouseId.sportHouseName}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="tribe">Tribe:</label>

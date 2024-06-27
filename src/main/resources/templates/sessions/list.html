@@ -14,6 +14,19 @@
                 <h1>Sessions List</h1>
                 <a href="/sessions/new">Add New Session</a>
             </div>
+
+            <form th:action="@{/sessions/create}" th:object="${academicSession}" class="list-form-layout" method="post">
+                <div class="list-form">
+                    <div class="form-group">
+                        <label for="sessionName">Session Name:</label>
+                        <input type="text" id="sessionName" th:field="*{sessionName}" required />
+                    </div>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
             <div class="table-container">
                 <table>
                     <tr>
