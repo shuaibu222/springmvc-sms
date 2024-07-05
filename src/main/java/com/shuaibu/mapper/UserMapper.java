@@ -6,24 +6,22 @@ import com.shuaibu.model.UserModel;
 public class UserMapper {
     
     public static UserDto mapToDto(UserModel userModel){
-        UserDto userDto = UserDto.builder()
+
+        return UserDto.builder()
                 .id(userModel.getId())
                 .username(userModel.getUsername())
                 .password(userModel.getPassword())
                 .roles(userModel.getRoles())
         .build();
-
-        return userDto;
     }
 
     public static UserModel mapToModel(UserDto userDto){
-        UserModel userModel =UserModel.builder()
+
+        return UserModel.builder()
                 .id(userDto.getId())
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .roles(userDto.getRoles())
         .build();
-
-        return userModel;
     }
 }

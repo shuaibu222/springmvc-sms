@@ -7,5 +7,6 @@ import com.shuaibu.model.TermModel;
 
 @Repository
 public interface TermRepository extends JpaRepository<TermModel, Long> {
+    TermModel findByTermName(String termId);
 }
 

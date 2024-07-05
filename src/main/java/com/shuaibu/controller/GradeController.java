@@ -12,12 +12,13 @@ import com.shuaibu.service.GradeService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("SameReturnValue")
 @Controller
 @RequestMapping("/grades")
 @PreAuthorize("hasRole('ADMIN')")
 public class GradeController {
     
-    private GradeService gradeService;
+    private final GradeService gradeService;
 
     public GradeController(GradeService gradeService) {
         this.gradeService = gradeService;

@@ -1,6 +1,7 @@
 package com.shuaibu.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,11 +37,11 @@ public class StaffModel {
     private String phoneNumber;
 
     @ElementCollection
-    private List<Long> subjectModelIds;
+    private Set<Long> subjectModelIds;
 
     @ElementCollection
-    private List<Long> classModelIds;
+    private Set<Long> classModelIds;
 
     @ElementCollection
-    private List<Long> roleModelIds;
+    private Set<Long> roleModelIds;
 }

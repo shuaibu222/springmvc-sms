@@ -8,6 +8,8 @@ import com.shuaibu.model.ResultModel;
 public interface ResultService {
     List<ResultDto> getAllResults();
     ResultDto getResultById(Long id);
-    ResultModel saveOrUpdateResult(ResultDto resultDto);
+    void saveOrUpdateResult(ResultDto resultDto);
     void deleteResult(Long id);
+
+    List<ResultModel> getResultModelsBySectionIdAndStudentClassId(String section, String classId);
 }

@@ -1,7 +1,6 @@
 package com.shuaibu.controller;
 
 import com.shuaibu.mapper.UserMapper;
-import com.shuaibu.model.SchoolClassModel;
 import com.shuaibu.model.UserModel;
 import com.shuaibu.service.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.shuaibu.dto.StaffDto;
 import com.shuaibu.model.StaffModel;
-import com.shuaibu.model.SubjectModel;
 
 import jakarta.validation.Valid;
 
 import java.util.Collections;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/staffs")
 @PreAuthorize("hasRole('ADMIN')")

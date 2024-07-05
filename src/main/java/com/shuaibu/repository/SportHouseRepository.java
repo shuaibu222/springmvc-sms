@@ -7,5 +7,6 @@ import com.shuaibu.model.SportHouseModel;
 
 @Repository
 public interface SportHouseRepository extends JpaRepository<SportHouseModel, Long> {
+    SportHouseModel findBySportHouseName(String sportHouseId);
 }
 

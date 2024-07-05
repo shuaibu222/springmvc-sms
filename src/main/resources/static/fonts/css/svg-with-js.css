@@ -27,7 +27,7 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
   .svg-inline--fa.fa-2xs {
     vertical-align: 0.1em; }
   .svg-inline--fa.fa-xs {
-    vertical-align: 0; }
+    vertical-align: 0em; }
   .svg-inline--fa.fa-sm {
     vertical-align: -0.07143em; }
   .svg-inline--fa.fa-lg {

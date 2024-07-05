@@ -1,6 +1,7 @@
 package com.shuaibu.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,6 @@ public class SportHouseDto {
     
     // Todo: Add validation
     private String sportHouseName;
-    private List<Long> houseStudentIds;
+    private Set<Long> houseStudentIds;
 
 }

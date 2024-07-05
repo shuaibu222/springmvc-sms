@@ -1,12 +1,8 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.dto.SchoolClassDto;
-import com.shuaibu.dto.SectionDto;
-import com.shuaibu.mapper.SectionMapper;
+import com.shuaibu.mapper.StudentMapper;
 import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
-import com.shuaibu.service.SectionService;
-import com.shuaibu.service.TermService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +19,22 @@ public class StudentImpl implements StudentService {
     
     private final StudentRepository studentRepository;
     private final TermRepository termRepository;
-    private final SchoolClassRepository schoolClassRepository;
+    private final SectionRepository sectionRepository;
     private final SportHouseRepository sportHouseRepository;
+    private final SchoolClassRepository schoolClassRepository;
 
-    public StudentImpl(StudentRepository studentRepository, TermRepository termRepository, SchoolClassRepository schoolClassRepository, SportHouseRepository sportHouseRepository) {
+    public StudentImpl(StudentRepository studentRepository, TermRepository termRepository, SectionRepository sectionRepository, SportHouseRepository sportHouseRepository, SchoolClassRepository schoolClassRepository) {
         this.studentRepository = studentRepository;
         this.termRepository = termRepository;
-        this.schoolClassRepository = schoolClassRepository;
+        this.sectionRepository = sectionRepository;
         this.sportHouseRepository = sportHouseRepository;
+        this.schoolClassRepository = schoolClassRepository;
     }
 
     @Override
     public List<StudentDto> getAllStudents() {
         List<StudentModel> students = studentRepository.findAll();
-        return students.stream().map(student -> mapToDto(student)).collect(Collectors.toList());
+        return students.stream().map(StudentMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -45,11 +43,14 @@ public class StudentImpl implements StudentService {
     }
 
     @Override
-    public StudentModel saveOrUpdateStudent(StudentDto studentDto) {
+    public void saveOrUpdateStudent(StudentDto studentDto) {
         // for regNo purpose
         boolean isNew = studentDto.getId() == null;
 
-        SchoolClassModel schoolClassModel = schoolClassRepository.findById(Long.parseLong(studentDto.getStudentClassId()))
+        SectionModel sectionModel = sectionRepository.findById(Long.parseLong(studentDto.getSectionId()))
+                .orElseThrow(() -> new EntityNotFoundException("Section not found with ID: " + studentDto.getSectionId()));
+
+        SchoolClassModel classModel = schoolClassRepository.findById(Long.parseLong(studentDto.getStudentClassId()))
                 .orElseThrow(() -> new EntityNotFoundException("Class not found with ID: " + studentDto.getStudentClassId()));
 
         TermModel termModel = termRepository.findById(Long.parseLong(studentDto.getTermId()))
@@ -61,7 +62,7 @@ public class StudentImpl implements StudentService {
 
         if (isNew) {
             // Generate the registration number only for new students
-            String regNo = generateStudentRegNumber(studentDto.getSectionId(), schoolClassModel.getSectionId(), studentDto.getAdmissionDate());
+            String regNo = generateStudentRegNumber(studentDto.getSectionId(), sectionModel.getSectionName(), studentDto.getAdmissionDate());
             studentDto.setRegNo(regNo);
         } else {
             StudentModel existingStudent = studentRepository.findById(studentDto.getId())
@@ -71,11 +72,12 @@ public class StudentImpl implements StudentService {
 
 
 
-        studentDto.setStudentClassId(schoolClassModel.getClassName());
+        studentDto.setSectionId(sectionModel.getSectionName());
+        studentDto.setStudentClassId(classModel.getClassName());
         studentDto.setTermId(termModel.getTermName());
         studentDto.setSportHouseId(sportHouseModel.getSportHouseName());
 
-        return studentRepository.save(mapToModel(studentDto));
+        studentRepository.save(mapToModel(studentDto));
     }
 
     @Override

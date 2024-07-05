@@ -7,5 +7,6 @@ import com.shuaibu.model.SubjectModel;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<SubjectModel, Long> {
+    SubjectModel findBySubjectName(String subjectId);
 }
 

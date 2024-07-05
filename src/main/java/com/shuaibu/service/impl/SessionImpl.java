@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.SessionMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SessionDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.SessionMapper.*;
 @Service
 public class SessionImpl implements SessionService {
     
-    private SessionRepository sessionRepository;
+    private final SessionRepository sessionRepository;
 
     public SessionImpl(SessionRepository sessionRepository) {
         this.sessionRepository = sessionRepository;
@@ -24,7 +25,7 @@ public class SessionImpl implements SessionService {
     @Override
     public List<SessionDto> getAllSessions() {
         List<SessionModel> sessions = sessionRepository.findAll();
-        return sessions.stream().map(session -> mapToDto(session)).collect(Collectors.toList());
+        return sessions.stream().map(SessionMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class SessionImpl implements SessionService {
     }
 
     @Override
-    public SessionModel saveSession(SessionDto sessionDto) {
-        return sessionRepository.save(mapToModel(sessionDto));
+    public void saveSession(SessionDto sessionDto) {
+        sessionRepository.save(mapToModel(sessionDto));
     }
 
     @Override

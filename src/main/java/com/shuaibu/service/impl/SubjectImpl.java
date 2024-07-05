@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.SubjectMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SubjectDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.SubjectMapper.*;
 @Service
 public class SubjectImpl implements SubjectService {
     
-    private SubjectRepository subjectRepository;
+    private final SubjectRepository subjectRepository;
 
     public SubjectImpl(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
@@ -24,7 +25,7 @@ public class SubjectImpl implements SubjectService {
     @Override
     public List<SubjectDto> getAllSubjects() {
         List<SubjectModel> subjects = subjectRepository.findAll();
-        return subjects.stream().map(subject -> mapToDto(subject)).collect(Collectors.toList());
+        return subjects.stream().map(SubjectMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class SubjectImpl implements SubjectService {
     }
 
     @Override
-    public SubjectModel saveSubject(SubjectDto subjectDto) {
-        return subjectRepository.save(mapToModel(subjectDto));
+    public void saveSubject(SubjectDto subjectDto) {
+        subjectRepository.save(mapToModel(subjectDto));
     }
 
     @Override

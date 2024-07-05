@@ -11,10 +11,12 @@
     <section layout:fragment="body">
         <section class="form-container">
             <h1>Create New Result Settings</h1>
-            <form th:action="@{/resultSettings/create}" th:object="${result}" method="post">
+            <form th:action="@{/resultSettings/create}" th:object="${resultSetting}" method="post">
                 <div>
-                    <label for="section">Section Name:</label>
-                    <input type="text" id="section" th:field="*{section}" required />
+                    <label for="section">Section:</label>
+                    <select id="section" th:field="*{sectionId}" required>
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="firstCA">1st C.A:</label>

@@ -7,5 +7,6 @@ import com.shuaibu.model.StaffModel;
 
 @Repository
 public interface StaffRepository extends JpaRepository<StaffModel, Long> {
+    StaffModel findByUserName(String userName);
 }
 

@@ -11,10 +11,12 @@
     <section layout:fragment="body">
         <section class="form-container">
             <h1>Edit Result</h1>
-            <form role="form" th:action="@{/results/update/{id}(id=${result.id})}" th:object="${result}" method="post">
+            <form role="form" th:action="@{/results/{sectionName}/{className}/update/{id}(id=${result.id}, sectionName=${result.sectionId}, className=${result.studentClassId})}" th:object="${result}" method="post">
                 <div>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" th:field="*{name}" required />
+                    <label for="student">Student Name:</label>
+                    <select id="student" th:field="*{name}" required>
+                        <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName + ' ' + student.lastName}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="section">Section:</label>
@@ -25,30 +27,26 @@
                 <div>
                     <label for="academicSession">Academic Session:</label>
                     <select id="academicSession" th:field="*{academicSessionId}" required>
-                        <option th:each="academicSession : ${academicSessions}" th:value="${academicSession.id}" th:text="${academicSession.sessionName}"></option>
+                        <option th:each="academicSession : ${academicSessions}" th:value="${academicSession.id}" th:text="${academicSession.sessionName}" th:selected="${academicSessionDefault}"></option>
                     </select>
                 </div>
                 <div>
                     <label for="studentClass">Student Class:</label>
                     <select id="studentClass" th:field="*{studentClassId}" required>
-                        <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.className}"></option>
+                        <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:selected="${studentClasseDefault}" th:text="${studentClass.sectionId + ' ' + studentClass.className}"></option>
                     </select>
                 </div>
                 <div>
                     <label for="term">Term:</label>
                     <select id="term" th:field="*{termId}" required>
-                        <option th:each="term : ${terms}" th:value="${term.id}" th:text="${term.termName}"></option>
+                        <option th:each="term : ${terms}" th:selected="${termDefault}" th:value="${term.id}" th:text="${term.termName}"></option>
                     </select>
                 </div>
                 <div>
                     <label for="subject">Subject:</label>
                     <select id="subject" th:field="*{subjectId}" required>
-                        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.subjectName}"></option>
+                        <option th:each="subject : ${subjects}" th:selected="${subjectDefault}" th:value="${subject.id}" th:text="${subject.subjectName}"></option>
                     </select>
-                </div>
-                <div>
-                    <label for="regNo">Registration Number:</label>
-                    <input type="text" id="regNo" th:field="*{regNo}" required />
                 </div>
                 <div>
                     <label for="firstCA">First CA:</label>

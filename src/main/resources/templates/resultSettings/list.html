@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
 <head>
     <title>Result Settings</title>
 </head>
@@ -30,11 +33,11 @@
                     </div>
                     <div class="form-group">
                         <label for="thirdCA">Third CA:</label>
-                        <input type="text" id="thirdCA" th:field="*{thirdCA}" required />
+                        <input type="text" id="thirdCA" th:field="*{thirdCA}" />
                     </div>
                     <div class="form-group">
                         <label for="fourthCA">Fourth CA:</label>
-                        <input type="text" id="fourthCA" th:field="*{fourthCA}" required />
+                        <input type="text" id="fourthCA" th:field="*{fourthCA}" />
                     </div>
                     <div class="form-group">
                         <label for="exam">Exam:</label>

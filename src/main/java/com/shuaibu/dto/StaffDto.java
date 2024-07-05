@@ -1,6 +1,7 @@
 package com.shuaibu.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,8 @@ public class StaffDto {
     private String gender;
     private String profilePicture;
     private String phoneNumber;
-    private List<Long> subjectModelIds;
-    private List<Long> classModelIds;
-    private List<Long> roleModelIds;
+    private Set<Long> subjectModelIds;
+    private Set<Long> classModelIds;
+    private Set<Long> roleModelIds;
 
 }

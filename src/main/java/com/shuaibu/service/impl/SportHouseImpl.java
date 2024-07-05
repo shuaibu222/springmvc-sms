@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.SportHouseMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SportHouseDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.SportHouseMapper.*;
 @Service
 public class SportHouseImpl implements SportHouseService {
     
-    private SportHouseRepository sportHouseRepository;
+    private final SportHouseRepository sportHouseRepository;
 
     public SportHouseImpl(SportHouseRepository sportHouseRepository) {
         this.sportHouseRepository = sportHouseRepository;
@@ -24,7 +25,7 @@ public class SportHouseImpl implements SportHouseService {
     @Override
     public List<SportHouseDto> getAllSportHouses() {
         List<SportHouseModel> sportHouses = sportHouseRepository.findAll();
-        return sportHouses.stream().map(sportHouse -> mapToDto(sportHouse)).collect(Collectors.toList());
+        return sportHouses.stream().map(SportHouseMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class SportHouseImpl implements SportHouseService {
     }
 
     @Override
-    public SportHouseModel saveSportHouse(SportHouseDto sportHouseDto) {
-        return sportHouseRepository.save(mapToModel(sportHouseDto));
+    public void saveSportHouse(SportHouseDto sportHouseDto) {
+        sportHouseRepository.save(mapToModel(sportHouseDto));
     }
 
     @Override

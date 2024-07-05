@@ -13,10 +13,11 @@ import jakarta.validation.Valid;
 
 import java.util.Collections;
 
+@SuppressWarnings("ALL")
 @Controller
 public class UserController {
     
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;

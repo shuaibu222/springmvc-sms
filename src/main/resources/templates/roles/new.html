@@ -13,7 +13,7 @@
             <h1>Create New Role</h1>
             <form th:action="@{/roles/create}" th:object="${role}" method="post">
                 <div>
-                    <label for="lastName">Role Name:</label>
+                    <label for="role">Role Name:</label>
                     <input type="text" id="role" th:field="*{roleName}" required />
                 </div>
                 <div>

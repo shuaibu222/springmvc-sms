@@ -79,7 +79,7 @@
                         <label>Classes:</label>
                         <div th:each="classModel : ${classModels}">
                             <input type="checkbox" th:id="${'classModel_' + classModel.id}" th:name="classModelIds" th:field="*{classModelIds}" th:value="${classModel.id}" />
-                            <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.className}"></label>
+                            <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.sectionId + ' ' + classModel.className}"></label>
                             <br/>
                         </div>
                     </div>

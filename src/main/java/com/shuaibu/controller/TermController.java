@@ -12,12 +12,13 @@ import com.shuaibu.service.TermService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/terms")
 @PreAuthorize("hasRole('ADMIN')")
 public class TermController {
     
-    private TermService termService;
+    private final TermService termService;
 
     public TermController(TermService termService) {
         this.termService = termService;

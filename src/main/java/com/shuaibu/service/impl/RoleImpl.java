@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.RoleMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.RoleDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.RoleMapper.*;
 @Service
 public class RoleImpl implements RoleService {
     
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public RoleImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -24,7 +25,7 @@ public class RoleImpl implements RoleService {
     @Override
     public List<RoleDto> getAllRoles() {
         List<RoleModel> roles = roleRepository.findAll();
-        return roles.stream().map(role -> mapToDto(role)).collect(Collectors.toList());
+        return roles.stream().map(RoleMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class RoleImpl implements RoleService {
     }
 
     @Override
-    public RoleModel saveOrUpdateRole(RoleDto roleDto) {
-        return roleRepository.save(mapToModel(roleDto));
+    public void saveOrUpdateRole(RoleDto roleDto) {
+        roleRepository.save(mapToModel(roleDto));
     }
 
     @Override

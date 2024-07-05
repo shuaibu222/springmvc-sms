@@ -12,12 +12,13 @@ import com.shuaibu.service.SportHouseService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/sportHouses")
 @PreAuthorize("hasRole('ADMIN')")
 public class SportHouseController {
     
-    private SportHouseService sportHouseService;
+    private final SportHouseService sportHouseService;
 
     public SportHouseController(SportHouseService sportHouseService) {
         this.sportHouseService = sportHouseService;

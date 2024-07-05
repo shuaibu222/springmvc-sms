@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.CommentMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.CommentDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.CommentMapper.*;
 @Service
 public class CommentImpl implements CommentService {
     
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     public CommentImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
@@ -24,7 +25,7 @@ public class CommentImpl implements CommentService {
     @Override
     public List<CommentDto> getAllComments() {
         List<CommentModel> comments = commentRepository.findAll();
-        return comments.stream().map(comment -> mapToDto(comment)).collect(Collectors.toList());
+        return comments.stream().map(CommentMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class CommentImpl implements CommentService {
     }
 
     @Override
-    public CommentModel saveOrUpdateComment(CommentDto commentDto) {
-        return commentRepository.save(mapToModel(commentDto));
+    public void saveOrUpdateComment(CommentDto commentDto) {
+        commentRepository.save(mapToModel(commentDto));
     }
 
     

@@ -1,10 +1,8 @@
 package com.shuaibu.dto;
 
-import com.shuaibu.model.SchoolClassModel;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Set;
 
 @Data

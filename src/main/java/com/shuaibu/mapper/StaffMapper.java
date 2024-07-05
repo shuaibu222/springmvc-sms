@@ -6,7 +6,8 @@ import com.shuaibu.model.StaffModel;
 public class StaffMapper {
     
     public static StaffDto mapToDto(StaffModel staffModel){
-        StaffDto staffDto = StaffDto.builder()
+
+        return StaffDto.builder()
                 .id(staffModel.getId())
                 .firstName(staffModel.getFirstName())
                 .lastName(staffModel.getLastName())
@@ -26,12 +27,11 @@ public class StaffMapper {
                 .classModelIds(staffModel.getClassModelIds())
                 .roleModelIds(staffModel.getRoleModelIds())
                 .build();
-
-        return staffDto;
     }
 
     public static StaffModel mapToModel(StaffDto staffDto){
-        StaffModel staffModel = StaffModel.builder()
+
+        return StaffModel.builder()
                 .id(staffDto.getId())
                 .firstName(staffDto.getFirstName())
                 .lastName(staffDto.getLastName())
@@ -51,7 +51,5 @@ public class StaffMapper {
                 .classModelIds(staffDto.getClassModelIds())
                 .roleModelIds(staffDto.getRoleModelIds())
                 .build();
-
-        return staffModel;
     }
 }

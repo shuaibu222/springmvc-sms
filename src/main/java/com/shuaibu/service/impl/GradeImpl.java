@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.GradeMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.GradeDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.GradeMapper.*;
 @Service
 public class GradeImpl implements GradeService {
     
-    private GradeRepository gradeRepository;
+    private final GradeRepository gradeRepository;
 
     public GradeImpl(GradeRepository gradeRepository) {
         this.gradeRepository = gradeRepository;
@@ -24,7 +25,7 @@ public class GradeImpl implements GradeService {
     @Override
     public List<GradeDto> getAllGrades() {
         List<GradeModel> grades = gradeRepository.findAll();
-        return grades.stream().map(grade -> mapToDto(grade)).collect(Collectors.toList());
+        return grades.stream().map(GradeMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class GradeImpl implements GradeService {
     }
 
     @Override
-    public GradeModel saveGrade(GradeDto gradeDto) {
-        return gradeRepository.save(mapToModel(gradeDto));
+    public void saveGrade(GradeDto gradeDto) {
+        gradeRepository.save(mapToModel(gradeDto));
     }
 
     @Override

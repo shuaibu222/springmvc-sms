@@ -15,8 +15,7 @@ import com.shuaibu.service.SectionService;
 
 import jakarta.validation.Valid;
 
-import java.util.List;
-
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/sections")
 @PreAuthorize("hasRole('ADMIN')")
@@ -75,14 +74,13 @@ public class SectionController {
         // Update section name
         existingSection.setSectionName(section.getSectionName());
 
-        // TODO
-        // Update associated school classes (optional, see note below)
-        if (existingSection.getClassIds() != null && !existingSection.getClassIds().isEmpty()) {
-            for (String schoolClass : existingSection.getClassIds()) {
-                SchoolClassModel classModel = schoolClassRepository.findById(Long.valueOf(schoolClass)).get();
-                classModel.setSectionId(existingSection.getSectionName()); // Update reference to updated section
-            }
-        }
+//        // TODO
+//        // Update associated school classes (optional, see note below)
+//        if (existingSection.getClassIds() != null && !existingSection.getClassIds().isEmpty()) {
+//                SchoolClassModel classModel = schoolClassRepository.findById(Long.valueOf(existingSection.getId())).get();
+//                classModel.setSectionId(existingSection.getSectionName()); // Update reference to updated section
+//                schoolClassRepository.save(classModel);
+//        }
 
         sectionService.updateSection(section);
         return "redirect:/sections";

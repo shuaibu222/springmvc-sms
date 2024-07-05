@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
 <head>
     <title>Grading System</title>
 </head>
 <body>
-<section layout:fragment="body">
-    <article class="list-page">
-        <div class="list-header">
-            <h1>Gradings List</h1>
-            <a href="/grades/new">Add New Grade</a>
-        </div>
+    <section layout:fragment="body">
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Gradings List</h1>
+                <a href="/grades/new">Add New Grade</a>
+            </div>
 
         <!-- Form Section -->
             <form th:action="@{/grades/create}" th:object="${grade}" class="list-form-layout" method="post">

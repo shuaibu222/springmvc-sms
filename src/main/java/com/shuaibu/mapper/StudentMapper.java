@@ -6,7 +6,8 @@ import com.shuaibu.model.StudentModel;
 public class StudentMapper {
     
     public static StudentDto mapToDto(StudentModel studentModel){
-        StudentDto studentDto = StudentDto.builder()
+
+        return StudentDto.builder()
                 .id(studentModel.getId())
                 .firstName(studentModel.getFirstName())
                 .lastName(studentModel.getLastName())
@@ -28,12 +29,11 @@ public class StudentMapper {
                 .profilePicture(studentModel.getProfilePicture())
                 .phoneNumber(studentModel.getPhoneNumber())
         .build();
-
-        return studentDto;
     }
 
     public static StudentModel mapToModel(StudentDto studentDto){
-        StudentModel studentModel = StudentModel.builder()
+
+        return StudentModel.builder()
                 .id(studentDto.getId())
                 .firstName(studentDto.getFirstName())
                 .lastName(studentDto.getLastName())
@@ -55,7 +55,5 @@ public class StudentMapper {
                 .profilePicture(studentDto.getProfilePicture())
                 .phoneNumber(studentDto.getPhoneNumber())
         .build();
-
-        return studentModel;
     }
 }

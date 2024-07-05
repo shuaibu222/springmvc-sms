@@ -33,10 +33,6 @@
                     <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
                 </div>
                 <div>
-                    <label for="regNo">Registration No.:</label>
-                    <input type="text" id="regNo" th:field="*{regNo}" required />
-                </div>
-                <div>
                     <label for="admissionDate">Admission Date:</label>
                     <input type="text" id="admissionDate" th:field="*{admissionDate}" required />
                 </div>
@@ -71,7 +67,7 @@
                 <div>
                     <label for="studentClassId">Class:</label>
                     <select id="studentClassId" th:field="*{studentClassId}" th:name="studentClassId" required>
-                        <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.className}"></option>
+                        <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.sectionId + ' ' + studentClassId.className}"></option>
                     </select>
                 </div>
                 <div>

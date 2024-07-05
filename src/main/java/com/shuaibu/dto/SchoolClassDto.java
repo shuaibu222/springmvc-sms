@@ -1,10 +1,10 @@
 package com.shuaibu.dto;
 
-import com.shuaibu.model.SectionModel;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -13,6 +13,6 @@ public class SchoolClassDto {
 
     private String className;
     private String sectionId;
-    private List<Long> subjectModels;
-    private List<Long> staffModels;
+    private Set<Long> subjectModels;
+    private Set<Long> staffModels;
 }

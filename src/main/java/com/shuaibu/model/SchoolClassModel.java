@@ -1,14 +1,13 @@
 package com.shuaibu.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 
 @Data
@@ -27,8 +26,8 @@ public class SchoolClassModel {
     private String sectionId;
 
     @ElementCollection
-    private List<Long> subjectModels;
+    private Set<Long> subjectModels;
 
     @ElementCollection
-    private List<Long> staffModels;
+    private Set<Long> staffModels;
 }

@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.shuaibu.model.ResultModel;
 
+import java.util.List;
+
 @Repository
 public interface ResultRepository extends JpaRepository<ResultModel, Long> {
+    List<ResultModel> findResultModelsBySectionIdAndStudentClassId(String section, String classId);
 }
 

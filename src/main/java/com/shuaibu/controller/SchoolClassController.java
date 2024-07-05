@@ -1,10 +1,7 @@
 package com.shuaibu.controller;
 
 
-import com.shuaibu.dto.SectionDto;
-import com.shuaibu.mapper.SchoolClassMapper;
-import com.shuaibu.mapper.SectionMapper;
-import com.shuaibu.model.SectionModel;
+import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.SectionRepository;
 import com.shuaibu.service.SectionService;
 import com.shuaibu.service.StaffService;
@@ -21,8 +18,7 @@ import com.shuaibu.service.SchoolClassService;
 
 import jakarta.validation.Valid;
 
-import java.util.List;
-
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/classes")
 @PreAuthorize("hasRole('ADMIN')")
@@ -32,14 +28,14 @@ public class SchoolClassController {
     private final SubjectService subjectService;
     private final StaffService staffService;
     private final SectionService sectionService;
-    private final SectionRepository sectionRepository;
+    private final SchoolClassRepository schoolClassRepository;
 
-    public SchoolClassController(SchoolClassService schoolClassService, SubjectService subjectService, StaffService staffService, SectionService sectionService, SectionRepository sectionRepository) {
+    public SchoolClassController(SchoolClassService schoolClassService, SubjectService subjectService, StaffService staffService, SectionService sectionService, SectionRepository sectionRepository, SchoolClassRepository schoolClassRepository) {
         this.schoolClassService = schoolClassService;
         this.subjectService = subjectService;
         this.staffService = staffService;
         this.sectionService = sectionService;
-        this.sectionRepository = sectionRepository;
+        this.schoolClassRepository = schoolClassRepository;
     }
 
     @GetMapping
@@ -101,6 +97,9 @@ public class SchoolClassController {
         }
 
         schoolClass.setId(id);
+        // for re-updating the link btw teacher and class
+        SchoolClassModel schoolClassModel = schoolClassRepository.findById(id).get();
+        schoolClass.setStaffModels(schoolClassModel.getStaffModels());
         schoolClassService.saveOrUpdateSchoolClass(schoolClass);
 
         return "redirect:/classes";

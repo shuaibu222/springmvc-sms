@@ -13,7 +13,7 @@
             <h1>Create New Sport House</h1>
             <form th:action="@{/sportHouses/create}" th:object="${sportHouse}" method="post">
                 <div>
-                    <label for="sportName">SportHouse Name:</label>
+                    <label for="sportHouse">SportHouse Name:</label>
                     <input type="text" id="sportHouse" th:field="*{sportHouseName}" required />
                 </div>
                 <div>

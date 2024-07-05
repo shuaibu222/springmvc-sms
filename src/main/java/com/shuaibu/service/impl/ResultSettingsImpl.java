@@ -1,6 +1,6 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.dto.GradeDto;
+import com.shuaibu.mapper.ResultSettingsMapper;
 import com.shuaibu.model.*;
 import com.shuaibu.repository.SectionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,14 +13,13 @@ import com.shuaibu.service.ResultSettingsService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.shuaibu.mapper.ResultSettingsMapper.mapToModel;
 import static com.shuaibu.mapper.ResultSettingsMapper.*;
 
 @Service
 public class ResultSettingsImpl implements ResultSettingsService {
     
-    private ResultSettingsRepository resultSettingsRepository;
-    private SectionRepository sectionRepository;
+    private final ResultSettingsRepository resultSettingsRepository;
+    private final SectionRepository sectionRepository;
 
     public ResultSettingsImpl(ResultSettingsRepository resultSettingsRepository, SectionRepository sectionRepository) {
         this.resultSettingsRepository = resultSettingsRepository;
@@ -30,7 +29,7 @@ public class ResultSettingsImpl implements ResultSettingsService {
     @Override
     public List<ResultSettingsDto> getAllResultSettings() {
         List<ResultSettingsModel> resultSetting = resultSettingsRepository.findAll();
-        return resultSetting.stream().map(grade -> mapToDto(grade)).collect(Collectors.toList());
+        return resultSetting.stream().map(ResultSettingsMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ResultSettingsImpl implements ResultSettingsService {
     }
 
     @Override
-    public ResultSettingsModel saveOrUpdateResultSetting(ResultSettingsDto resultSettingDto) {
+    public void saveOrUpdateResultSetting(ResultSettingsDto resultSettingDto) {
         // Map ResultSettingDto to ResultSettingModel
         ResultSettingsModel resultSettingModel = mapToModel(resultSettingDto);
 
@@ -50,7 +49,7 @@ public class ResultSettingsImpl implements ResultSettingsService {
         resultSettingModel.setSectionId(section.getSectionName());
 
         // Save the resultSetting model
-        return resultSettingsRepository.save(resultSettingModel);
+        resultSettingsRepository.save(resultSettingModel);
     }
     
     @Override

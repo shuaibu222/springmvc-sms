@@ -7,5 +7,6 @@ import com.shuaibu.model.SessionModel;
 
 @Repository
 public interface SessionRepository extends JpaRepository<SessionModel, Long> {
+    SessionModel findBySessionName(String sessionName);
 }
 

@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.SectionMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SectionDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.SectionMapper.*;
 @Service
 public class SectionImpl implements SectionService {
     
-    private SectionRepository sectionRepository;
+    private final SectionRepository sectionRepository;
 
     public SectionImpl(SectionRepository sectionRepository) {
         this.sectionRepository = sectionRepository;
@@ -24,7 +25,7 @@ public class SectionImpl implements SectionService {
     @Override
     public List<SectionDto> getAllSections() {
         List<SectionModel> sections = sectionRepository.findAll();
-        return sections.stream().map(section -> mapToDto(section)).collect(Collectors.toList());
+        return sections.stream().map(SectionMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class SectionImpl implements SectionService {
     }
 
     @Override
-    public SectionModel saveSection(SectionDto sectionDto) {
-        return sectionRepository.save(mapToModel(sectionDto));
+    public void saveSection(SectionDto sectionDto) {
+        sectionRepository.save(mapToModel(sectionDto));
     }
 
     @Override

@@ -51,7 +51,7 @@
                             <option th:each="termId : ${termIds}" th:value="${termId.id}" th:text="${termId.termName}"></option>
                         </select>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label for="sectionId">Section:</label>
                         <select id="sectionId" th:field="*{sectionId}" th:name="sectionId" required>
                             <option th:each="sectionId : ${sectionIds}" th:value="${sectionId.id}" th:text="${sectionId.sectionName}"></option>
@@ -72,7 +72,7 @@
                     <div class="form-group">
                         <label for="studentClassId">Class:</label>
                         <select id="studentClassId" th:field="*{studentClassId}" th:name="studentClassId" required>
-                            <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.className}"></option>
+                            <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.sectionId + ' ' + studentClassId.className}"></option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -137,7 +137,7 @@
                         <td th:text="${student.state}"></td>
                         <td th:text="${student.LGA}"></td>
                         <td th:text="${student.religion}"></td>
-                        <td th:text="${student.studentClassId}"></td>
+                        <td th:text="${student.sectionId + ' ' + student.studentClassId}"></td>
                         <td th:text="${student.sportHouseId}"></td>
                         <td th:text="${student.tribe}"></td>
                         <td th:text="${student.gender}"></td>

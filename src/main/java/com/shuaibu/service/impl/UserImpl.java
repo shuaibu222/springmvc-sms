@@ -1,7 +1,6 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.dto.UserRole;
-import jakarta.annotation.PostConstruct;
+import com.shuaibu.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,19 +18,19 @@ import static com.shuaibu.mapper.UserMapper.*;
 @Service
 public class UserImpl implements UserService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserImpl(UserRepository userRepository) {
+    public UserImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<UserDto> getAllUsers() {
         List<UserModel> users = userRepository.findAll();
-        return users.stream().map(user -> mapToDto(user)).collect(Collectors.toList());
+        return users.stream().map(UserMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -40,9 +39,9 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public UserModel saveUser(UserDto userDto) {
+    public void saveUser(UserDto userDto) {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return userRepository.save(mapToModel(userDto));
+        userRepository.save(mapToModel(userDto));
     }
 
     @Override

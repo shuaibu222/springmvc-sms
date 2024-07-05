@@ -6,7 +6,8 @@ import com.shuaibu.model.ResultSettingsModel;
 public class ResultSettingsMapper {
     
     public static ResultSettingsDto mapToDto(ResultSettingsModel resultSettingsModel){
-        ResultSettingsDto resultSettingDto = ResultSettingsDto.builder()
+
+        return ResultSettingsDto.builder()
         .id(resultSettingsModel.getId())
         .sectionId(resultSettingsModel.getSectionId())
         .firstCA(resultSettingsModel.getFirstCA())
@@ -16,12 +17,11 @@ public class ResultSettingsMapper {
         .exam(resultSettingsModel.getExam())
         .total(resultSettingsModel.getTotal())
         .build();
-
-        return resultSettingDto;
     }
 
     public static ResultSettingsModel mapToModel(ResultSettingsDto resultSettingDto){
-        ResultSettingsModel resultSettingsModel = ResultSettingsModel.builder()
+
+        return ResultSettingsModel.builder()
         .id(resultSettingDto.getId())
         .sectionId(resultSettingDto.getSectionId())
         .firstCA(resultSettingDto.getFirstCA())
@@ -31,7 +31,5 @@ public class ResultSettingsMapper {
         .exam(resultSettingDto.getExam())
         .total(resultSettingDto.getTotal())
         .build();
-
-        return resultSettingsModel;
     }
 }

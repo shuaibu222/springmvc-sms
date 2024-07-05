@@ -1,24 +1,17 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.controller.GlobalControllerAdvice;
 import com.shuaibu.dto.ResultSettingsDto;
+import com.shuaibu.mapper.ResultMapper;
+import com.shuaibu.model.*;
+import com.shuaibu.repository.*;
 import com.shuaibu.service.ResultSettingsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.GradeDto;
 import com.shuaibu.dto.ResultDto;
-import com.shuaibu.model.GradeModel;
-import com.shuaibu.model.ResultModel;
-import com.shuaibu.model.SchoolClassModel;
-import com.shuaibu.model.SectionModel;
-import com.shuaibu.model.SessionModel;
-import com.shuaibu.model.SubjectModel;
-import com.shuaibu.model.TermModel;
-import com.shuaibu.repository.ResultRepository;
-import com.shuaibu.repository.SchoolClassRepository;
-import com.shuaibu.repository.SectionRepository;
-import com.shuaibu.repository.SessionRepository;
-import com.shuaibu.repository.SubjectRepository;
-import com.shuaibu.repository.TermRepository;
 import com.shuaibu.service.GradeService;
 import com.shuaibu.service.ResultService;
 
@@ -31,20 +24,22 @@ import static com.shuaibu.mapper.ResultMapper.*;
 
 @Service
 public class ResultImpl implements ResultService {
-    
-    private ResultRepository resultRepository;
-    private SectionRepository sectionRepository;
-    private SessionRepository sessionRepository;
-    private SchoolClassRepository schoolClassRepository;
-    private TermRepository termRepository;
-    private SubjectRepository subjectRepository;
-    private GradeService gradeService;
-    private ResultSettingsService resultSettingsService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ResultImpl.class);
+    private final ResultRepository resultRepository;
+    private final SectionRepository sectionRepository;
+    private final SessionRepository sessionRepository;
+    private final SchoolClassRepository schoolClassRepository;
+    private final TermRepository termRepository;
+    private final SubjectRepository subjectRepository;
+    private final GradeService gradeService;
+    private final ResultSettingsService resultSettingsService;
+    private final StudentRepository studentRepository;
 
 
     public ResultImpl(ResultRepository resultRepository, SectionRepository sectionRepository,
                       SessionRepository sessionRepository, SchoolClassRepository schoolClassRepository,
-                      TermRepository termRepository, SubjectRepository subjectRepository, GradeService gradeService, ResultSettingsService resultSettingsService) {
+                      TermRepository termRepository, SubjectRepository subjectRepository, GradeService gradeService, ResultSettingsService resultSettingsService, StudentRepository studentRepository) {
         this.resultRepository = resultRepository;
         this.sectionRepository = sectionRepository;
         this.sessionRepository = sessionRepository;
@@ -53,21 +48,23 @@ public class ResultImpl implements ResultService {
         this.subjectRepository = subjectRepository;
         this.gradeService = gradeService;
         this.resultSettingsService = resultSettingsService;
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public List<ResultDto> getAllResults() {
         List<ResultModel> results = resultRepository.findAll();
-        return results.stream().map(result -> mapToDto(result)).collect(Collectors.toList());
+        return results.stream().map(ResultMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     public ResultDto getResultById(Long id) {
-        return mapToDto(resultRepository.findById(id).get());
+        return mapToDto(resultRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Result not found with ID: " + id)));
     }
 
     @Override
-    public ResultModel saveOrUpdateResult(ResultDto resultDto) {
+    public void saveOrUpdateResult(ResultDto resultDto) {
 
         // Fetch related entities from repositories
         SectionModel section = sectionRepository.findById(Long.parseLong(resultDto.getSectionId()))
@@ -84,6 +81,9 @@ public class ResultImpl implements ResultService {
 
         SubjectModel subject = subjectRepository.findById(Long.parseLong(resultDto.getSubjectId()))
                             .orElseThrow(() -> new EntityNotFoundException("Subject not found with ID: " + resultDto.getSubjectId()));
+
+        StudentModel student = studentRepository.findById(Long.parseLong(resultDto.getName()))
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + resultDto.getName()));
 
         List<ResultSettingsDto> resultSettingsDto = resultSettingsService.getAllResultSettings();
         ResultSettingsDto resultSetting = resultSettingsDto.stream()
@@ -111,6 +111,8 @@ public class ResultImpl implements ResultService {
         resultModel.setStudentClassId(schoolClass.getClassName());
         resultModel.setTermId(term.getTermName());
         resultModel.setSubjectId(subject.getSubjectName());
+        resultModel.setName(student.getFirstName() + ' ' + student.getLastName());
+        resultModel.setRegNo(student.getRegNo());
 
         // Calculating total
         Integer totalMark = resultModel.getFirstCA() + resultModel.getSecondCA() + resultModel.getExam();
@@ -122,18 +124,23 @@ public class ResultImpl implements ResultService {
         GradeDto matchingGrade = gradeList.stream()
                 .filter(grade -> totalMark >= grade.getRangeFrom() && totalMark <= grade.getRangeTo())
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("No grade found for total marks: " + totalMark));
 
 
         resultModel.setGrade(matchingGrade.getGrade());
         resultModel.setRemark(matchingGrade.getRemark());
 
         // Save the result model
-        return resultRepository.save(resultModel);
+        resultRepository.save(resultModel);
     }
     
     @Override
     public void deleteResult(Long id) {
         resultRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ResultModel> getResultModelsBySectionIdAndStudentClassId(String section, String classId) {
+        return resultRepository.findResultModelsBySectionIdAndStudentClassId(section, classId);
     }
 }

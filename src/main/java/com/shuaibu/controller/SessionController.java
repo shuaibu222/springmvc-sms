@@ -12,12 +12,13 @@ import com.shuaibu.service.SessionService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/sessions")
 @PreAuthorize("hasRole('ADMIN')")
 public class SessionController {
     
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
     public SessionController(SessionService sessionService) {
         this.sessionService = sessionService;

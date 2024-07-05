@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html 
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+<!--suppress ALL -->
+<html
+        lang="en-US"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
 >
 <head th:fragment="header">
     <meta charset="utf-8">
@@ -31,14 +33,11 @@
                 <li>
                     <a sec:authorize="hasRole('ADMIN') or hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
                     <ul class="submenu">
-                        <li th:each="section : ${sections}">
-                            <a href="#" class="has-submenu"><i class="fas fa-chevron-right"></i> <span th:text="${section.sectionName}"></span></a>
-                            <ul class="submenu">
-                                <li th:each="classId : ${section.classIds}">
-                                    <a th:href="@{'/results/' + ${section.sectionName} + '/' + ${classId}}" th:text="${section.sectionName + ' ' + classId}"></a>
-                                </li>
-                            </ul>
+                        <li th:each="sectionClass : ${classes}">
+                            <!-- Assuming you want to get the last character of className -->
+                            <a th:href="@{'/results/' + ${sectionClass.sectionId} + '/' + ${sectionClass.className}}" th:text="${sectionClass.sectionId} + ' ' + ${sectionClass.className}"></a>
                         </li>
+
                     </ul>
                 </li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/subjects"><i class="fas fa-book"></i> Subjects</a></li>

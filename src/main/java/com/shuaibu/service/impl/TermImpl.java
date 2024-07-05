@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.TermMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.TermDto;
@@ -15,7 +16,7 @@ import static com.shuaibu.mapper.TermMapper.*;
 @Service
 public class TermImpl implements TermService {
     
-    private TermRepository termRepository;
+    private final TermRepository termRepository;
 
     public TermImpl(TermRepository termRepository) {
         this.termRepository = termRepository;
@@ -24,7 +25,7 @@ public class TermImpl implements TermService {
     @Override
     public List<TermDto> getAllTerms() {
         List<TermModel> terms = termRepository.findAll();
-        return terms.stream().map(term -> mapToDto(term)).collect(Collectors.toList());
+        return terms.stream().map(TermMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,8 +34,8 @@ public class TermImpl implements TermService {
     }
 
     @Override
-    public TermModel saveTerm(TermDto termDto) {
-        return termRepository.save(mapToModel(termDto));
+    public void saveTerm(TermDto termDto) {
+        termRepository.save(mapToModel(termDto));
     }
 
     @Override

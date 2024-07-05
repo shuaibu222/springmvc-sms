@@ -12,12 +12,13 @@ import com.shuaibu.service.SubjectService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/subjects")
 @PreAuthorize("hasRole('ADMIN')")
 public class SubjectController {
     
-    private SubjectService subjectService;
+    private final SubjectService subjectService;
 
     public SubjectController(SubjectService subjectService) {
         this.subjectService = subjectService;

@@ -23,14 +23,6 @@
                     <input type="text" id="className" th:field="*{className}" required />
                 </div>
                 <div class="checkbox-container">
-                    <label>Staffs: </label>
-                    <div th:each="staff : ${staffs}">
-                        <input type="checkbox" th:id="${'staff_' + staff.id}" th:name="staffModels" th:field="*{staffModels}" th:value="${staff.id}" />
-                        <label th:for="${'staff_' + staff.id}" th:text="${staff.firstName}"></label>
-                        <br/>
-                    </div>
-                </div>
-                <div class="checkbox-container">
                     <label>Subjects: </label>
                     <div th:each="subject : ${subjects}">
                         <input type="checkbox" th:id="${'subject_' + subject.id}" th:field="*{subjectModels}" th:name="subjectModels" th:value="${subject.id}" />

@@ -12,12 +12,13 @@ import com.shuaibu.service.RoleService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/roles")
 @PreAuthorize("hasRole('ADMIN')")
 public class RoleController {
     
-    private RoleService roleService;
+    private final RoleService roleService;
 
     public RoleController(RoleService roleService) {
         this.roleService = roleService;

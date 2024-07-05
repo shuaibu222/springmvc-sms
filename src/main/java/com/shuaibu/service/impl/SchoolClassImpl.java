@@ -1,5 +1,6 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.mapper.SchoolClassMapper;
 import com.shuaibu.model.SectionModel;
 import com.shuaibu.repository.SectionRepository;
 import com.shuaibu.service.SectionService;
@@ -19,20 +20,18 @@ import static com.shuaibu.mapper.SchoolClassMapper.*;
 @Service
 public class SchoolClassImpl implements SchoolClassService {
     
-    private SchoolClassRepository schoolClassRepository;
-    private SectionRepository sectionRepository;
-    private SectionService sectionService;
+    private final SchoolClassRepository schoolClassRepository;
+    private final SectionRepository sectionRepository;
 
     public SchoolClassImpl(SchoolClassRepository schoolClassRepository, SectionRepository sectionRepository, SectionService sectionService) {
         this.schoolClassRepository = schoolClassRepository;
         this.sectionRepository = sectionRepository;
-        this.sectionService = sectionService;
     }
 
     @Override
     public List<SchoolClassDto> getAllSchoolClass() {
         List<SchoolClassModel> sessions = schoolClassRepository.findAll();
-        return sessions.stream().map(session -> mapToDto(session)).collect(Collectors.toList());
+        return sessions.stream().map(SchoolClassMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class SchoolClassImpl implements SchoolClassService {
     }
 
     @Override
-    public SchoolClassModel saveOrUpdateSchoolClass(SchoolClassDto schoolClassDto) {
+    public void saveOrUpdateSchoolClass(SchoolClassDto schoolClassDto) {
 
         SectionModel section = sectionRepository.findById(Long.valueOf(schoolClassDto.getSectionId()))
                 .orElseThrow(() -> new EntityNotFoundException("Section not found with ID: " + schoolClassDto.getSectionId()));
@@ -55,7 +54,6 @@ public class SchoolClassImpl implements SchoolClassService {
         sectionRepository.save(section);
 
 
-        return schoolClassModel;
     }
     
     @Override

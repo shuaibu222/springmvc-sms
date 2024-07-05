@@ -9,7 +9,6 @@
     --sidebar-width: 15rem;
     --border-color: #000000; /* Black for borders */
     --shadow:  0px 8px 24px rgba(149,157,165,0.2);
-    /*0 10px 50px 00px rgba(17,12,46,0.15)*/
 }
 
 /* Font definitions */
@@ -161,7 +160,6 @@ button:hover {
 .sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     list-style: none;
     padding: 0;
 }
@@ -170,6 +168,7 @@ button:hover {
     color: var(--tertiary-color);
     text-decoration: none;
     font-weight: 500;
+    padding: 0.6rem 0;
     display: flex;
     align-items: center;
     gap: 0.7rem;
@@ -208,8 +207,6 @@ button:hover {
 }
 
 .submenu li {
-    padding: 0.3rem; /* Add padding to submenu items */
-    margin-bottom: 0.2rem;
     margin-left: 1.1rem;
 }
 
@@ -224,7 +221,6 @@ button:hover {
 .submenu.active {
     display: block;
     max-height: 700px; /* Large value for smooth animation */
-    padding-top: 0.5rem;
 }
 
 
@@ -317,10 +313,11 @@ form select:focus {
 .checkbox-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 0.5rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    align-self: start;
+    width: auto; /* Auto width to fit content */
 }
 
 .checkbox-container em {
@@ -354,6 +351,7 @@ form select:focus {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    align-items: start; /* Ensure grid items align to the start */
     padding: 1rem;
 }
 
@@ -387,11 +385,6 @@ form select:focus {
 
 .list-form-layout button:hover {
     color: var(--tertiary-color);
-}
-
-.list-form .checkbox-container {
-    justify-content: flex-start;
-    margin: 0rem;
 }
 
 /* Table styles */
