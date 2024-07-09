@@ -301,9 +301,9 @@ public class ResultController {
 
         model.addAttribute("students", filteredStudents);
         model.addAttribute("sections", sectionDto);
-        model.addAttribute("academicSessions", sessionDto);
+        model.addAttribute("academicSessions", sessionDto); // TODO activating and deactivating
         model.addAttribute("studentClasses", schoolClassDto);
-        model.addAttribute("terms", termDto);
+        model.addAttribute("terms", termDto); // TODO activating and deactivating
         model.addAttribute("subjects", subjectDtoList);
 
         // Default values for this result

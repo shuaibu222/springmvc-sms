@@ -1,9 +1,14 @@
 package com.shuaibu.controller;
 
+import com.shuaibu.dto.SchoolClassDto;
+import com.shuaibu.mapper.SchoolClassMapper;
 import com.shuaibu.mapper.UserMapper;
 import com.shuaibu.model.UserModel;
+import com.shuaibu.repository.SchoolClassRepository;
+import com.shuaibu.repository.UserRepository;
 import com.shuaibu.service.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,19 +26,23 @@ import java.util.Collections;
 @RequestMapping("/staffs")
 @PreAuthorize("hasRole('ADMIN')")
 public class StaffController {
-    
+
     private final StaffService staffService;
     private final SubjectService subjectService;
     private final SchoolClassService schoolClassService;
     private final RoleService roleService;
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final SchoolClassRepository schoolClassRepository;
 
-    public StaffController(StaffService staffService, SubjectService subjectService, SchoolClassService schoolClassService, RoleService roleService, UserService userService) {
+    public StaffController(StaffService staffService, SubjectService subjectService, SchoolClassService schoolClassService, RoleService roleService, UserService userService, UserRepository userRepository, SchoolClassRepository schoolClassRepository) {
         this.staffService = staffService;
         this.subjectService = subjectService;
         this.schoolClassService = schoolClassService;
         this.roleService = roleService;
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.schoolClassRepository = schoolClassRepository;
     }
 
     
@@ -68,13 +77,6 @@ public class StaffController {
 
             return "staffs/new";
         }
-
-        UserModel userModel = new UserModel();
-        userModel.setUsername(staff.getUserName());
-        userModel.setPassword(staff.getPassword());
-        userModel.setRoles(Collections.singleton("ROLE_STAFF"));
-
-        userService.saveUser(UserMapper.mapToDto(userModel));
         
         staffService.saveOrUpdateStaff(staff);
         return "redirect:/staffs";
@@ -83,6 +85,7 @@ public class StaffController {
     @GetMapping("/edit/{id}")
     public String updateStaffForm(@PathVariable Long id, Model model) {
         StaffDto staff = staffService.getStaffById(id);
+
         model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("staff", staff);
@@ -103,6 +106,7 @@ public class StaffController {
 
             return "staffs/edit";
         }
+
         staff.setId(id);
         staffService.saveOrUpdateStaff(staff);
         return "redirect:/staffs";

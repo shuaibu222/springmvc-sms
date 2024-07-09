@@ -43,13 +43,19 @@
                 <div>
                     <label for="termId">Term:</label>
                     <select id="termId" th:field="*{termId}" th:name="termId" required>
-                        <option th:each="termId : ${termIds}" th:value="${termId.id}" th:text="${termId.termName}"></option>
+                        <option th:each="term : ${allTerms}"
+                                th:value="${term.id}"
+                                th:text="${term.termName}"
+                                th:selected="${term.id} == ${termIds.id}"></option>
                     </select>
                 </div>
                 <div>
                     <label for="sectionId">Section:</label>
                     <select id="sectionId" th:field="*{sectionId}" th:name="sectionId" required>
-                        <option th:each="sectionId : ${sectionIds}" th:value="${sectionId.id}" th:text="${sectionId.sectionName}"></option>
+                        <option th:each="section : ${allSections}"
+                                th:value="${section.id}"
+                                th:text="${section.sectionName}"
+                                th:selected="${section.id} == ${sectionIds.id}"></option>
                     </select>
                 </div>
                 <div>
@@ -67,13 +73,19 @@
                 <div>
                     <label for="studentClassId">Class:</label>
                     <select id="studentClassId" th:field="*{studentClassId}" th:name="studentClassId" required>
-                        <option th:each="studentClassId : ${studentClassIds}" th:value="${studentClassId.id}" th:text="${studentClassId.sectionId + ' ' + studentClassId.className}"></option>
+                        <option th:each="oneClass : ${allClasses}"
+                                th:selected="${oneClass.id} == ${studentClassIds.id}"
+                                th:value="${oneClass.id}"
+                                th:text="${oneClass.sectionId + ' ' + oneClass.className}"></option>
                     </select>
                 </div>
                 <div>
                     <label for="sportHouseId">Sport House:</label>
                     <select id="sportHouseId" th:field="*{sportHouseId}" th:name="sportHouseId" required>
-                        <option th:each="sportHouseId : ${sportHouseIds}" th:value="${sportHouseId.id}" th:text="${sportHouseId.sportHouseName}"></option>
+                        <option th:each="sportHouse : ${allSportHouses}"
+                                th:value="${sportHouse.id}"
+                                th:text="${sportHouse.sportHouseName}"
+                                th:selected="${sportHouse.id} == ${sportHouseIds.id}"></option>
                     </select>
                 </div>
                 <div>

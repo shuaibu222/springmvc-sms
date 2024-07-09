@@ -1,5 +1,6 @@
 package com.shuaibu.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 @SuppressWarnings("SameReturnValue")
 @Controller
 @RequestMapping("/comments")
+@PreAuthorize("hasRole('ADMIN')")
 public class CommentController {
     
     private final CommentService commentService;

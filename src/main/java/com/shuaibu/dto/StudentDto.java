@@ -11,6 +11,7 @@ public class StudentDto {
     // Todo: Add validation
     private String firstName;
     private String lastName;
+    private Long userId;
     private String userName;
     private String password;
     private String regNo;

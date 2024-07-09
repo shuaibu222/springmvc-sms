@@ -22,6 +22,7 @@ public class StaffModel {
 
     private String firstName;
     private String lastName;
+    private Long userId;
     private String userName;
     private String password;
     private String dateOfBirth;

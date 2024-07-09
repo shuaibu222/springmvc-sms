@@ -31,7 +31,7 @@
                 <li><a sec:authorize="hasRole('ADMIN')" href="/classes"><i class="fas fa-school"></i> Classes</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/grades"><i class="fa fa-clipboard-list"></i> Grades</a></li>
                 <li>
-                    <a sec:authorize="hasRole('ADMIN') or hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <a sec:authorize="hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
                     <ul class="submenu">
                         <li th:each="sectionClass : ${classes}">
                             <!-- Assuming you want to get the last character of className -->
@@ -49,7 +49,7 @@
                 <li><a sec:authorize="hasRole('ADMIN')" href="/terms"><i class="fa fa-graduation-cap"></i> Terms</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sportHouses"><i class="fa fa-running"></i> Sport Houses</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/attendance"><i class="fas fa-clipboard-list"></i> Attendance</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT') or hasRole('STAFF')" href="/comments"><i class="fas fa-comments"></i> Result Comments</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF')" href="/comments"><i class="fas fa-comments"></i> Result Comments</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/resultChecking"><i class="fa fa-file-alt"></i> Result Checking</a></li>
                 <li><a href="/awards"><i class="fas fa-trophy"></i> Awards</a></li>
                 <li><a href="/settings"><i class="fas fa-cogs"></i> Settings</a></li>
