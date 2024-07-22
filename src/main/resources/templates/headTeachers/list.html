@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="en">
+<head>
+    <title>Head Teacher</title>
+</head>
+<body>
+<section layout:fragment="body">
+    <article class="list-page">
+        <div class="list-header">
+            <h1>Head Teacher</h1>
+<!--            <a href="/classTeacherComments/new">Add New Class Teacher Comment</a>-->
+        </div>
+
+        <form th:action="@{/headTeachers}" th:object="${headTeacherDto}" class="list-form-layout" method="post">
+            <div class="list-form">
+                <div class="form-group">
+                    <label for="className">Sections:</label>
+                    <select id="className" th:field="*{sectionId}" th:name="sectionId">
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('sectionId')}" th:errors="*{sectionId}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+                <div class="form-group">
+                    <label for="teacherName">Staffs:</label>
+                    <select id="teacherName" th:field="*{teacherId}" th:name="teacherName">
+                        <option th:each="staff : ${staffs}" th:value="${staff.id}" th:text="${staff.firstName + ' ' + staff.lastName}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+            </div>
+
+            <div class="form-group-btn">
+                <button type="submit">Assign Head Teacher</button>
+            </div>
+        </form>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Staff Name</th>
+                    <th>Section Name</th>
+                    <th>Actions</th>
+                </tr>
+                <tr th:each="headTeacher : ${headTeachers}">
+                    <td th:text="${headTeacher.id}"></td>
+                    <td th:text="${headTeacher.teacherName}"></td>
+                    <td th:text="${headTeacher.sectionName}"></td>
+                    <td>
+                        <a class="dynamic-link" th:href="@{'/headTeachers/edit/' + ${headTeacher.id}}">Edit</a>
+                        <a class="dynamic-link" th:href="@{'/headTeachers/delete/' + ${headTeacher.id}}">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </article>
+</section>
+</body>
+</html>

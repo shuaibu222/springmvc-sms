@@ -2,7 +2,8 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+        layout:decorate="~{layout}"
+        lang="en">
 <head>
     <title>Result Settings</title>
 </head>
@@ -15,21 +16,23 @@
         </div>
 
         <!-- Form Section -->
-            <form th:action="@{/resultSettings/create}" th:object="${resultSetting}" class="list-form-layout" method="post">
+            <form th:action="@{/resultSettings}" th:object="${resultSetting}" class="list-form-layout" method="post">
                 <div class="list-form">
                     <div class="form-group">
                         <label for="section">Section:</label>
-                        <select id="section" th:field="*{sectionId}" required>
+                        <select id="section" th:field="*{sectionId}">
                             <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="firstCA">First CA:</label>
-                        <input type="text" id="firstCA" th:field="*{firstCA}" required />
+                        <input type="text" id="firstCA" th:field="*{firstCA}" />
+                        <p th:if="${#fields.hasErrors('firstCA')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{firstCA}"></p>
                     </div>
                     <div class="form-group">
                         <label for="secondCA">Second CA:</label>
-                        <input type="text" id="secondCA" th:field="*{secondCA}" required />
+                        <input type="text" id="secondCA" th:field="*{secondCA}" />
+                        <p th:if="${#fields.hasErrors('secondCA')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{secondCA}"></p>
                     </div>
                     <div class="form-group">
                         <label for="thirdCA">Third CA:</label>
@@ -41,11 +44,12 @@
                     </div>
                     <div class="form-group">
                         <label for="exam">Exam:</label>
-                        <input type="text" id="exam" th:field="*{exam}" required />
+                        <input type="text" id="exam" th:field="*{exam}" />
+                        <p th:if="${#fields.hasErrors('exam')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{exam}"></p>
                     </div>
                     <div class="form-group">
                         <label for="total">Total:</label>
-                        <input type="text" id="total" th:field="*{total}" required />
+                        <input type="text" id="total" th:field="*{total}" />
                     </div>
                 </div>
                 <div class="form-group-btn">
@@ -77,8 +81,8 @@
                     <td th:text="${resultSetting.exam}"></td>
                     <td th:text="${resultSetting.total}"></td>
                     <td>
-                        <a th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
-                        <a th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
+                        <a class="dynamic-link" th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
+                        <a class="dynamic-link" th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
                     </td>
                 </tr>
             </table>

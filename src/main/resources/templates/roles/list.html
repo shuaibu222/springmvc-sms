@@ -37,8 +37,8 @@
                         <td th:text="${role.id}"></td>
                         <td th:text="${role.roleName}"></td>
                         <td>
-                            <a th:href="@{'/roles/edit/' + ${role.id}}">Edit</a>
-                            <a th:href="@{'/roles/delete/' + ${role.id}}">Delete</a>
+                            <a class="dynamic-link" th:href="@{'/roles/edit/' + ${role.id}}">Edit</a>
+                            <a class="dynamic-link" th:href="@{'/roles/delete/' + ${role.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

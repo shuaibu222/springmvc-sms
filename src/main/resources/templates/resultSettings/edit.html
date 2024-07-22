@@ -3,44 +3,50 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
->
+    lang="en">
 <head>
     <title>Edit Result Setting</title>
 </head>
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/resultSettings" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Edit Result Setting</h1>
             <form role="form" th:action="@{/resultSettings/update/{id}(id=${resultSetting.id})}" th:object="${resultSetting}" method="post">
                 <div>
                     <label for="section">Section:</label>
-                    <select id="section" th:field="*{sectionId}" required>
+                    <select id="section" th:field="*{sectionId}">
                         <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
                     </select>
                 </div>
                 <div>
-                    <label for="firstCA">1st C.A:</label>
-                    <input type="text" id="firstCA" th:field="*{firstCA}" required />
+                    <label for="firstCA">First CA:</label>
+                    <input type="text" id="firstCA" th:field="*{firstCA}" />
+                    <p th:if="${#fields.hasErrors('firstCA')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{firstCA}"></p>
                 </div>
                 <div>
-                    <label for="secondCA">2nd C.A:</label>
-                    <input type="text" id="secondCA" th:field="*{secondCA}" required />
+                    <label for="secondCA">Second CA:</label>
+                    <input type="text" id="secondCA" th:field="*{secondCA}" />
+                    <p th:if="${#fields.hasErrors('secondCA')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{secondCA}"></p>
                 </div>
                 <div>
-                    <label for="thirdCA">3rd C.A:</label>
+                    <label for="thirdCA">Third CA:</label>
                     <input type="text" id="thirdCA" th:field="*{thirdCA}" />
                 </div>
                 <div>
-                    <label for="fourthCA">4th C.A:</label>
+                    <label for="fourthCA">Fourth CA:</label>
                     <input type="text" id="fourthCA" th:field="*{fourthCA}" />
                 </div>
                 <div>
                     <label for="exam">Exam:</label>
-                    <input type="text" id="exam" th:field="*{exam}" required />
+                    <input type="text" id="exam" th:field="*{exam}" />
+                    <p th:if="${#fields.hasErrors('exam')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{exam}"></p>
                 </div>
                 <div>
                     <label for="total">Total:</label>
-                    <input type="text" id="total" th:field="*{total}" required />
+                    <input type="text" id="total" th:field="*{total}" />
                 </div>
                 <div>
                     <button type="submit">Update</button>

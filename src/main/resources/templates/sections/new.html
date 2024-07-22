@@ -3,6 +3,7 @@
     xmlns:th="http://thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
+    lang="en"
     >
 <head>
     <title>Create New Section</title>
@@ -10,11 +11,15 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/sections" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Create New Section</h1>
             <form th:action="@{/sections/create}" th:object="${section}" method="post">
                 <div>
                     <label for="sectionName">Section Name:</label>
-                    <input type="text" id="sectionName" th:field="*{sectionName}" required />
+                    <input type="text" id="sectionName" placeholder="e.g Nursery, JSS" th:field="*{sectionName}" />
+                    <p th:if="${#fields.hasErrors('sectionName')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem" th:errors="*{sectionName}"></p>
                 </div>
                 <div>
                     <button type="submit">Save</button>

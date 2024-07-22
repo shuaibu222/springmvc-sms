@@ -10,19 +10,25 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/comments" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Create New Comments</h1>
             <form th:action="@{/comments/create}" th:object="${comment}" method="post">
                 <div>
-                    <label>From:</label>
-                    <input type="text" th:field="*{rangeFrom}" required />
+                    <label for="rangeFrom">From:</label>
+                    <input id="rangeFrom" type="text" th:field="*{rangeFrom}" />
+                    <p th:if="${#fields.hasErrors('rangeFrom')}" th:errors="*{rangeFrom}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
-                    <label>To:</label>
-                    <input type="text" th:field="*{rangeTo}" required />
+                    <label for="rangeTo">To:</label>
+                    <input id="rangeTo" type="text" th:field="*{rangeTo}" />
+                    <p th:if="${#fields.hasErrors('rangeTo')}" th:errors="*{rangeTo}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="remark">Remarks:</label>
-                    <input type="text" id="remark" th:field="*{remark}" required />
+                    <input id="remark" type="text" th:field="*{remark}" />
+                    <p th:if="${#fields.hasErrors('remark')}" th:errors="*{remark}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <button type="submit">Save</button>

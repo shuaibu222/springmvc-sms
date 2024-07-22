@@ -22,17 +22,12 @@ import jakarta.validation.Valid;
 @PreAuthorize("hasRole('ADMIN')")
 public class ResultSettingsController {
 
-
-    // TODO: filter the one to update
-    
     private final ResultSettingsService resultSettingsService;
     private final SectionService sectionService;
-    private SectionRepository sectionRepository;
 
-    public ResultSettingsController(ResultSettingsService resultSettingsService, SectionService sectionService, SectionRepository sectionRepository) {
+    public ResultSettingsController(ResultSettingsService resultSettingsService, SectionService sectionService) {
         this.resultSettingsService = resultSettingsService;
         this.sectionService = sectionService;
-        this.sectionRepository = sectionRepository;
     }
 
     @GetMapping
@@ -43,6 +38,17 @@ public class ResultSettingsController {
         return "resultSettings/list";
     }
 
+    @PostMapping
+    public String saveListResultSetting(@Valid @ModelAttribute("resultSetting") ResultSettingsDto resultSettingDto, BindingResult result, Model model) {
+        if (result.hasErrors()){
+            model.addAttribute("sections", sectionService.getAllSections());
+            model.addAttribute("resultSettings", resultSettingsService.getAllResultSettings());
+            return "resultSettings/list";
+        }
+        resultSettingsService.saveOrUpdateResultSetting(resultSettingDto);
+        return "redirect:/resultSettings";
+    }
+
     @GetMapping("/new")
     public String createResultSettingForm(Model model) {
         model.addAttribute("resultSetting", new ResultSettingsModel());
@@ -51,7 +57,7 @@ public class ResultSettingsController {
     }
 
     @PostMapping("/create")
-    public String saveResultSetting(@Valid @ModelAttribute("result") ResultSettingsDto resultSettingDto, BindingResult result, Model model) {
+    public String saveResultSetting(@Valid @ModelAttribute("resultSetting") ResultSettingsDto resultSettingDto, BindingResult result, Model model) {
         if (result.hasErrors()){
             model.addAttribute("resultSetting", resultSettingDto);
             model.addAttribute("sections", sectionService.getAllSections());
@@ -64,22 +70,17 @@ public class ResultSettingsController {
     @GetMapping("/edit/{id}")
     public String updateResultSettingForm(@PathVariable Long id, Model model) {
         ResultSettingsDto resultSetting = resultSettingsService.getResultSettingById(id);
-        SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(resultSetting.getSectionId()));
         model.addAttribute("resultSetting", resultSetting);
-        model.addAttribute("sections", sectionDto);
+        model.addAttribute("sections", sectionService.getAllSections());
         return "resultSettings/edit";
     }
 
     @PostMapping("/update/{id}")
     public String updateResultSetting(@PathVariable Long id,
-                                @Valid @ModelAttribute("resultSetting") ResultSettingsDto resultSettingDto, 
+                                @Valid @ModelAttribute("resultSetting") ResultSettingsDto resultSettingDto,
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
-            ResultSettingsDto resultSetting = resultSettingsService.getResultSettingById(id);
-            SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(resultSetting.getSectionId()));
-            model.addAttribute("resultSetting", resultSetting);
-            model.addAttribute("sections", sectionDto);
-            model.addAttribute("resultSetting", resultSettingDto);
+            model.addAttribute("sections", sectionService.getAllSections());
             return "resultSettings/edit";
         }
         resultSettingDto.setId(id);

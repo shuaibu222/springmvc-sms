@@ -21,6 +21,7 @@ public class SessionModel {
     private Long id;
 
     private String sessionName;
+    private String isActive;
 
     
 }

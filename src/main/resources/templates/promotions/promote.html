@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+  <title>Promotions</title>
+  <script>
+    function fetchStudents() {
+      console.log("Fetching students...");
+      let classId = document.getElementById("classId").value;
+      console.log("Selected class ID:", classId);
+      let url = "/promotions/students/" + classId;
+      console.log("Fetching from URL:", url);
+
+      fetch(url)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log("Data received:", data);
+                let table = document.getElementById("studentsTable");
+                table.innerHTML = "";
+                data.forEach(student => {
+                  let row = table.insertRow();
+                  row.insertCell(0).innerHTML = student.id;
+                  row.insertCell(1).innerHTML = student.firstName + ' ' + student.lastName;
+                  row.insertCell(2).innerHTML = student.regNo;
+                  row.insertCell(3).innerHTML = student.sectionName + ' ' + student.studentClassName;
+
+                  let checkboxCell = row.insertCell(4);
+                  let checkbox = document.createElement("input");
+                  checkbox.type = "checkbox";
+                  checkbox.name = "studentIds";
+                  checkbox.value = student.id;
+                  checkboxCell.appendChild(checkbox);
+                });
+              })
+              .catch(error => console.error('Error fetching students:', error));
+    }
+
+    // Function to handle form submission
+    function handleFormSubmit(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Collect selected student IDs
+      let selectedStudentIds = [];
+      document.querySelectorAll('input[name="studentIds"]:checked').forEach(checkbox => {
+        selectedStudentIds.push(checkbox.value);
+      });
+
+      if (selectedStudentIds.length > 0) {
+        // Add hidden input fields dynamically
+        let hiddenContainer = document.getElementById("hiddenStudentIdsContainer");
+        hiddenContainer.innerHTML = "";
+        selectedStudentIds.forEach(id => {
+          let hiddenInput = document.createElement("input");
+          hiddenInput.type = "hidden";
+          hiddenInput.name = "studentIds";
+          hiddenInput.value = id;
+          hiddenContainer.appendChild(hiddenInput);
+        });
+
+        // Submit the form
+        event.target.submit();
+      } else {
+        alert("Please select at least one student to promote.");
+      }
+    }
+
+    // Function to call fetchStudents on page load if classId has a value
+    window.onload = function() {
+      let classSelect = document.getElementById("classId");
+      if (classSelect.value) {
+        fetchStudents();
+      }
+    };
+  </script>
+</head>
+<body>
+<section layout:fragment="body">
+  <article class="list-page">
+    <h1>Promotion</h1>
+
+    <!-- Form to filter students by class -->
+    <form class="list-form-layout">
+      <div style="display: flex; align-items: center; justify-content: center; width: 100%">
+        <div class="form-group" style="width: 50%">
+          <label for="classId">Select Class:</label>
+          <select id="classId" name="classId" onchange="fetchStudents()">
+            <option th:each="c : ${classes}" th:value="${c.id}" th:text="${c.sectionId + ' ' + c.className}" th:selected="${c.id == selectedClassId}"></option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <!-- Table to display students -->
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Full Name</th>
+          <th>Registration No.</th>
+          <th>Class</th>
+          <th>Promote</th>
+        </tr>
+        </thead>
+        <tbody id="studentsTable">
+        <!-- Rows will be inserted here by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Form to select students and promote them -->
+    <form th:action="@{/promotions/promote}" class="list-form-layout" method="post" onsubmit="handleFormSubmit(event)">
+      <div style="display: flex; align-items: center; justify-content: center; width: 100%">
+        <div class="form-group" style="width: 50%">
+          <label for="toClassId">To Class:</label>
+          <select id="toClassId" name="toClassId">
+            <option th:each="c : ${classes}" th:value="${c.id}" th:text="${c.sectionId + ' ' + c.className}"></option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Include this hidden field to submit the selected student IDs -->
+      <div id="hiddenStudentIdsContainer"></div>
+
+      <div class="form-group-btn">
+        <button type="submit">Promote</button>
+      </div>
+    </form>
+
+  </article>
+</section>
+</body>
+</html>

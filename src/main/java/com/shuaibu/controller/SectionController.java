@@ -30,10 +30,22 @@ public class SectionController {
     }
 
     @GetMapping
-    public String listSections(Model model) {
+    public String showSectionsPage(Model model) {
         model.addAttribute("section", new SectionModel());
         model.addAttribute("sections", sectionService.getAllSections());
         return "sections/list";
+    }
+
+
+    @PostMapping
+    public String listSections(@Valid @ModelAttribute("section") SectionDto section, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("sections", sectionService.getAllSections());
+            return "sections/list";
+        }
+
+        sectionService.saveOrUpdateSection(section);
+        return "redirect:/sections";
     }
 
     @GetMapping("/new")
@@ -48,7 +60,8 @@ public class SectionController {
             model.addAttribute("section", section);
             return "sections/new";
         }
-        sectionService.saveSection(section);
+
+        sectionService.saveOrUpdateSection(section);
         return "redirect:/sections";
     }
 
@@ -82,7 +95,7 @@ public class SectionController {
 //                schoolClassRepository.save(classModel);
 //        }
 
-        sectionService.updateSection(section);
+        sectionService.saveOrUpdateSection(section);
         return "redirect:/sections";
     }
 

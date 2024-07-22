@@ -1,23 +1,21 @@
 package com.shuaibu.controller;
 
+import com.shuaibu.dto.GradeDto;
+import com.shuaibu.model.GradeModel;
+import com.shuaibu.service.GradeService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.shuaibu.dto.GradeDto;
-import com.shuaibu.model.GradeModel;
-import com.shuaibu.service.GradeService;
-
 import jakarta.validation.Valid;
 
-@SuppressWarnings("SameReturnValue")
 @Controller
 @RequestMapping("/grades")
 @PreAuthorize("hasRole('ADMIN')")
 public class GradeController {
-    
+
     private final GradeService gradeService;
 
     public GradeController(GradeService gradeService) {
@@ -25,10 +23,20 @@ public class GradeController {
     }
 
     @GetMapping
-    public String listGrades(Model model) {
+    public String showListGrades(Model model) {
         model.addAttribute("grade", new GradeModel());
         model.addAttribute("grades", gradeService.getAllGrades());
         return "grades/list";
+    }
+
+    @PostMapping
+    public String listGradesSave(@Valid @ModelAttribute("grade") GradeDto grade, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("grades", gradeService.getAllGrades());
+            return "grades/list";
+        }
+        gradeService.saveGrade(grade);
+        return "redirect:/grades";
     }
 
     @GetMapping("/new")
@@ -55,9 +63,7 @@ public class GradeController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateGrade(@PathVariable Long id,
-                                @Valid @ModelAttribute("grade") GradeDto grade, 
-                                BindingResult result, Model model) {
+    public String updateGrade(@PathVariable Long id, @Valid @ModelAttribute("grade") GradeDto grade, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("grade", grade);
             return "grades/edit";

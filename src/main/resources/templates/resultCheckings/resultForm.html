@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+>
+<head>
+    <title>Result Checking</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <article  class="reg-form">
+            <h1>Result Checking</h1>
+            <form th:action="@{/resultCheckings}" th:object="${resultChecking}" method="post">
+                    <div>
+                        <label for="regNo">Registration No.:</label>
+                        <input type="text" id="regNo" th:field="*{regNo}" />
+                        <p th:if="${#fields.hasErrors('regNo')}" th:errors="*{regNo}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                    </div>
+                    <button type="submit">Print Result</button>
+            </form>
+        </article>
+    </section>
+</body>
+</html>

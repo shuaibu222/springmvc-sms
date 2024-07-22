@@ -10,6 +10,9 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/results" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Create New Result</h1>
             <form th:action="@{'/results/' + ${sectionName} + '/' + ${className} + '/create'}" th:object="${result}" method="post">
                 <div>

@@ -10,6 +10,9 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/results" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Edit Result</h1>
             <form role="form" th:action="@{/results/{sectionName}/{className}/update/{id}(id=${result.id}, sectionName=${result.sectionId}, className=${result.studentClassId})}" th:object="${result}" method="post">
                 <div>

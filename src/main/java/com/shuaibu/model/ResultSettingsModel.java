@@ -21,11 +21,11 @@ public class ResultSettingsModel {
     private Long id;
 
     private String sectionId;
-    private String firstCA;
-    private String secondCA;
-    private String thirdCA;
-    private String fourthCA;
-    private String exam;
-    private String total;
+    private Long firstCA;
+    private Long secondCA;
+    private Long thirdCA;
+    private Long fourthCA;
+    private Long exam;
+    private Long total;
     
 }

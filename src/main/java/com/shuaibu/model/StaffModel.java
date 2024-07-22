@@ -1,5 +1,7 @@
 package com.shuaibu.model;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -25,24 +27,23 @@ public class StaffModel {
     private Long userId;
     private String userName;
     private String password;
-    private String dateOfBirth;
-    private String startDate;
+    private LocalDate dateOfBirth;
+    private LocalDate employedDate;
     private String homeAddress;
     private String state;
     private String LGA;
     private String religion;
-    private String role;
     private String tribe;
     private String gender;
     private String profilePicture;
     private String phoneNumber;
+    private String isActive;
+    private String classTeacherOfId; // he's class teacher of
+    private String headTeacherOfId;
 
     @ElementCollection
     private Set<Long> subjectModelIds;
 
     @ElementCollection
     private Set<Long> classModelIds;
-
-    @ElementCollection
-    private Set<Long> roleModelIds;
 }

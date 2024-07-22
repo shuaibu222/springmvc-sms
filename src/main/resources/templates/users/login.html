@@ -2,24 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/fonts/css/all.min.css}">
 </head>
 <body>
-    <div th:if="${param.success}">
-        You successfully registered. Please use your credentials to log in.
-    </div>
-    <div th:if="${param.error}">
-        Login or password incorrect.
-    </div>
-
-    <div th:if="${param.logout}">
-        You've been logged out.
-    </div>
-    <form th:action="@{/login}" method="post">
-        <input name="username" type="text" placeholder="Username">
-        <input name="password" type="password" placeholder="Password">
-        <button type="submit">Save</button>
-    </form>
-    <a th:href="@{'/register'}">Don't have an account, Register here.</a>
+<section class="reg-form">
+    <article>
+        <div class="params success" th:if="${param.success}">
+            You successfully registered. Please use your credentials to log in.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Login or password incorrect.
+        </div>
+        <div class="params logout" th:if="${param.logout}">
+            You've been logged out.
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div class="input-group">
+                <input name="username" type="text" placeholder="Username">
+                <i class="fa fa-user"></i> <!-- FontAwesome icon -->
+            </div>
+            <div class="input-group">
+                <input name="password" type="password" placeholder="Password">
+                <i class="fa fa-lock"></i> <!-- FontAwesome icon -->
+            </div>
+            <button type="submit">Login</button>
+<!--            <a th:href="@{'/register'}">Don't have an account, Register here.</a>-->
+        </form>
+    </article>
+</section>
 </body>
 </html>

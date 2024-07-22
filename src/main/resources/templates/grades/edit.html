@@ -11,23 +11,30 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/grades" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Edit Grade</h1>
             <form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
                 <div>
-                    <label>From:</label>
-                    <input type="text" th:field="*{rangeFrom}" />
+                    <label for="rangeFrom">From:</label>
+                    <input id="rangeFrom" type="text" th:field="*{rangeFrom}" />
+                    <p th:if="${#fields.hasErrors('rangeFrom')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{rangeFrom}"></p>
                 </div>
                 <div>
-                    <label>To:</label>
-                    <input type="text" th:field="*{rangeTo}" />
+                    <label for="rangeTo">To:</label>
+                    <input id="rangeTo" type="text" th:field="*{rangeTo}" />
+                    <p th:if="${#fields.hasErrors('rangeTo')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{rangeTo}"></p>
                 </div>
                 <div>
-                    <label>Grades:</label>
-                    <input type="text" th:field="*{grade}" />
+                    <label for="grade">Grades:</label>
+                    <input id="grade" type="text" placeholder="e.g A" th:field="*{grade}" />
+                    <p th:if="${#fields.hasErrors('grade')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{grade}"></p>
                 </div>
                 <div>
-                    <label>Remarks:</label>
-                    <input type="text" th:field="*{remark}" />
+                    <label for="remark">Remarks:</label>
+                    <input id="remark" type="text" placeholder="e.g EXCELLENT" th:field="*{remark}" />
+                    <p th:if="${#fields.hasErrors('remark')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{remark}"></p>
                 </div>
                 <div>
                     <button type="submit">Update</button>

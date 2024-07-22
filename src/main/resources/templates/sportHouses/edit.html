@@ -3,6 +3,7 @@
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
+    lang="en"
     >
 <head>
     <title>Edit Sport House</title>
@@ -10,11 +11,15 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/sportHouses" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Edit Sport House</h1>
-            <form sportHouse="form" action="#" th:action="@{/sportHouses/update/{id}(id=${sportHouse.id})}" th:object="${sportHouse}" method="post">
+            <form role="form" action="#" th:action="@{/sportHouses/update/{id}(id=${sportHouse.id})}" th:object="${sportHouse}" method="post">
                 <div>
-                    <label>Sport House Name:</label>
-                    <input type="text" th:field="*{sportHouseName}" />
+                    <label for="sportHouseName">Sport House Name:</label>
+                    <input id="sportHouseName" type="text" th:field="*{sportHouseName}" />
+                    <p th:if="${#fields.hasErrors('sportHouseName')}" th:errors="*{sportHouseName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <button type="submit">Update</button>

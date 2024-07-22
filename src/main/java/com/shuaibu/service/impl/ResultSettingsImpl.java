@@ -34,7 +34,7 @@ public class ResultSettingsImpl implements ResultSettingsService {
 
     @Override
     public ResultSettingsDto getResultSettingById(Long id) {
-        return mapToDto(resultSettingsRepository.findById(id).get());
+        return mapToDto(resultSettingsRepository.findById(id).orElseThrow());
     }
 
     @Override

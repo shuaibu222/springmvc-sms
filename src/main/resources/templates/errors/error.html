@@ -2,14 +2,19 @@
 <html
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}"
->
+        lang="en">
 <head>
-    <title>Access Denied</title>
+  <title>Error</title>
 </head>
 <body>
-    <section layout:fragment="body">
-        <h1>Access Denied!</h1>
-        <p>You do not have permission to access this page.</p>
-    </section>
+  <section layout:fragment="body">
+    <article style="margin-top: 2rem">
+      <div style="font-size: 8rem; color: #ff253a; text-align: center"><i class="fas fa-exclamation-circle"></i></div>
+      <div>
+        <h1 style="text-align: center; font-size: 1.7rem;">Error</h1>
+        <p style="text-align: center" th:text="${message}"></p>
+      </div>
+    </article>
+  </section>
 </body>
 </html>

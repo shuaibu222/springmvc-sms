@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @SuppressWarnings("SameReturnValue")
 @Controller
-public class ErrorController {
+public class AccessDeniedController {
 
     @GetMapping("/access-denied")
     public String accessDenied() {
-        return "errors/error";
+        return "errors/access-denied";
     }
 }

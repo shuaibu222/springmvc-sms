@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -26,18 +29,23 @@ public class StudentModel {
     private String userName;
     private String password;
     private String regNo;
-    private String dateOfBirth;
-    private String admissionDate;
+    private LocalDate dateOfBirth;
+    private LocalDate admissionDate;
     private String homeAddress;
     private String termId;
     private String sectionId;
+    private String sectionName;
     private String state;
     private String LGA;
     private String religion;
     private String studentClassId;
+    private String studentClassName;
     private String sportHouseId;
     private String tribe;
     private String gender;
     private String profilePicture;
     private String phoneNumber;
+    private String isActive;
+    private Double balance;
+    private String admissionType;
 }

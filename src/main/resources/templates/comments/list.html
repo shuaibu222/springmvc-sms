@@ -14,19 +14,22 @@
         </div>
 
         <!-- Form Section -->
-            <form th:action="@{/comments/create}" th:object="${comment}" class="list-form-layout" method="post">
+            <form th:action="@{/comments}" th:object="${comment}" class="list-form-layout" method="post">
                 <div class="list-form">
                     <div class="form-group">
                         <label for="rangeFrom">Marks Range From:</label>
-                        <input type="text" id="rangeFrom" th:field="*{rangeFrom}" required />
+                        <input type="text" id="rangeFrom" th:field="*{rangeFrom}" />
+                        <p th:if="${#fields.hasErrors('rangeFrom')}" th:errors="*{rangeFrom}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                     </div>
                     <div class="form-group">
                         <label for="rangeTo">Marks Range To:</label>
-                        <input type="text" id="rangeTo" th:field="*{rangeTo}" required />
+                        <input type="text" id="rangeTo" th:field="*{rangeTo}" />
+                        <p th:if="${#fields.hasErrors('rangeTo')}" th:errors="*{rangeTo}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                     </div>
                     <div class="form-group">
                         <label for="remark">Remarks:</label>
-                        <input type="text" id="remark" th:field="*{remark}" required />
+                        <input type="text" id="remark" th:field="*{remark}" />
+                        <p th:if="${#fields.hasErrors('remark')}" th:errors="*{remark}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                     </div>
 
                 </div>
@@ -49,8 +52,8 @@
                     <td th:text="${comment.rangeFrom + '-' + comment.rangeTo}"></td>
                     <td th:text="${comment.remark}"></td>
                     <td>
-                        <a th:href="@{'/comments/edit/' + ${comment.id}}">Edit</a>
-                        <a th:href="@{'/comments/delete/' + ${comment.id}}">Delete</a>
+                        <a class="dynamic-link" th:href="@{'/comments/edit/' + ${comment.id}}">Edit</a>
+                        <a class="dynamic-link" th:href="@{'/comments/delete/' + ${comment.id}}">Delete</a>
                     </td>
                 </tr>
             </table>

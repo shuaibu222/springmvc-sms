@@ -1,6 +1,5 @@
 package com.shuaibu.model;
 
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -22,8 +21,8 @@ public class SchoolClassModel {
     private Long id;
 
     private String className;
-
     private String sectionId;
+    private String classTeacher;
 
     @ElementCollection
     private Set<Long> subjectModels;

@@ -1,5 +1,6 @@
 package com.shuaibu.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +9,8 @@ import lombok.Data;
 public class SessionDto {
     private Long id;
     
-    // Todo: Add validation
+    @NotEmpty(message = "* Must provide a session")
     private String sessionName;
+
+    private String isActive;
 }

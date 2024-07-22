@@ -92,13 +92,13 @@ public class ResultImpl implements ResultService {
                 .orElseThrow(() -> new EntityNotFoundException("Result settings not found for section ID: " + section.getId()));
 
         // Verify scores against result settings
-        if (resultDto.getFirstCA() > Long.parseLong(resultSetting.getFirstCA())) {
+        if (resultDto.getFirstCA() > resultSetting.getFirstCA()) {
             throw new IllegalArgumentException("First CA score exceeds the allowed maximum of " + resultSetting.getFirstCA());
         }
-        if (resultDto.getSecondCA() > Long.parseLong(resultSetting.getSecondCA())) {
+        if (resultDto.getSecondCA() > resultSetting.getSecondCA()) {
             throw new IllegalArgumentException("Second CA score exceeds the allowed maximum of " + resultSetting.getSecondCA());
         }
-        if (resultDto.getExam() > Long.parseLong(resultSetting.getExam())) {
+        if (resultDto.getExam() > resultSetting.getExam()) {
             throw new IllegalArgumentException("Exam score exceeds the allowed maximum of " + resultSetting.getExam());
         }
 

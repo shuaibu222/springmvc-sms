@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html 
+<html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}"
->
+        lang="en">
 <head>
     <title>Term List</title>
 </head>
@@ -15,11 +15,18 @@
                 <a href="/terms/new">Add New Term</a>
             </div>
 
-            <form th:action="@{/terms/create}" th:object="${term}" class="list-form-layout" method="post">
+            <form th:action="@{/terms}" th:object="${term}" class="list-form-layout" method="post">
                 <div class="list-form">
                     <div class="form-group">
-                        <label for="term">Term Name:</label>
-                        <input type="text" id="term" th:field="*{termName}" required />
+                        <label for="termName">Term Name:</label>
+                        <input type="text" id="termName" th:field="*{termName}" />
+                        <p th:if="${#fields.hasErrors('termName')}" th:errors="*{termName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="termActive">Is Active:</label>
+                        <select id="termActive" th:field="*{isActive}" th:name="isActive" required>
+                            <option th:each="active : ${isActive}" th:value="${active}" th:text="${active}"></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group-btn">
@@ -32,14 +39,16 @@
                     <tr>
                         <th>ID</th>
                         <th>Term Name</th>
+                        <th>Is Term Active</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="term : ${terms}">
                         <td th:text="${term.id}"></td>
                         <td th:text="${term.termName}"></td>
+                        <td th:text="${term.isActive}"></td>
                         <td>
-                            <a th:href="@{'/terms/edit/' + ${term.id}}">Edit</a>
-                            <a th:href="@{'/terms/delete/' + ${term.id}}">Delete</a>
+                            <a class="dynamic-link" th:href="@{'/terms/edit/' + ${term.id}}">Edit</a>
+                            <a class="dynamic-link" th:href="@{'/terms/delete/' + ${term.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

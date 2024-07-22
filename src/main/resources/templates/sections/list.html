@@ -16,11 +16,12 @@
                 <a href="/sections/new">Add New Section</a>
             </div>
 
-            <form th:action="@{/sections/create}" th:object="${section}" class="list-form-layout" method="post">
-                <div class="list-form">
-                    <div class="form-group">
+            <form th:action="@{/sections}" th:object="${section}" class="list-form-layout" method="post">
+                <div class="list-form" style="display: flex; align-items: center; justify-content: center; width: 100%">
+                    <div class="form-group" style="width: 50%">
                         <label for="sectionName">Section Name:</label>
-                        <input type="text" id="sectionName" th:field="*{sectionName}" required />
+                        <input type="text" id="sectionName" placeholder="e.g Nursery, JSS" th:field="*{sectionName}" />
+                        <p th:if="${#fields.hasErrors('sectionName')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{sectionName}"></p>
                     </div>
                 </div>
                 <div class="form-group-btn">
@@ -40,8 +41,8 @@
                         <td th:text="${section.id}"></td>
                         <td th:text="${section.sectionName}"></td>
                         <td>
-                            <a th:href="@{'/sections/edit/' + ${section.id}}">Edit</a>
-                            <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
+                            <a class="dynamic-link" th:href="@{'/sections/edit/' + ${section.id}}">Edit</a>
+                            <a class="dynamic-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

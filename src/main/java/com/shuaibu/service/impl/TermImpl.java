@@ -25,21 +25,23 @@ public class TermImpl implements TermService {
     @Override
     public List<TermDto> getAllTerms() {
         List<TermModel> terms = termRepository.findAll();
-        return terms.stream().map(TermMapper::mapToDto).collect(Collectors.toList());
+        return terms.stream()
+                .filter(t -> t.getIsActive().equals("True"))
+                .map(term -> TermDto.builder()
+                        .id(term.getId())
+                        .termName(term.getTermName())
+                        .isActive(term.getIsActive())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
     public TermDto getTermById(Long id) {
-        return mapToDto(termRepository.findById(id).get());
+        return mapToDto(termRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public void saveTerm(TermDto termDto) {
-        termRepository.save(mapToModel(termDto));
-    }
-
-    @Override
-    public void updateTerm(TermDto termDto) {
+    public void saveOrUpdateTerm(TermDto termDto) {
         termRepository.save(mapToModel(termDto));
     }
     

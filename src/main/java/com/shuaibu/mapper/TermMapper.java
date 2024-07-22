@@ -8,16 +8,18 @@ public class TermMapper {
     public static TermDto mapToDto(TermModel termModel){
 
         return TermDto.builder()
-        .id(termModel.getId())
-        .termName(termModel.getTermName())
+                .id(termModel.getId())
+                .termName(termModel.getTermName())
+                .isActive(termModel.getIsActive())
         .build();
     }
 
     public static TermModel mapToModel(TermDto termDto){
 
         return TermModel.builder()
-        .id(termDto.getId())
-        .termName(termDto.getTermName())
+                .id(termDto.getId())
+                .termName(termDto.getTermName())
+                .isActive(termDto.getIsActive())
         .build();
     }
 }

@@ -9,3 +9,9 @@
 ### Section Management
 ### Class Management
 ### Grade Management
+### Fees Management
+### Promotion & Demotion Management
+### Result Management
+### Checking Result Management
+### School Expense Management
+### Debit & Credit Account Management

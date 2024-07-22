@@ -3,6 +3,7 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}"
+        lang="en"
 >
 <head>
     <title>Sessions</title>
@@ -15,11 +16,18 @@
                 <a href="/sessions/new">Add New Session</a>
             </div>
 
-            <form th:action="@{/sessions/create}" th:object="${academicSession}" class="list-form-layout" method="post">
+            <form th:action="@{/sessions}" th:object="${academicSession}" class="list-form-layout" method="post">
                 <div class="list-form">
                     <div class="form-group">
                         <label for="sessionName">Session Name:</label>
-                        <input type="text" id="sessionName" th:field="*{sessionName}" required />
+                        <input type="text" id="sessionName" placeholder="e.g 2021/2022" th:field="*{sessionName}" />
+                        <p th:if="${#fields.hasErrors('sessionName')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{sessionName}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionActive">Is Active:</label>
+                        <select id="sessionActive" th:field="*{isActive}" th:name="isActive" required>
+                            <option th:each="active : ${isActive}" th:value="${active}" th:text="${active}"></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group-btn">
@@ -32,14 +40,16 @@
                     <tr>
                         <th>ID</th>
                         <th>Session Name</th>
+                        <th>Is Session Active</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="academicSession : ${sessions}">
                         <td th:text="${academicSession.id}"></td>
                         <td th:text="${academicSession.sessionName}"></td>
+                        <td th:text="${academicSession.isActive}"></td>
                         <td>
-                            <a th:href="@{'/sessions/edit/' + ${academicSession.id}}">Edit</a>
-                            <a th:href="@{'/sessions/delete/' + ${academicSession.id}}">Delete</a>
+                            <a class="dynamic-link" th:href="@{'/sessions/edit/' + ${academicSession.id}}">Edit</a>
+                            <a class="dynamic-link" th:href="@{'/sessions/delete/' + ${academicSession.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

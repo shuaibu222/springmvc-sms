@@ -31,6 +31,16 @@ public class SubjectController {
         return "subjects/list";
     }
 
+    @PostMapping
+    public String saveListSubject(@Valid @ModelAttribute("subject") SubjectDto subject, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("subjects", subjectService.getAllSubjects());
+            return "subjects/list";
+        }
+        subjectService.saveSubject(subject);
+        return "redirect:/subjects";
+    }
+
     @GetMapping("/new")
     public String createSubjectForm(Model model) {
         model.addAttribute("subject", new SubjectModel());

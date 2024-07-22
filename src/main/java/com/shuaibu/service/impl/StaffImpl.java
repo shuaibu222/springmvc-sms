@@ -1,15 +1,12 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.dto.StudentDto;
 import com.shuaibu.mapper.StaffMapper;
 import com.shuaibu.mapper.UserMapper;
 import com.shuaibu.model.SchoolClassModel;
-import com.shuaibu.model.StudentModel;
 import com.shuaibu.model.UserModel;
 import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +14,7 @@ import com.shuaibu.dto.StaffDto;
 import com.shuaibu.model.StaffModel;
 import com.shuaibu.repository.StaffRepository;
 import com.shuaibu.service.StaffService;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -49,15 +47,14 @@ public class StaffImpl implements StaffService {
 
     @Override
     public StaffDto getStaffById(Long id) {
-        return mapToDto(staffRepository.findById(id).get());
+        return mapToDto(staffRepository.findById(id).orElseThrow());
     }
 
     @Override
     public void saveOrUpdateStaff(StaffDto staffDto) {
 
-        StaffModel existingStaff;
         if (staffDto.getId() != null) {
-            existingStaff = staffRepository.findById(staffDto.getId())
+            StaffModel existingStaff = staffRepository.findById(staffDto.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Staff not found with ID: " + staffDto.getId()));
 
             // Delete user associated with the student (if it exists)
@@ -72,17 +69,28 @@ public class StaffImpl implements StaffService {
                 staffDto.setUserId(savedUser.getId());
                 staffDto.setPassword(passwordEncoder.encode(staffDto.getPassword()));
             }
+
+            // save
+            StaffModel staffModel = staffRepository.save(mapToModel(staffDto));
+
+            // TODO
+            // clear and add new classes
+            for (Long classIds: staffDto.getClassModelIds()) {
+                SchoolClassModel schoolClassModel = schoolClassRepository.findById(classIds).orElseThrow();
+                schoolClassModel.getStaffModels().add(staffModel.getId());
+                schoolClassRepository.save(schoolClassModel);
+            }
+
         } else {
             newUserModel(staffDto);
-        }
+            StaffModel staffModel = staffRepository.save(mapToModel(staffDto));
 
-        StaffModel staffModel = staffRepository.save(mapToModel(staffDto));
-
-        // join classes to a staff
-        for (Long classIds: staffDto.getClassModelIds()) {
-            SchoolClassModel schoolClassModel = schoolClassRepository.findById(classIds).get();
-            schoolClassModel.getStaffModels().add(staffModel.getId());
-            schoolClassRepository.save(schoolClassModel);
+            // join classes to a staff
+            for (Long classIds: staffDto.getClassModelIds()) {
+                SchoolClassModel schoolClassModel = schoolClassRepository.findById(classIds).orElseThrow();
+                schoolClassModel.getStaffModels().add(staffModel.getId());
+                schoolClassRepository.save(schoolClassModel);
+            }
         }
     }
     
@@ -105,4 +113,9 @@ public class StaffImpl implements StaffService {
         staffDto.setUserId(savedUser.getId());
         staffDto.setPassword(passwordEncoder.encode(staffDto.getPassword()));
     }
+
+//    private String getCurrentDateString() {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//        return LocalDate.now().format(formatter);
+//    }
 }

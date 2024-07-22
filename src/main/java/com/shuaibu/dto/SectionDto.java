@@ -1,5 +1,6 @@
 package com.shuaibu.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,8 +10,12 @@ import java.util.Set;
 @Builder
 public class SectionDto {
     private Long id;
-    
-    // Todo: Add validation
+
+    @NotEmpty(message = "* Section name must be specified")
     private String sectionName;
+
+    private String sectionDesc;
+    private String headTeacherId;
+
     private Set<String> classIds;
 }

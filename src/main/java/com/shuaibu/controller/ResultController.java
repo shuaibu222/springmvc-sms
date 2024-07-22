@@ -102,18 +102,33 @@ public class ResultController {
                 .filter(sec -> sec.getSectionName().equals(sectionName))
                 .collect(Collectors.toList());
 
-        List<SchoolClassModel> filteredClasses = schoolClassRepository.findAll()
+        SchoolClassModel filteredClasses = schoolClassRepository.findAll()
                 .stream()
                 .filter(cls -> cls.getSectionId().equals(sectionName) && cls.getClassName().equals(className))
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElseThrow();
 
         List<StudentDto> filteredStudents = studentService.getAllStudents()
                 .stream()
                 .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
                 .collect(Collectors.toList());
 
-        // Filter results based on section and classId
+        // Filter result list based on section and classId
         List<ResultModel> filteredResults = resultService.getResultModelsBySectionIdAndStudentClassId(sectionName, className);
+
+        // filter again based on class subjects
+        List<SubjectDto> filteredSubjectDtoList = null;
+        if (filteredClasses != null) {
+            // Filter the subjects based on the class subjects
+            filteredSubjectDtoList = subjectDtoList
+                    .stream()
+                    .filter(s -> filteredClasses.getSubjectModels().contains(s.getId()))
+                    .collect(Collectors.toList());
+
+            // Use the filtered list as needed
+        } else {
+            logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+        }
 
         model.addAttribute("students", filteredStudents);
         model.addAttribute("results", filteredResults);
@@ -122,7 +137,7 @@ public class ResultController {
         model.addAttribute("academicSessions", sessionService.getAllSessions());
         model.addAttribute("studentClasses", filteredClasses);
         model.addAttribute("terms", termService.getAllTerms());
-        model.addAttribute("subjects", subjectDtoList);
+        model.addAttribute("subjects", filteredSubjectDtoList);
 
         model.addAttribute("sectionName", sectionName);
         model.addAttribute("className", className);
@@ -166,15 +181,30 @@ public class ResultController {
                 .filter(sec -> sec.getSectionName().equals(sectionName))
                 .collect(Collectors.toList());
 
-        List<SchoolClassModel> filteredClasses = schoolClassRepository.findAll()
+        SchoolClassModel filteredClasses = schoolClassRepository.findAll()
                 .stream()
                 .filter(cls -> cls.getSectionId().equals(sectionName) && cls.getClassName().equals(className))
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElseThrow();
 
         List<StudentDto> filteredStudents = studentService.getAllStudents()
                 .stream()
                 .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
                 .collect(Collectors.toList());
+
+        // filter again based on class subjects
+        List<SubjectDto> filteredSubjectDtoList = null;
+        if (filteredClasses != null) {
+            // Filter the subjects based on the class subjects
+            filteredSubjectDtoList = subjectDtoList
+                    .stream()
+                    .filter(s -> filteredClasses.getSubjectModels().contains(s.getId()))
+                    .collect(Collectors.toList());
+
+            // Use the filtered list as needed
+        } else {
+            logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+        }
 
         model.addAttribute("students", filteredStudents);
         model.addAttribute("result", new ResultModel());
@@ -182,7 +212,7 @@ public class ResultController {
         model.addAttribute("academicSessions", sessionService.getAllSessions());
         model.addAttribute("studentClasses", filteredClasses);
         model.addAttribute("terms", termService.getAllTerms());
-        model.addAttribute("subjects", subjectDtoList);
+        model.addAttribute("subjects", filteredSubjectDtoList);
 
         model.addAttribute("sectionName", sectionName);
         model.addAttribute("className", className);
@@ -228,15 +258,31 @@ public class ResultController {
                     .filter(sec -> sec.getSectionName().equals(sectionName))
                     .collect(Collectors.toList());
 
-            List<SchoolClassModel> filteredClasses = schoolClassRepository.findAll()
+            SchoolClassModel filteredClasses = schoolClassRepository.findAll()
                     .stream()
                     .filter(cls -> cls.getSectionId().equals(sectionName) && cls.getClassName().equals(className))
-                    .collect(Collectors.toList());
+                    .findFirst()
+                    .orElseThrow();
 
             List<StudentDto> filteredStudents = studentService.getAllStudents()
                     .stream()
                     .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
                     .collect(Collectors.toList());
+
+            // filter again based on class subjects
+            List<SubjectDto> filteredSubjectDtoList = null;
+            if (filteredClasses != null) {
+                // Filter the subjects based on the class subjects
+                filteredSubjectDtoList = subjectDtoList
+                        .stream()
+                        .filter(s -> filteredClasses.getSubjectModels().contains(s.getId()))
+                        .collect(Collectors.toList());
+                logger.info("Found UserModel: {}", filteredSubjectDtoList);
+
+                // Use the filtered list as needed
+            } else {
+                logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+            }
 
             model.addAttribute("students", filteredStudents);
             model.addAttribute("result", new ResultModel());
@@ -244,7 +290,7 @@ public class ResultController {
             model.addAttribute("academicSessions", sessionService.getAllSessions());
             model.addAttribute("studentClasses", filteredClasses);
             model.addAttribute("terms", termService.getAllTerms());
-            model.addAttribute("subjects", subjectDtoList);
+            model.addAttribute("subjects", filteredSubjectDtoList);
 
             model.addAttribute("sectionName", sectionName);
             model.addAttribute("className", className);
@@ -289,9 +335,7 @@ public class ResultController {
         model.addAttribute("result", result);
 
         SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(result.getSectionId()));
-        SessionDto sessionDto = SessionMapper.mapToDto(sessionRepository.findBySessionName(result.getAcademicSessionId()));
         SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findSchoolClassModelByClassNameAndSectionId(result.getStudentClassId(), result.getSectionId()));
-        TermDto termDto = TermMapper.mapToDto(termRepository.findByTermName(result.getTermId()));
         SubjectDto subjectDto = SubjectMapper.mapToDto(subjectRepository.findBySubjectName(result.getSubjectId()));
 
         List<StudentDto> filteredStudents = studentService.getAllStudents()
@@ -299,12 +343,26 @@ public class ResultController {
                 .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
                 .collect(Collectors.toList());
 
+        // filter again based on class subjects
+        List<SubjectDto> filteredSubjectDtoList = null;
+        if (schoolClassDto != null) {
+            // Filter the subjects based on the class subjects
+            filteredSubjectDtoList = subjectDtoList
+                    .stream()
+                    .filter(s -> schoolClassDto.getSubjectModels().contains(s.getId()))
+                    .collect(Collectors.toList());
+
+            // Use the filtered list as needed
+        } else {
+            logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+        }
+
         model.addAttribute("students", filteredStudents);
         model.addAttribute("sections", sectionDto);
-        model.addAttribute("academicSessions", sessionDto); // TODO activating and deactivating
+        model.addAttribute("academicSessions", sessionService.getAllSessions());
         model.addAttribute("studentClasses", schoolClassDto);
-        model.addAttribute("terms", termDto); // TODO activating and deactivating
-        model.addAttribute("subjects", subjectDtoList);
+        model.addAttribute("terms", termService.getAllTerms());
+        model.addAttribute("subjects", filteredSubjectDtoList);
 
         // Default values for this result
         model.addAttribute("subjectDefault", subjectDto.getSubjectName());
@@ -349,9 +407,7 @@ public class ResultController {
             ResultDto resultData = resultService.getResultById(id);
 
             SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(resultData.getSectionId()));
-            SessionDto sessionDto = SessionMapper.mapToDto(sessionRepository.findBySessionName(resultData.getAcademicSessionId()));
             SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findSchoolClassModelByClassNameAndSectionId(resultData.getStudentClassId(), resultData.getSectionId()));
-            TermDto termDto = TermMapper.mapToDto(termRepository.findByTermName(resultData.getTermId()));
             SubjectDto subjectDto = SubjectMapper.mapToDto(subjectRepository.findBySubjectName(resultData.getSubjectId()));
 
             List<StudentDto> filteredStudents = studentService.getAllStudents()
@@ -359,12 +415,26 @@ public class ResultController {
                     .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
                     .collect(Collectors.toList());
 
+            // filter again based on class subjects
+            List<SubjectDto> filteredSubjectDtoList = null;
+            if (schoolClassDto != null) {
+                // Filter the subjects based on the class subjects
+                filteredSubjectDtoList = subjectDtoList
+                        .stream()
+                        .filter(s -> schoolClassDto.getSubjectModels().contains(s.getId()))
+                        .collect(Collectors.toList());
+
+                // Use the filtered list as needed
+            } else {
+                logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+            }
+
             model.addAttribute("students", filteredStudents);
             model.addAttribute("sections", sectionDto);
-            model.addAttribute("academicSessions", sessionDto);
+            model.addAttribute("academicSessions", sessionService.getAllSessions());
             model.addAttribute("studentClasses", schoolClassDto);
-            model.addAttribute("terms", termDto);
-            model.addAttribute("subjects", subjectDtoList);
+            model.addAttribute("terms", termService.getAllTerms());
+            model.addAttribute("subjects", filteredSubjectDtoList);
 
             // Default values for this result
             model.addAttribute("subjectDefault", subjectDto.getSubjectName());

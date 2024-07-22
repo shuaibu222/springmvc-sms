@@ -1,20 +1,30 @@
 <!DOCTYPE html>
-<html 
-    xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout}"
-    >
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
 <head>
     <title>Edit Term</title>
 </head>
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/terms" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Edit Term</h1>
-            <form term="form" action="#" th:action="@{/terms/update/{id}(id=${term.id})}" th:object="${term}" method="post">
+            <form role="form" th:action="@{/terms/update/{id}(id=${term.id})}" th:object="${term}" method="post">
                 <div>
-                    <label>Term Name:</label>
-                    <input type="text" th:field="*{termName}" />
+                    <label for="termName">Term Name:</label>
+                    <input type="text" id="termName" th:field="*{termName}" />
+                    <p th:if="${#fields.hasErrors('termName')}" th:errors="*{termName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+                <div>
+                    <label for="termActive">Is Active:</label>
+                    <select id="termActive" th:field="*{isActive}" th:name="isActive" required>
+                        <option th:each="active : ${isActive}" th:value="${active}" th:text="${active}"></option>
+                    </select>
                 </div>
                 <div>
                     <button type="submit">Update</button>

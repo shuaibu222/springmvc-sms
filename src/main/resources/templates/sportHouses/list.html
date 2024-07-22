@@ -15,11 +15,12 @@
                 <a href="/sportHouses/new">Add New Sport House</a>
             </div>
 
-            <form th:action="@{/sportHouses/create}" th:object="${sportHouse}" class="list-form-layout" method="post">
-                <div class="list-form">
-                    <div class="form-group">
+            <form th:action="@{/sportHouses}" th:object="${sportHouse}" class="list-form-layout" method="post">
+                <div class="list-form" style="display: flex; align-items: center; justify-content: center; width: 100%">
+                    <div class="form-group" style="width: 40%">
                         <label for="sportHouse">Sport House Name:</label>
-                        <input type="text" id="sportHouse" th:field="*{sportHouseName}" required />
+                        <input type="text" id="sportHouse" th:field="*{sportHouseName}" />
+                        <p th:if="${#fields.hasErrors('sportHouseName')}" th:errors="*{sportHouseName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                     </div>
                 </div>
                 <div class="form-group-btn">
@@ -38,8 +39,8 @@
                         <td th:text="${sportHouse.id}"></td>
                         <td th:text="${sportHouse.sportHouseName}"></td>
                         <td>
-                            <a th:href="@{'/sportHouses/edit/' + ${sportHouse.id}}">Edit</a>
-                            <a th:href="@{'/sportHouses/delete/' + ${sportHouse.id}}">Delete</a>
+                            <a class="dynamic-link" th:href="@{'/sportHouses/edit/' + ${sportHouse.id}}">Edit</a>
+                            <a class="dynamic-link" th:href="@{'/sportHouses/delete/' + ${sportHouse.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

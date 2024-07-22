@@ -31,6 +31,17 @@ public class SportHouseController {
         return "sportHouses/list";
     }
 
+    @PostMapping
+    public String saveListSportHouse(@Valid @ModelAttribute("sportHouse") SportHouseDto sportHouse,
+                                 BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("sportHouses", sportHouseService.getAllSportHouses());
+            return "sportHouses/list";
+        }
+        sportHouseService.saveSportHouse(sportHouse);
+        return "redirect:/sportHouses";
+    }
+
     @GetMapping("/new")
     public String createSportHouseForm(Model model) {
         model.addAttribute("sportHouse", new SportHouseModel());

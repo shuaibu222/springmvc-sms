@@ -1,66 +1,80 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" lang="en">
+
 <head>
     <title>Classes</title>
 </head>
+
 <body>
-    <section layout:fragment="body">
-        <article class="list-page">
-            <div class="list-header">
-                <h1>Classes</h1>
-                <a href="/classes/new">Add New Class</a>
-            </div>
+<section layout:fragment="body">
+    <article class="list-page">
+        <div class="list-header">
+            <h1>Classes</h1>
+            <a href="/classes/new">Add New Class</a>
+        </div>
 
-            <!-- Form Section -->
-            <form th:action="@{/classes/create}" th:object="${schoolClass}" class="list-form-layout" method="post">
-                <div class="list-form">
-                    <div class="form-group">
-                        <label for="section">Section:</label>
-                        <select id="section" th:field="*{sectionId}" th:name="sectionId" required>
-                            <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="className">Class Name:</label>
-                        <input type="text" id="className" placeholder="e.g one or 1" th:field="*{className}" required />
-                    </div>
-                    <div class="checkbox-container">
-                        <label>Subjects: </label>
-                        <div th:each="subject : ${subjects}">
-                            <input type="checkbox" th:id="${'subject_' + subject.id}" th:field="*{subjectModels}" th:name="subjectModels" th:value="${subject.id}" />
-                            <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
-                            <br/>
-                        </div>
-                    </div>
+        <!-- Form Section -->
+        <form th:action="@{/classes}" th:object="${schoolClass}" class="list-form-layout" method="post">
+            <div class="list-form">
+                <div class="form-group">
+                    <label for="section">Section:</label>
+                    <select id="section" th:field="*{sectionId}">
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('sectionId')}"
+                       style="color: #ff253a; font-style: italic; font-size: 0.9rem;"
+                       th:errors="*{sectionId}"></p>
                 </div>
-                <div class="form-group-btn">
-                    <button type="submit">Save</button>
+                <div class="form-group">
+                    <label for="className">Class Name:</label>
+                    <input type="text" id="className" placeholder="e.g One" th:field="*{className}" />
+                    <p th:if="${#fields.hasErrors('className')}"
+                       style="color: #ff253a; font-style: italic; font-size: 0.9rem;"
+                       th:errors="*{className}"></p>
                 </div>
-            </form>
-
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Section Name</th>
-                        <th>Class Name</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr th:each="schoolClass : ${schoolClasses}">
-                        <td th:text="${schoolClass.id}"></td>
-                        <td th:text="${schoolClass.sectionId}"></td>
-                        <td th:text="${schoolClass.sectionId + ' ' + schoolClass.className}"></td>
-                        <td>
-                            <a th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>
-                            <a th:href="@{'/classes/delete/' + ${schoolClass.id}}">Delete</a>
-                        </td>
-                    </tr>
-                </table>
+                <div class="checkbox-container">
+                    <label>Subjects:</label>
+                    <div th:each="subject : ${subjects}">
+                        <input type="checkbox" th:id="${'subject_' + subject.id}" th:field="*{subjectModels}" th:value="${subject.id}" />
+                        <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
+                        <br/>
+                    </div>
+                    <p th:if="${#fields.hasErrors('subjectModels')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{subjectModels}"></p>
+                </div>
             </div>
-        </article>
-    </section>
+            <div class="form-group-btn">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Section Name</th>
+                    <th>Class Name</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="schoolClass : ${schoolClasses}">
+                    <td th:text="${schoolClass.id}"></td>
+                    <td th:text="${schoolClass.sectionId}"></td>
+                    <td th:text="${schoolClass.className}"></td>
+                    <td>
+                        <a class="dynamic-link" th:href="@{'/classes/edit/' + ${schoolClass.id}}">Edit</a>
+                        <a class="dynamic-link" th:href="@{'/classes/delete/' + ${schoolClass.id}}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</section>
 </body>
+
 </html>

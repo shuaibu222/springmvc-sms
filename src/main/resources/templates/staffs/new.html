@@ -3,6 +3,7 @@
     xmlns:th="http://thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
+    lang="en"
     >
 <head>
     <title>Create New Staff</title>
@@ -10,72 +11,101 @@
 <body>
     <section layout:fragment="body">
         <section class="form-container">
+            <a href="/staffs" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
             <h1>Create New Staff</h1>
-            <form th:action="@{/staffs/create}" th:object="${staff}" method="post">
+            <form th:action="@{/staffs/create}" role="form" th:object="${staff}" method="post">
                 <div>
                     <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" th:field="*{firstName}" required />
+                    <input type="text" id="firstName" th:field="*{firstName}" />
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" th:field="*{lastName}" required />
+                    <input type="text" id="lastName" th:field="*{lastName}" />
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
-                <div class="form-group">
+                <div>
                     <label for="userName">User Name:</label>
-                    <input type="text" id="userName" th:field="*{userName}" required />
+                    <input type="text" id="userName" th:field="*{userName}" />
+                    <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" style="padding: 0.5rem; border-radius: 0.2rem" th:field="*{password}" />
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" th:field="*{password}" required />
-                </div>
-                <div>
                     <label for="dateOfBirth">Date of Birth:</label>
-                    <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" required />
+                    <input type="date" style="padding: 0.8rem" id="dateOfBirth" th:field="*{dateOfBirth}" />
+                    <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
-                <div>
-                    <label for="startDate">Employed Date:</label>
-                    <input type="text" id="startDate" th:field="*{startDate}" required />
+                <div class="form-group">
+                    <label for="employedDate">Employed Date:</label>
+                    <input type="date" style="padding: 0.8rem" id="employedDate" th:field="*{employedDate}" />
+                    <p th:if="${#fields.hasErrors('employedDate')}" th:errors="*{employedDate}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="homeAddress">Home Address:</label>
-                    <input type="text" id="homeAddress" th:field="*{homeAddress}" required />
+                    <input type="text" id="homeAddress" th:field="*{homeAddress}" />
+                    <p th:if="${#fields.hasErrors('homeAddress')}" th:errors="*{homeAddress}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="state">State:</label>
-                    <input type="text" id="state" th:field="*{state}" required />
+                    <input type="text" id="state" th:field="*{state}" />
+                    <p th:if="${#fields.hasErrors('state')}" th:errors="*{state}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="LGA">L.G.A:</label>
-                    <input type="text" id="LGA" th:field="*{LGA}" required />
+                    <input type="text" id="LGA" th:field="*{LGA}" />
+                    <p th:if="${#fields.hasErrors('LGA')}" th:errors="*{LGA}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="religion">Religion:</label>
-                    <input type="text" id="religion" th:field="*{religion}" required />
+                    <input type="text" id="religion" th:field="*{religion}" />
+                    <p th:if="${#fields.hasErrors('religion')}" th:errors="*{religion}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="tribe">Tribe:</label>
-                    <input type="text" id="tribe" th:field="*{tribe}" required />
+                    <input type="text" id="tribe" th:field="*{tribe}" />
+                    <p th:if="${#fields.hasErrors('tribe')}" th:errors="*{tribe}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="gender">Gender:</label>
-                    <input type="text" id="gender" th:field="*{gender}" required />
+                    <select id="gender" th:field="*{gender}" th:name="gender">
+                        <option th:each="g : ${gender}"
+                                th:value="${g}"
+                                th:text="${g}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+                <div class="form-group">
+                    <label for="isActive">Is Teacher Active:</label>
+                    <select id="isActive" th:field="*{isActive}" th:name="isActive">
+                        <option th:each="a : ${isActive}"
+                                th:value="${a}"
+                                th:text="${a}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('isActive')}" th:errors="*{isActive}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="profilePicture">Profile Picture:</label>
-                    <input type="text" id="profilePicture" th:field="*{profilePicture}" required />
+                    <input type="text" id="profilePicture" th:field="*{profilePicture}" />
                 </div>
                 <div>
                     <label for="phoneNumber">Phone Number:</label>
-                    <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required />
+                    <input type="text" id="phoneNumber" th:field="*{phoneNumber}" />
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div class="checkbox-container">
-                    <em>*Note: this part is only for teaching staff</em>
                     <label>Classes:</label>
                     <div th:each="classModel : ${classModels}">
                         <input type="checkbox" th:id="${'classModel_' + classModel.id}" th:name="classModelIds" th:field="*{classModelIds}" th:value="${classModel.id}" />
                         <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.sectionId + ' ' + classModel.className}"></label>
                         <br/>
                     </div>
+                    <p th:if="${#fields.hasErrors('classModelIds')}" th:errors="*{classModelIds}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div class="checkbox-container">
                     <label>Subjects: </label>
@@ -84,6 +114,7 @@
                         <label th:for="${'subject_' + subject.id}" th:text="${subject.subjectName}"></label>
                         <br/>
                     </div>
+                    <p th:if="${#fields.hasErrors('subjectModelIds')}" th:errors="*{subjectModelIds}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <button type="submit">Save</button>

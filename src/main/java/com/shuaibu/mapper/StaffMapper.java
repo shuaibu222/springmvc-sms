@@ -2,9 +2,10 @@ package com.shuaibu.mapper;
 
 import com.shuaibu.dto.StaffDto;
 import com.shuaibu.model.StaffModel;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class StaffMapper {
-    
+
     public static StaffDto mapToDto(StaffModel staffModel){
 
         return StaffDto.builder()
@@ -15,7 +16,7 @@ public class StaffMapper {
                 .userName(staffModel.getUserName())
                 .password(staffModel.getPassword())
                 .dateOfBirth(staffModel.getDateOfBirth())
-                .startDate(staffModel.getStartDate())
+                .employedDate(staffModel.getEmployedDate())
                 .homeAddress(staffModel.getHomeAddress())
                 .state(staffModel.getState())
                 .LGA(staffModel.getLGA())
@@ -24,9 +25,11 @@ public class StaffMapper {
                 .gender(staffModel.getGender())
                 .profilePicture(staffModel.getProfilePicture())
                 .phoneNumber(staffModel.getPhoneNumber())
+                .isActive(staffModel.getIsActive())
+                .classTeacherOfId(staffModel.getClassTeacherOfId())
+                .headTeacherOfId(staffModel.getHeadTeacherOfId())
                 .subjectModelIds(staffModel.getSubjectModelIds())
                 .classModelIds(staffModel.getClassModelIds())
-                .roleModelIds(staffModel.getRoleModelIds())
                 .build();
     }
 
@@ -40,7 +43,7 @@ public class StaffMapper {
                 .userName(staffDto.getUserName())
                 .password(staffDto.getPassword())
                 .dateOfBirth(staffDto.getDateOfBirth())
-                .startDate(staffDto.getStartDate())
+                .employedDate(staffDto.getEmployedDate())
                 .homeAddress(staffDto.getHomeAddress())
                 .state(staffDto.getState())
                 .LGA(staffDto.getLGA())
@@ -49,9 +52,11 @@ public class StaffMapper {
                 .gender(staffDto.getGender())
                 .profilePicture(staffDto.getProfilePicture())
                 .phoneNumber(staffDto.getPhoneNumber())
+                .isActive(staffDto.getIsActive())
+                .classTeacherOfId(staffDto.getClassTeacherOfId())
+                .headTeacherOfId(staffDto.getHeadTeacherOfId())
                 .subjectModelIds(staffDto.getSubjectModelIds())
                 .classModelIds(staffDto.getClassModelIds())
-                .roleModelIds(staffDto.getRoleModelIds())
                 .build();
     }
 }

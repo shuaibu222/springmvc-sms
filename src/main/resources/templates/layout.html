@@ -25,8 +25,9 @@
     <div class="content-wrapper">
         <aside class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
-                <li><a sec:authorize="hasRole('ADMIN')" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/students"><i class="fas fa-user-graduate"></i> Students</a></li>
+<!--                TODO: dashboard issue for both student, teacher, account officer and admin-->
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/students"><i class="fas fa-user-graduate"></i> Students</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sections"><i class="fas fa-layer-group"></i> Sections</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/classes"><i class="fas fa-school"></i> Classes</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/grades"><i class="fa fa-clipboard-list"></i> Grades</a></li>
@@ -34,25 +35,31 @@
                     <a sec:authorize="hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
                     <ul class="submenu">
                         <li th:each="sectionClass : ${classes}">
-                            <!-- Assuming you want to get the last character of className -->
                             <a th:href="@{'/results/' + ${sectionClass.sectionId} + '/' + ${sectionClass.className}}" th:text="${sectionClass.sectionId} + ' ' + ${sectionClass.className}"></a>
                         </li>
-
                     </ul>
                 </li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/subjects"><i class="fas fa-book"></i> Subjects</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/resultSettings"><i class="fas fa-cog"></i> Result Settings</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sessions"><i class="fas fa-calendar-alt"></i> Academic Sessions</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/staffs"><i class="fas fa-users"></i> Staffs</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/users"><i class="fas fa-user-circle"></i> Users Profile</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/roles"><i class="fas fa-user-tag"></i> Roles</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('FINANCE_OFFICER')" href="/fees"><i class="fas fa-money-bill-wave"></i> Student Fees</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('FINANCE_OFFICER')" href="/finances"><i class="fas fa-calculator"></i> *School Finance</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/promotions"><i class="fas fa-arrows-up-to-line"></i> Promotion</a></li>
+<!--                TODO: student search and edit, report sheet design, student & staff details page-->
+<!--                    TODO: fees statement design, transaction records for each student, and school expense tracker-->
                 <li><a sec:authorize="hasRole('ADMIN')" href="/terms"><i class="fa fa-graduation-cap"></i> Terms</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sportHouses"><i class="fa fa-running"></i> Sport Houses</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/attendance"><i class="fas fa-clipboard-list"></i> Attendance</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF')" href="/comments"><i class="fas fa-comments"></i> Result Comments</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/resultChecking"><i class="fa fa-file-alt"></i> Result Checking</a></li>
-                <li><a href="/awards"><i class="fas fa-trophy"></i> Awards</a></li>
-                <li><a href="/settings"><i class="fas fa-cogs"></i> Settings</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/events"><i class="fas fa-calendar"></i> Event</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/classTeachers"><i class="fas fa-chalkboard-teacher"></i> Class Teachers</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/classTeacherComments"><i class="fas fa-comment"></i> *Class Comment</a></li>
+<!--                TODO: class teacher comment, and head teachers comment-->
+                <li><a sec:authorize="hasRole('ADMIN')" href="/headTeachers"><i class="fas fa-user-tie"></i> Head Teacher</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/headTeacherComments"><i class="fas fa-comment-alt"></i> *Head Comment</a></li>
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/resultCheckings"><i class="fa fa-file-alt"></i> Result Checking</a></li>
+<!--                <li><a sec:authorize="hasRole('ADMIN') or hasRole('FINANCE_OFFICER')" href="/feesAccount"><i class="fas fa-file-invoice-dollar"></i> *Fees Account</a></li>-->
+<!--                <li><a href="/awards"><i class="fas fa-trophy"></i> Awards</a></li>-->
+                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/notifications"><i class="fas fa-bell"></i> Notifications</a></li>
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </aside>
@@ -60,7 +67,7 @@
             <!-- Main content will be injected here -->
         </main>
     </div>
-    
+
     <script>
         // JavaScript for toggling sidebar
         document.getElementById('toggle-button').addEventListener('click', function() {
@@ -79,6 +86,86 @@
                 }
             });
         });
+
+        // // Load content dynamically for sidebar links
+        // document.querySelectorAll('.sidebar-menu a').forEach(function(link) {
+        //     link.addEventListener('click', function(event) {
+        //         event.preventDefault();
+        //
+        //         // Remove active class from all links
+        //         document.querySelectorAll('.sidebar-menu a').forEach(function(link) {
+        //             link.classList.remove('active');
+        //         });
+        //
+        //         // Add active class to the clicked link
+        //         this.classList.add('active');
+        //
+        //         // Store the active link's href in local storage
+        //         localStorage.setItem('activeLink', this.href);
+        //
+        //         // Load content dynamically using fetch API
+        //         const contentContainer = document.querySelector('.main-content');
+        //         fetch(this.href + '?' + new Date().getTime())  // Add timestamp to prevent caching
+        //             .then(response => response.text())
+        //             .then(html => {
+        //                 const tempDiv = document.createElement('div');
+        //                 tempDiv.innerHTML = html;
+        //                 const newContent = tempDiv.querySelector('.main-content'); // Replace with appropriate selector
+        //                 if (newContent) {
+        //                     contentContainer.innerHTML = newContent.innerHTML;
+        //                 }
+        //                 // Update the browser's URL
+        //                 history.pushState(null, '', this.href);
+        //             })
+        //             .catch(error => console.error('Error fetching content:', error));
+        //     });
+        // });
+        //
+        // // Restore active link on page load
+        // window.addEventListener('load', function() {
+        //     const activeLink = localStorage.getItem('activeLink');
+        //     if (activeLink) {
+        //         const links = document.querySelectorAll('.sidebar-menu a');
+        //         links.forEach(link => {
+        //             if (link.href === activeLink) {
+        //                 link.classList.add('active');
+        //             }
+        //         });
+        //         // Fetch and load the active link's content
+        //         const contentContainer = document.querySelector('.main-content');
+        //         fetch(activeLink)
+        //             .then(response => response.text())
+        //             .then(html => {
+        //                 const tempDiv = document.createElement('div');
+        //                 tempDiv.innerHTML = html;
+        //                 const newContent = tempDiv.querySelector('.main-content');
+        //                 if (newContent) {
+        //                     contentContainer.innerHTML = newContent.innerHTML;
+        //                 }
+        //             })
+        //             .catch(error => console.error('Error fetching content:', error));
+        //         // Update the browser's URL
+        //         history.replaceState(null, '', activeLink);
+        //     }
+        // });
+        //
+        // // Handle back/forward navigation
+        // window.addEventListener('popstate', function() {
+        //     const contentContainer = document.querySelector('.main-content');
+        //     fetch(window.location.href)
+        //         .then(response => response.text())
+        //         .then(html => {
+        //             const tempDiv = document.createElement('div');
+        //             tempDiv.innerHTML = html;
+        //             const newContent = tempDiv.querySelector('.main-content');
+        //             if (newContent) {
+        //                 contentContainer.innerHTML = newContent.innerHTML;
+        //             }
+        //         })
+        //         .catch(error => console.error('Error fetching content:', error));
+        // });
+
     </script>
+
 </body>
 </html>

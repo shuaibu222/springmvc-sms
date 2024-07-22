@@ -31,6 +31,16 @@ public class CommentController {
         return "comments/list";
     }
 
+    @PostMapping
+    public String saveListComment(@Valid @ModelAttribute("comment") CommentDto comment, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("comments", commentService.getAllComments());
+            return "comments/list";
+        }
+        commentService.saveOrUpdateComment(comment);
+        return "redirect:/comments";
+    }
+
     @GetMapping("/new")
     public String createCommentForm(Model model) {
         model.addAttribute("comment", new CommentModel());

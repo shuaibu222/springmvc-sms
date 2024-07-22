@@ -20,8 +20,8 @@ public class CommentModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer rangeFrom;
-    private Integer rangeTo;
+    private Long rangeFrom;
+    private Long rangeTo;
     private String remark;
 
     

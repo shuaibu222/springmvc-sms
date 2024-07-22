@@ -1,5 +1,6 @@
 package com.shuaibu.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,8 +8,10 @@ import lombok.Data;
 @Builder
 public class TermDto {
     private Long id;
-    
-    // Todo: Add validation
+
+    @NotEmpty(message = "* Term name is mandatory")
     private String termName;
+
+    private String isActive;
 
 }

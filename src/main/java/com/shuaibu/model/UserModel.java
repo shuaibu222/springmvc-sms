@@ -22,6 +22,7 @@ public class UserModel {
 
     private String username;
     private String password;
+    private String isActive;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles = new HashSet<>();

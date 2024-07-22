@@ -1,6 +1,7 @@
 package com.shuaibu.service.impl;
 
 import com.shuaibu.mapper.SectionMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SectionDto;
@@ -30,18 +31,18 @@ public class SectionImpl implements SectionService {
 
     @Override
     public SectionDto getSectionById(Long id) {
-        return mapToDto(sectionRepository.findById(id).get());
+
+        return mapToDto(sectionRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public void saveSection(SectionDto sectionDto) {
+    public void saveOrUpdateSection(SectionDto sectionDto) {
+        if (sectionDto.getSectionName().equals("JSS") || sectionDto.getSectionName().equals("SSS")) {
+            sectionDto.setSectionDesc("Secondary");
+        }
         sectionRepository.save(mapToModel(sectionDto));
     }
 
-    @Override
-    public void updateSection(SectionDto sectionDto) {
-        sectionRepository.save(mapToModel(sectionDto));
-    }
     
     @Override
     public void deleteSection(Long id) {

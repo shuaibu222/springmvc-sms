@@ -2,10 +2,7 @@ package com.shuaibu.controller;
 
 import com.shuaibu.dto.SchoolClassDto;
 import com.shuaibu.model.StaffModel;
-import com.shuaibu.model.UserModel;
-import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.StaffRepository;
-import com.shuaibu.repository.UserRepository;
 import com.shuaibu.service.SchoolClassService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

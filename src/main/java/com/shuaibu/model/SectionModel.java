@@ -1,6 +1,7 @@
 package com.shuaibu.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,8 @@ public class SectionModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String sectionName;
+    private String sectionDesc;
+    private String headTeacherId;
 
     @ElementCollection
     private Set<String> classIds;

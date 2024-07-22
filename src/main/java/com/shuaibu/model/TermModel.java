@@ -21,4 +21,5 @@ public class TermModel {
     private Long id;
 
     private String termName;
+    private String isActive;
 }

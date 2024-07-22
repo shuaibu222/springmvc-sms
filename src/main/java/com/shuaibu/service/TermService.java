@@ -7,7 +7,6 @@ import com.shuaibu.dto.TermDto;
 public interface TermService {
     List<TermDto> getAllTerms();
     TermDto getTermById(Long id);
-    void saveTerm(TermDto termDto);
-    void updateTerm(TermDto termDto);
+    void saveOrUpdateTerm(TermDto termDto);
     void deleteTerm(Long id);
 }

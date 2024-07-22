@@ -2,8 +2,7 @@ package com.shuaibu.controller;
 
 import com.shuaibu.dto.*;
 import com.shuaibu.mapper.*;
-import com.shuaibu.model.SchoolClassModel;
-import com.shuaibu.model.UserModel;
+import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
 import com.shuaibu.service.*;
 import org.slf4j.Logger;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import com.shuaibu.model.StudentModel;
 
 import jakarta.validation.Valid;
 
@@ -41,8 +38,9 @@ public class StudentController {
     private final TermRepository termRepository;
     private final SportHouseRepository sportHouseRepository;
     private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
 
-    public StudentController(PasswordEncoder passwordEncoder, StudentService studentService, SchoolClassService schoolClassService, TermService termService, SportHouseService sportHouseService, UserService userService, SectionService sectionService, SchoolClassRepository schoolClassRepository, SectionRepository sectionRepository, TermRepository termRepository, SportHouseRepository sportHouseRepository, UserRepository userRepository) {
+    public StudentController(PasswordEncoder passwordEncoder, StudentService studentService, SchoolClassService schoolClassService, TermService termService, SportHouseService sportHouseService, UserService userService, SectionService sectionService, SchoolClassRepository schoolClassRepository, SectionRepository sectionRepository, TermRepository termRepository, SportHouseRepository sportHouseRepository, UserRepository userRepository, StudentRepository studentRepository) {
         this.passwordEncoder = passwordEncoder;
         this.studentService = studentService;
         this.schoolClassService = schoolClassService;
@@ -55,39 +53,63 @@ public class StudentController {
         this.termRepository = termRepository;
         this.sportHouseRepository = sportHouseRepository;
         this.userRepository = userRepository;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public String listStudents(Model model) {
         model.addAttribute("studentClassIds", schoolClassService.getAllSchoolClass());
         model.addAttribute("termIds", termService.getAllTerms());
         model.addAttribute("sectionIds", sectionService.getAllSections());
         model.addAttribute("sportHouseIds", sportHouseService.getAllSportHouses());
         model.addAttribute("student", new StudentModel());
-        model.addAttribute("students", studentService.getAllStudents());
+        model.addAttribute("students", studentRepository.findAll());
+        model.addAttribute("gender", Arrays.asList("Male", "Female"));
+        model.addAttribute("isActive", Arrays.asList("True", "False"));
+        model.addAttribute("admissionType", Arrays.asList("Fully-funded", "Partial-schorlarship", "Fully-schorlarship"));
         return "students/list";
     }
 
+    @PostMapping
+    public String saveListStudent(@Valid @ModelAttribute("student") StudentDto student, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("studentClassIds", schoolClassService.getAllSchoolClass());
+            model.addAttribute("termIds", termService.getAllTerms());
+            model.addAttribute("sectionIds", sectionService.getAllSections());
+            model.addAttribute("sportHouseIds", sportHouseService.getAllSportHouses());
+            model.addAttribute("gender", Arrays.asList("Male", "Female"));
+            model.addAttribute("isActive", Arrays.asList("True", "False"));
+            model.addAttribute("admissionType", Arrays.asList("Fully-funded", "Partial-schorlarship", "Fully-schorlarship"));
+            return "students/list";
+        }
+
+        studentService.saveOrUpdateStudent(student);
+        return "redirect:/students";
+    }
+
     @GetMapping("/new")
-    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public String createStudentForm(Model model) {
         model.addAttribute("studentClassIds", schoolClassService.getAllSchoolClass());
         model.addAttribute("termIds", termService.getAllTerms());
         model.addAttribute("sectionIds", sectionService.getAllSections());
         model.addAttribute("sportHouseIds", sportHouseService.getAllSportHouses());
         model.addAttribute("student", new StudentModel());
+        model.addAttribute("gender", Arrays.asList("Male", "Female"));
+        model.addAttribute("isActive", Arrays.asList("True", "False"));
+        model.addAttribute("admissionType", Arrays.asList("Fully-funded", "Partial-schorlarship", "Fully-schorlarship"));
         return "students/new";
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public String saveStudent(@Valid @ModelAttribute("student") StudentDto student, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("studentClassIds", schoolClassService.getAllSchoolClass());
             model.addAttribute("termIds", termService.getAllTerms());
             model.addAttribute("sectionIds", sectionService.getAllSections());
             model.addAttribute("sportHouseIds", sportHouseService.getAllSportHouses());
+            model.addAttribute("gender", Arrays.asList("Male", "Female"));
+            model.addAttribute("isActive", Arrays.asList("True", "False"));
+            model.addAttribute("admissionType", Arrays.asList("Fully-funded", "Partial-schorlarship", "Fully-schorlarship"));
             model.addAttribute("student", student);
             return "students/new";
         }
@@ -99,17 +121,6 @@ public class StudentController {
     @GetMapping("/edit/{id}")
     public String updateStudentForm(@PathVariable Long id, Model model) {
         StudentDto student = studentService.getStudentById(id);
-
-        // fetch specific datas
-        SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findSchoolClassModelByClassNameAndSectionId(student.getStudentClassId(), student.getSectionId()));
-        SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(student.getSectionId()));
-        TermDto termDto = TermMapper.mapToDto(termRepository.findByTermName(student.getTermId()));
-        SportHouseDto sportHouseDto = SportHouseMapper.mapToDto(sportHouseRepository.findBySportHouseName(student.getSportHouseId()));
-
-        model.addAttribute("studentClassIds", schoolClassDto);
-        model.addAttribute("termIds", termDto);
-        model.addAttribute("sectionIds", sectionDto);
-        model.addAttribute("sportHouseIds", sportHouseDto);
         model.addAttribute("student", student);
 
         // Add other data required for the dropdowns
@@ -117,27 +128,20 @@ public class StudentController {
         model.addAttribute("allSections", sectionService.getAllSections());
         model.addAttribute("allTerms", termService.getAllTerms());
         model.addAttribute("allSportHouses", sportHouseService.getAllSportHouses());
+        model.addAttribute("gender", Arrays.asList("Male", "Female"));
+        model.addAttribute("isActive", Arrays.asList("True", "False"));
+        model.addAttribute("admissionType", Arrays.asList("Fully-funded", "Partial-schorlarship", "Fully-schorlarship"));
 
         return "students/edit";
     }
 
     @PostMapping("/update/{id}")
     public String updateStudent(@PathVariable Long id,
-                                @Valid @ModelAttribute("student") StudentDto student, 
+                                @Valid @ModelAttribute("student") StudentDto student,
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             StudentDto studentFromRepo = studentService.getStudentById(id);
 
-            // fetch specific datas
-            SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findSchoolClassModelByClassNameAndSectionId(studentFromRepo.getStudentClassId(), student.getSectionId()));
-            SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(studentFromRepo.getSectionId()));
-            TermDto termDto = TermMapper.mapToDto(termRepository.findByTermName(studentFromRepo.getTermId()));
-            SportHouseDto sportHouseDto = SportHouseMapper.mapToDto(sportHouseRepository.findBySportHouseName(studentFromRepo.getSportHouseId()));
-
-            model.addAttribute("studentClassIds", schoolClassDto);
-            model.addAttribute("termIds", termDto);
-            model.addAttribute("sectionIds", sectionDto);
-            model.addAttribute("sportHouseIds", sportHouseDto);
             model.addAttribute("student", student);
 
             // Add other data required for the dropdowns
@@ -145,14 +149,19 @@ public class StudentController {
             model.addAttribute("allSections", sectionService.getAllSections());
             model.addAttribute("allTerms", termService.getAllTerms());
             model.addAttribute("allSportHouses", sportHouseService.getAllSportHouses());
+            model.addAttribute("gender", Arrays.asList("Male", "Female"));
+            model.addAttribute("isActive", Arrays.asList("True", "False"));
+            model.addAttribute("admissionType", Arrays.asList("Fully-funded", "Partial-schorlarship", "Fully-schorlarship"));
+
             return "students/edit";
         }
 
-        // update overall student
+        // Update overall student
         student.setId(id);
         studentService.saveOrUpdateStudent(student);
         return "redirect:/students";
     }
+
 
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable Long id) {

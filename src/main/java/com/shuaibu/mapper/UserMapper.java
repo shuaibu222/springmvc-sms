@@ -11,6 +11,7 @@ public class UserMapper {
                 .id(userModel.getId())
                 .username(userModel.getUsername())
                 .password(userModel.getPassword())
+                .isActive(userModel.getIsActive())
                 .roles(userModel.getRoles())
         .build();
     }
@@ -21,6 +22,7 @@ public class UserMapper {
                 .id(userDto.getId())
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
+                .isActive(userDto.getIsActive())
                 .roles(userDto.getRoles())
         .build();
     }

@@ -1,25 +1,23 @@
 package com.shuaibu.service.impl;
 
+import com.shuaibu.dto.StudentDto;
 import com.shuaibu.mapper.StudentMapper;
 import com.shuaibu.mapper.UserMapper;
 import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
+import com.shuaibu.service.StudentService;
 import com.shuaibu.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.shuaibu.dto.StudentDto;
-import com.shuaibu.service.StudentService;
-
+import java.time.Year;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.shuaibu.mapper.StudentMapper.mapToModel;
 import static com.shuaibu.mapper.StudentMapper.*;
 
 @Service
@@ -32,10 +30,11 @@ public class StudentImpl implements StudentService {
     private final SportHouseRepository sportHouseRepository;
     private final SchoolClassRepository schoolClassRepository;
     private final UserService userService;
-    private final RegNoRepository regNoRepository;
     private final UserRepository userRepository;
+    private final StudentIdCounterRepository studentIdCounterRepository;
+    private final WalletRepository walletRepository;
 
-    public StudentImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, TermRepository termRepository, SectionRepository sectionRepository, SportHouseRepository sportHouseRepository, SchoolClassRepository schoolClassRepository, UserService userService, RegNoRepository regNoRepository, UserRepository userRepository) {
+    public StudentImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, TermRepository termRepository, SectionRepository sectionRepository, SportHouseRepository sportHouseRepository, SchoolClassRepository schoolClassRepository, UserService userService, UserRepository userRepository, StudentIdCounterRepository studentIdCounterRepository, WalletRepository walletRepository) {
         this.passwordEncoder = passwordEncoder;
         this.studentRepository = studentRepository;
         this.termRepository = termRepository;
@@ -43,24 +42,36 @@ public class StudentImpl implements StudentService {
         this.sportHouseRepository = sportHouseRepository;
         this.schoolClassRepository = schoolClassRepository;
         this.userService = userService;
-        this.regNoRepository = regNoRepository;
         this.userRepository = userRepository;
+        this.studentIdCounterRepository = studentIdCounterRepository;
+        this.walletRepository = walletRepository;
     }
 
     @Override
     public List<StudentDto> getAllStudents() {
         List<StudentModel> students = studentRepository.findAll();
-        return students.stream().map(StudentMapper::mapToDto).collect(Collectors.toList());
+        return students.stream()
+                .filter(s -> s.getIsActive().equals("True"))
+                .map(StudentMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StudentDto> getStudentsByClassId(Long classId) {
+        List<StudentModel> students = studentRepository.findAll();
+        return students.stream()
+                .filter(s -> s.getIsActive().equals("True") && Objects.equals(s.getStudentClassId(), String.valueOf(classId)))
+                .map(StudentMapper::mapToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public StudentDto getStudentById(Long id) {
-        return mapToDto(studentRepository.findById(id).get());
+        return mapToDto(studentRepository.findById(id).orElseThrow());
     }
 
     @Override
     public void saveOrUpdateStudent(StudentDto studentDto) {
-        // For regNo purpose
         boolean isNew = studentDto.getId() == null;
 
         SectionModel sectionModel = sectionRepository.findById(Long.parseLong(studentDto.getSectionId()))
@@ -75,60 +86,62 @@ public class StudentImpl implements StudentService {
         SportHouseModel sportHouseModel = sportHouseRepository.findById(Long.parseLong(studentDto.getSportHouseId()))
                 .orElseThrow(() -> new EntityNotFoundException("Sport House not found with ID: " + studentDto.getSportHouseId()));
 
+        // for the purpose of generating regNo and create or updating user account for login purpose
         if (isNew) {
-            // Generate the registration number only for new students
-            String regNo = generateStudentRegNumber(studentDto.getSectionId(), sectionModel.getSectionName(), studentDto.getAdmissionDate());
-            studentDto.setRegNo(regNo);
+            studentDto.setRegNo(generateYearlyId());
+
+            newUserModel(studentDto);
+
+            StudentModel studentFromRepo = studentRepository.findByUserName(studentDto.getUserName());
+            if (studentFromRepo != null) {
+                throw new IllegalArgumentException("Student exists");
+            }
         } else {
             StudentModel existingStudent = studentRepository.findById(studentDto.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentDto.getId()));
             studentDto.setRegNo(existingStudent.getRegNo());
-        }
 
-        StudentModel existingStudent;
-        if (studentDto.getId() != null) {
-            existingStudent = studentRepository.findById(studentDto.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentDto.getId()));
-
-            // Delete user associated with the student (if it exists)
             if (existingStudent.getUserId() != null) {
                 UserModel userModel = new UserModel();
                 userModel.setId(existingStudent.getUserId());
                 userModel.setUsername(studentDto.getUserName());
                 userModel.setPassword(studentDto.getPassword());
+                userModel.setIsActive(studentDto.getIsActive());
                 userModel.setRoles(Collections.singleton("ROLE_STUDENT"));
 
                 UserModel savedUser = userService.saveUser(UserMapper.mapToDto(userModel));
                 studentDto.setUserId(savedUser.getId());
                 studentDto.setPassword(passwordEncoder.encode(studentDto.getPassword()));
             }
-
-        } else {
-            newUserModel(studentDto);
         }
 
-        studentDto.setSectionId(sectionModel.getSectionName());
-        studentDto.setStudentClassId(classModel.getClassName());
+        studentDto.setSectionName(sectionModel.getSectionName());
+        studentDto.setStudentClassName(classModel.getClassName());
         studentDto.setTermId(termModel.getTermName());
         studentDto.setSportHouseId(sportHouseModel.getSportHouseName());
 
-        studentRepository.save(mapToModel(studentDto));
+        StudentModel createdStudent = studentRepository.save(mapToModel(studentDto));
+        WalletModel walletModel = WalletModel.builder()
+                .isActive(createdStudent.getIsActive())
+                .studentId(createdStudent.getId())
+                .regNo(createdStudent.getRegNo())
+                .balance(createdStudent.getBalance())
+                .build();
+        walletRepository.save(walletModel);
     }
-
 
     @Override
     public void deleteStudent(Long id) {
         StudentModel studentModel = studentRepository.findById(id).orElseThrow();
         userRepository.deleteById(studentModel.getUserId());
-
         studentRepository.deleteById(id);
     }
 
-    // UTILITY FUNCTIONS
     private void newUserModel(StudentDto studentDto) {
         UserModel userModel = new UserModel();
         userModel.setUsername(studentDto.getUserName());
         userModel.setPassword(studentDto.getPassword());
+        userModel.setIsActive(studentDto.getIsActive());
         userModel.setRoles(Collections.singleton("ROLE_STUDENT"));
 
         UserModel savedUser = userService.saveUser(UserMapper.mapToDto(userModel));
@@ -136,18 +149,20 @@ public class StudentImpl implements StudentService {
         studentDto.setPassword(passwordEncoder.encode(studentDto.getPassword()));
     }
 
-    public String generateStudentRegNumber(String sectionId, String sectionPart, String admissionDate) {
-        Long sectionIdLong = Long.parseLong(sectionId);
+    private synchronized String generateYearlyId() {
+        int currentYear = Year.now().getValue();
+        StudentIdCounter idCounter = studentIdCounterRepository.findByAcademicYear(currentYear);
 
-        Integer lastUsedNumber = regNoRepository.findMaxRegNumberBySectionId(sectionIdLong);
-        if (lastUsedNumber == null) {
-            lastUsedNumber = 0;
+        if (idCounter == null) {
+            idCounter = new StudentIdCounter();
+            idCounter.setAcademicYear(currentYear);
+            idCounter.setLastId(1000L);
         }
 
-        Integer newNumber = lastUsedNumber + 1;
-        String formattedNumber = String.format("%03d", newNumber);
+        Long newId = idCounter.getLastId() + 1;
+        idCounter.setLastId(newId);
+        studentIdCounterRepository.save(idCounter);
 
-        String year = admissionDate.substring(admissionDate.length() - 2);
-        return sectionPart.substring(0, 3) + "/" + year + "/" + formattedNumber;
+        return String.format("%d-%04d", currentYear, newId);
     }
 }

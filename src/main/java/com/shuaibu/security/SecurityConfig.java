@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .headers(headers -> headers
                         .defaultsDisabled()
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .authorizeHttpRequests(req -> req.requestMatchers("/", "/login", "/css/**", "/fonts/**", "/assets/*", "/register", "/h2-console/**").permitAll()
+                .authorizeHttpRequests(req -> req.requestMatchers("/", "/login", "/css/**", "/fonts/**", "/images/**", "/register", "/h2-console/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
                         .defaultSuccessUrl("/dashboard", true)

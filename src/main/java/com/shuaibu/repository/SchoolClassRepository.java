@@ -1,6 +1,5 @@
 package com.shuaibu.repository;
 
-import com.shuaibu.dto.SchoolClassDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

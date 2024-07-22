@@ -1,15 +1,30 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Registration page</title>
-</head>
-<body>
-    <form th:action="@{/register}" method="post" th:object="${user}">
-        <input name="username" type="text" placeholder="Username" th:field="*{username}">
-        <input name="password" type="password" placeholder="Password" th:field="*{password}">
-        <input name="roles" type="text" placeholder="Role" th:field="*{roles}">
-        <button type="submit">Save</button>
-    </form>
-<a th:href="@{'/login'}">Login</a>
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Registration page</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/styles.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/fonts/css/all.min.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<section class="reg-form">-->
+<!--    <article>-->
+<!--        <form th:action="@{/register}" method="post" th:object="${user}">-->
+<!--            <div class="input-group">-->
+<!--                <input name="username" type="text" placeholder="Username" th:field="*{username}">-->
+<!--                <i class="fa fa-user"></i> &lt;!&ndash; FontAwesome icon &ndash;&gt;-->
+<!--            </div>-->
+<!--            <div class="input-group">-->
+<!--                <input name="password" type="password" placeholder="Password" th:field="*{password}">-->
+<!--                <i class="fa fa-lock"></i> &lt;!&ndash; FontAwesome icon &ndash;&gt;-->
+<!--            </div>-->
+<!--            <div class="input-group">-->
+<!--                <input name="roles" type="text" placeholder="Role" th:field="*{roles}">-->
+<!--            </div>-->
+<!--            <button type="submit">Register</button>-->
+<!--            <a th:href="@{'/login'}">Login</a>-->
+<!--        </form>-->
+
+<!--    </article>-->
+<!--</section>-->
+<!--</body>-->
+<!--</html>-->

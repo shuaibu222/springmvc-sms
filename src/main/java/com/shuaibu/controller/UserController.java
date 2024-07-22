@@ -28,26 +28,21 @@ public class UserController {
         return "users/login";
     }
 
-    @GetMapping("/register")
-    public String createRegisterForm(Model model) {
-        model.addAttribute("user", new UserModel());
-        return "users/register";
-    }
-
-    @PostMapping("/register")
-    public String saveUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("user", user);
-            return "users/register";
-        }
-
-        // Ensure that a role is set, for example:
-        if (user.getRoles() == null || user.getRoles().isEmpty()) {
-            user.setRoles(Collections.singleton("ROLE_USER"));
-        }
-
-        userService.saveUser(user);
-        return "redirect:/login?success";
-    }
+//    @GetMapping("/register")
+//    public String createRegisterForm(Model model) {
+//        model.addAttribute("user", new UserModel());
+//        return "users/register";
+//    }
+//
+//    @PostMapping("/register")
+//    public String saveUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("user", user);
+//            return "users/register";
+//        }
+//
+//        userService.saveUser(user);
+//        return "redirect:/login?success";
+//    }
 
 }

@@ -1,6 +1,8 @@
 package com.shuaibu.dto;
 
-import java.util.List;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 import lombok.Builder;
@@ -9,26 +11,68 @@ import lombok.Data;
 @Data
 @Builder
 public class StaffDto {
-    private Long id;
-    
-    // Todo: Add validation
-    private String firstName;
-    private String lastName;
-    private Long userId;
-    private String userName;
-    private String password;
-    private String dateOfBirth;
-    private String startDate;
-    private String homeAddress;
-    private String state;
-    private String LGA;
-    private String religion;
-    private String tribe;
-    private String gender;
-    private String profilePicture;
-    private String phoneNumber;
-    private Set<Long> subjectModelIds;
-    private Set<Long> classModelIds;
-    private Set<Long> roleModelIds;
 
+    private Long id;
+
+    @NotBlank(message = "* First name is mandatory")
+    @Size(max = 50, message = "First name cannot exceed 50 characters")
+    private String firstName;
+
+    @NotBlank(message = "* Last name is mandatory")
+    @Size(max = 50, message = "Last name cannot exceed 50 characters")
+    private String lastName;
+
+    private Long userId;
+
+    @NotBlank(message = "* Username is mandatory")
+    @Size(min = 5, max = 20, message = "Username must be between 5 and 20 characters")
+    private String userName;
+
+    @NotBlank(message = "* Password is mandatory")
+    @Size(min = 5, message = "Password must be at least 5 characters long")
+    private String password;
+
+    @NotNull(message = "* Date of Birth cannot be empty")
+    @Past(message = "Date of birth cannot be future")
+    private LocalDate dateOfBirth;
+
+    @NotNull(message = "* Employed Date cannot be empty")
+    private LocalDate employedDate;
+
+    @NotBlank(message = "* Home address is mandatory")
+    private String homeAddress;
+
+    @NotBlank(message = "* State is mandatory")
+    private String state;
+
+    @NotBlank(message = "* LGA is mandatory")
+    private String LGA;
+
+    @NotBlank(message = "* Religion is mandatory")
+    private String religion;
+
+    @NotBlank(message = "* Tribe is mandatory")
+    private String tribe;
+
+    @NotBlank(message = "8 Gender is mandatory")
+    private String gender;
+
+    @NotBlank(message = "* Phone Number is mandatory")
+    private String phoneNumber;
+
+    private String profilePicture;
+
+    @NotEmpty(message = "* Is teacher currently active staff")
+    private String isActive;
+
+    @NotEmpty(message = "At least one subject is required")
+    private Set<Long> subjectModelIds;
+
+    private String classTeacherOfId;
+    private String headTeacherOfId;
+
+    @NotEmpty(message = "At least one class is required")
+    private Set<Long> classModelIds;
+
+    private Set<Long> roleModelIds;
 }

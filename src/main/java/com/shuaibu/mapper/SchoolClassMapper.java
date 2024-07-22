@@ -11,6 +11,7 @@ public class SchoolClassMapper {
                 .id(schoolClassModel.getId())
                 .className(schoolClassModel.getClassName())
                 .sectionId(schoolClassModel.getSectionId())
+                .classTeacher(schoolClassModel.getClassTeacher())
                 .subjectModels(schoolClassModel.getSubjectModels())
                 .staffModels(schoolClassModel.getStaffModels())
                 .build();
@@ -22,6 +23,7 @@ public class SchoolClassMapper {
                 .id(schoolClassDto.getId())
                 .className(schoolClassDto.getClassName())
                 .sectionId(schoolClassDto.getSectionId())
+                .classTeacher(schoolClassDto.getClassTeacher())
                 .subjectModels(schoolClassDto.getSubjectModels())
                 .staffModels(schoolClassDto.getStaffModels())
                 .build();
