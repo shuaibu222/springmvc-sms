@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+<section layout:fragment="body">
+    <a href="/students" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+        <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+    </a>
+    <article class="details-page">
+        <div class="details-header">
+            <h1>Student Details</h1>
+        </div>
+        <div class="detail-container">
+            <div class="student-details">
+                <div class="detail-item">
+                    <span class="label">ID:</span>
+                    <span class="value" th:text="${student.id}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">First Name:</span>
+                    <span class="value" th:text="${student.firstName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Last Name:</span>
+                    <span class="value" th:text="${student.lastName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Username:</span>
+                    <span class="value" th:text="${student.userName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Registration No.:</span>
+                    <span class="value" th:text="${student.regNo}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Date of Birth:</span>
+                    <span class="value" th:text="${student.dateOfBirth}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Admission Date:</span>
+                    <span class="value" th:text="${student.admissionDate}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Admission Type:</span>
+                    <span class="value" th:text="${student.admissionType}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Home Address:</span>
+                    <span class="value" th:text="${student.homeAddress}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Term:</span>
+                    <span class="value" th:text="${student.termId}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Session:</span>
+                    <span class="value" th:text="${student.sessionId}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Is Student Active:</span>
+                    <span class="value" th:text="${student.isActive}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">State:</span>
+                    <span class="value" th:text="${student.state}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">L.G.A:</span>
+                    <span class="value" th:text="${student.LGA}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Religion:</span>
+                    <span class="value" th:text="${student.religion}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Section:</span>
+                    <span class="value" th:text="${student.sectionName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Class:</span>
+                    <span class="value" th:text="${student.sectionName + ' ' + student.studentClassName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Sport House:</span>
+                    <span class="value" th:text="${student.sportHouseId}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Tribe:</span>
+                    <span class="value" th:text="${student.tribe}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Gender:</span>
+                    <span class="value" th:text="${student.gender}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Profile Picture:</span>
+                    <span class="value" th:text="${student.profilePicture}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Phone Number:</span>
+                    <span class="value" th:text="${student.phoneNumber}"></span>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+</body>
+</html>

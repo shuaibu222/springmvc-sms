@@ -607,52 +607,32 @@ table td a {
     transition: background-color 0.3s ease;
 }
 
-table tr td .green-details {
+td a:nth-child(1) {
     background: green;
     border: 2px solid green;
 }
 
-table td .blue-details {
+td a:nth-child(2) {
     background: blue;
     border: 2px solid blue;
 }
 
-table td .red-details {
+td a:nth-child(3) {
     background: red;
     border: 2px solid red;
 }
 
-table a:first-child {
-    background: blue;
-    border: 2px solid blue;
-}
-
-td a:last-child {
-    background: red;
-    border: 2px solid red;
-}
-
-table tr td .green-details:hover {
+td a:nth-child(1):hover {
     background: var(--primary-color);
     color: green;
 }
 
-table td .blue-details:hover {
+td a:nth-child(2):hover {
     background: var(--primary-color);
     color: blue;
 }
 
-table td .red-details:hover {
-    background: var(--primary-color);
-    color: red;
-}
-
-table td a:nth-child(2):hover {
-    background: var(--primary-color);
-    color: blue;
-}
-
-table td a:last-child:hover {
+td a:nth-child(3):hover {
     background: var(--primary-color);
     color: red;
 }
@@ -674,5 +654,146 @@ table td a:last-child:hover {
 
     .main-content {
         padding: 1rem;
+    }
+}
+
+.details-page {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.details-header {
+    margin-bottom: 1.5rem;
+}
+
+.detail-container {
+    width: 100%;
+    max-width: 50rem;
+    background: var(--primary-color);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+}
+
+.student-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.staff-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.value {
+    font-weight: 400;
+    color: var(--tertiary-color);
+}
+
+@media (max-width: 768px) {
+    .student-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Transactions Page Styles */
+.transactions-page {
+    padding: 1rem;
+}
+
+.transactions-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.transactions-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.wallet-info {
+    background: var(--primary-color);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.wallet-info h2 {
+    margin-bottom: 1rem;
+}
+
+.wallet-info p {
+    margin-bottom: 0.5rem;
+}
+
+.wallet-info strong {
+    font-weight: 700;
+}
+
+.transactions-list {
+    background: var(--primary-color);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+}
+
+.transactions-list h2 {
+    margin-bottom: 1rem;
+}
+
+.transactions-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transactions-list th,
+.transactions-list td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transactions-list th {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.transactions-list td {
+    background: var(--background-color);
+}
+
+/* Print styles */
+@media print {
+    body {
+        visibility: hidden;
+    }
+
+    .transactions-page,
+    .transactions-page * {
+        visibility: visible;
+    }
+
+    .transactions-page {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
     }
 }

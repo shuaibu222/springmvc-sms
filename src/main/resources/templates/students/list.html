@@ -2,8 +2,8 @@
 <html 
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-    layout:decorate="~{layout}">
+    layout:decorate="~{layout}"
+    lang="en">
 <head>
     <title>Students</title>
 </head>
@@ -58,6 +58,12 @@
                             <option th:each="termId : ${termIds}" th:value="${termId.id}" th:text="${termId.termName}"></option>
                         </select>
                         <p th:if="${#fields.hasErrors('termId')}" th:errors="*{termId}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="academicSession">Academic Session:</label>
+                        <select id="academicSession" th:field="*{sessionId}" required>
+                            <option th:each="academicSession : ${academicSessions}" th:value="${academicSession.id}" th:text="${academicSession.sessionName}"></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="isActive">Is Student Active:</label>
@@ -159,6 +165,7 @@
                         <th>Admission Type</th>
                         <th>Home Address</th>
                         <th>Term</th>
+                        <th>Session</th>
                         <th>Is Student Active</th>
                         <th>State</th>
                         <th>L.G.A</th>
@@ -183,6 +190,7 @@
                         <td th:text="${student.admissionType}"></td>
                         <td th:text="${student.homeAddress}"></td>
                         <td th:text="${student.termId}"></td>
+                        <td th:text="${student.sessionId}"></td>
                         <td th:text="${student.isActive}"></td>
                         <td th:text="${student.state}"></td>
                         <td th:text="${student.LGA}"></td>

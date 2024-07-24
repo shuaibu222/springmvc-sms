@@ -47,6 +47,9 @@ public class StudentDto {
     @NotEmpty(message = "* Term is mandatory")
     private String termId;
 
+    @NotEmpty(message = "* Session is mandatory")
+    private String sessionId;
+
     @NotEmpty(message = "* Section is mandatory")
     private String sectionId;
     private String sectionName;

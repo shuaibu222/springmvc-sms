@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Staff Details</title>
+</head>
+<body>
+<section layout:fragment="body">
+    <a href="/staffs" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+        <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+    </a>
+    <article class="details-page">
+        <div class="details-header">
+            <h1>Staff Details</h1>
+        </div>
+        <div class="detail-container">
+            <div class="staff-details">
+                <div class="detail-item">
+                    <span class="label">ID:</span>
+                    <span class="value" th:text="${staff.id}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">First Name:</span>
+                    <span class="value" th:text="${staff.firstName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Last Name:</span>
+                    <span class="value" th:text="${staff.lastName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Username:</span>
+                    <span class="value" th:text="${staff.userName}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Date of Birth:</span>
+                    <span class="value" th:text="${staff.dateOfBirth}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Admission Type:</span>
+                    <span class="value" th:text="${staff.employedDate}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Home Address:</span>
+                    <span class="value" th:text="${staff.homeAddress}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Is Staff Active:</span>
+                    <span class="value" th:text="${staff.isActive}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">State:</span>
+                    <span class="value" th:text="${staff.state}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">L.G.A:</span>
+                    <span class="value" th:text="${staff.LGA}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Religion:</span>
+                    <span class="value" th:text="${staff.religion}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Tribe:</span>
+                    <span class="value" th:text="${staff.tribe}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Gender:</span>
+                    <span class="value" th:text="${staff.gender}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Profile Picture:</span>
+                    <span class="value" th:text="${staff.profilePicture}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Phone Number:</span>
+                    <span class="value" th:text="${staff.phoneNumber}"></span>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+</body>
+</html>

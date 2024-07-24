@@ -1,8 +1,5 @@
 package com.shuaibu.controller;
 
-
-import com.shuaibu.model.SchoolClassModel;
-import com.shuaibu.repository.SchoolClassRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +19,9 @@ import jakarta.validation.Valid;
 public class SectionController {
     
     private final SectionService sectionService;
-    private final SchoolClassRepository schoolClassRepository;
 
-    public SectionController(SectionService sectionService, SchoolClassRepository schoolClassRepository) {
+    public SectionController(SectionService sectionService) {
         this.sectionService = sectionService;
-        this.schoolClassRepository = schoolClassRepository;
     }
 
     @GetMapping

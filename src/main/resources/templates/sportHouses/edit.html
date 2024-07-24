@@ -15,7 +15,7 @@
                 <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
             </a>
             <h1>Edit Sport House</h1>
-            <form role="form" action="#" th:action="@{/sportHouses/update/{id}(id=${sportHouse.id})}" th:object="${sportHouse}" method="post">
+            <form role="form" th:action="@{/sportHouses/update/{id}(id=${sportHouse.id})}" th:object="${sportHouse}" method="post">
                 <div>
                     <label for="sportHouseName">Sport House Name:</label>
                     <input id="sportHouseName" type="text" th:field="*{sportHouseName}" />

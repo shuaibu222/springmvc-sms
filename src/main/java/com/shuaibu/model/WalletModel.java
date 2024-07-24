@@ -21,7 +21,11 @@ public class WalletModel {
 
     private Double balance;
     private Long studentId;
+    private String studentName;
+    private String studentClass;
+    private String phoneNumber;
     private String regNo;
+    private String admissionType;
     private String isActive;
 
     @ElementCollection

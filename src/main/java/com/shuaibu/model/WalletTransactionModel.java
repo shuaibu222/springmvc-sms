@@ -6,13 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "TRANSACTION_MODEL")
 public class WalletTransactionModel {
 
     @Id
@@ -21,9 +20,9 @@ public class WalletTransactionModel {
 
     private String fromAccount;
     private String bankName;
-    private String date;
-    private Long termId;
-    private Long sessionId;
+    private String transactionDate;
+    private String termName;
+    private String sessionName;
     private Double amount;
     private Long walletId;
 }

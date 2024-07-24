@@ -33,6 +33,7 @@ public class StudentModel {
     private LocalDate admissionDate;
     private String homeAddress;
     private String termId;
+    private String sessionId;
     private String sectionId;
     private String sectionName;
     private String state;

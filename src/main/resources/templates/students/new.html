@@ -59,6 +59,12 @@
                     <p th:if="${#fields.hasErrors('termId')}" th:errors="*{termId}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
+                    <label for="academicSession">Academic Session:</label>
+                    <select id="academicSession" th:field="*{sessionId}" required>
+                        <option th:each="academicSession : ${academicSessions}" th:value="${academicSession.id}" th:text="${academicSession.sessionName}"></option>
+                    </select>
+                </div>
+                <div>
                     <label for="isActive">Is Student Active:</label>
                     <select id="isActive" th:field="*{isActive}" th:name="isActive">
                         <option th:each="a : ${isActive}"

@@ -15,7 +15,6 @@ import java.time.Year;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.StudentMapper.*;
@@ -33,8 +32,9 @@ public class StudentImpl implements StudentService {
     private final UserRepository userRepository;
     private final StudentIdCounterRepository studentIdCounterRepository;
     private final WalletRepository walletRepository;
+    private final SessionRepository sessionRepository;
 
-    public StudentImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, TermRepository termRepository, SectionRepository sectionRepository, SportHouseRepository sportHouseRepository, SchoolClassRepository schoolClassRepository, UserService userService, UserRepository userRepository, StudentIdCounterRepository studentIdCounterRepository, WalletRepository walletRepository) {
+    public StudentImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, TermRepository termRepository, SectionRepository sectionRepository, SportHouseRepository sportHouseRepository, SchoolClassRepository schoolClassRepository, UserService userService, UserRepository userRepository, StudentIdCounterRepository studentIdCounterRepository, WalletRepository walletRepository, SessionRepository sessionRepository) {
         this.passwordEncoder = passwordEncoder;
         this.studentRepository = studentRepository;
         this.termRepository = termRepository;
@@ -45,6 +45,7 @@ public class StudentImpl implements StudentService {
         this.userRepository = userRepository;
         this.studentIdCounterRepository = studentIdCounterRepository;
         this.walletRepository = walletRepository;
+        this.sessionRepository = sessionRepository;
     }
 
     @Override
@@ -83,6 +84,9 @@ public class StudentImpl implements StudentService {
         TermModel termModel = termRepository.findById(Long.parseLong(studentDto.getTermId()))
                 .orElseThrow(() -> new EntityNotFoundException("Term not found with ID: " + studentDto.getTermId()));
 
+        SessionModel sessionModel = sessionRepository.findById(Long.parseLong(studentDto.getSessionId()))
+                .orElseThrow(() -> new EntityNotFoundException("Session with ID not found: " + studentDto.getSessionId()));
+
         SportHouseModel sportHouseModel = sportHouseRepository.findById(Long.parseLong(studentDto.getSportHouseId()))
                 .orElseThrow(() -> new EntityNotFoundException("Sport House not found with ID: " + studentDto.getSportHouseId()));
 
@@ -118,13 +122,18 @@ public class StudentImpl implements StudentService {
         studentDto.setSectionName(sectionModel.getSectionName());
         studentDto.setStudentClassName(classModel.getClassName());
         studentDto.setTermId(termModel.getTermName());
+        studentDto.setSessionId(sessionModel.getSessionName());
         studentDto.setSportHouseId(sportHouseModel.getSportHouseName());
 
         StudentModel createdStudent = studentRepository.save(mapToModel(studentDto));
         WalletModel walletModel = WalletModel.builder()
                 .isActive(createdStudent.getIsActive())
                 .studentId(createdStudent.getId())
+                .studentName(createdStudent.getFirstName() + " " + createdStudent.getLastName())
+                .studentClass(createdStudent.getSectionName() + " " + createdStudent.getStudentClassName())
+                .phoneNumber(createdStudent.getPhoneNumber())
                 .regNo(createdStudent.getRegNo())
+                .admissionType(createdStudent.getAdmissionType())
                 .balance(createdStudent.getBalance())
                 .build();
         walletRepository.save(walletModel);

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="en">
+<head>
+    <title>Edit Wallet Balance</title>
+</head>
+<body>
+<section layout:fragment="body">
+    <article class="form-container">
+        <a href="/fees" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+            <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+        </a>
+        <h1>Edit Wallet Balance</h1>
+
+        <form method="post" th:action="@{/fees/updateBalance}">
+            <input type="hidden" name="id" th:value="${wallet.id}"/>
+            <div>
+                <label for="studentName">Student Name:</label>
+                <input id="studentName" type="text" name="studentName" th:value="${wallet.studentName}" disabled/>
+            </div>
+            <div>
+                <label for="balance">Balance:</label>
+                <input id="balance" type="text" name="balance" th:value="${wallet.balance}" required/>
+            </div>
+            <div>
+                <button type="submit">Update Balance</button>
+            </div>
+        </form>
+    </article>
+</section>
+</body>
+</html>

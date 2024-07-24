@@ -1,18 +1,10 @@
 package com.shuaibu.controller;
 
-import com.shuaibu.dto.SchoolClassDto;
-import com.shuaibu.mapper.SchoolClassMapper;
-import com.shuaibu.mapper.UserMapper;
-import com.shuaibu.model.UserModel;
 import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.StaffRepository;
 import com.shuaibu.repository.UserRepository;
 import com.shuaibu.service.*;
-import com.shuaibu.service.impl.StaffImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +16,6 @@ import com.shuaibu.model.StaffModel;
 import jakarta.validation.Valid;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @SuppressWarnings("ALL")
 @Controller
@@ -32,14 +23,11 @@ import java.util.Collections;
 @PreAuthorize("hasRole('ADMIN')")
 public class StaffController {
 
-    private static final Logger logger = LoggerFactory.getLogger(StaffController.class);
+    // private static final Logger logger = LoggerFactory.getLogger(StaffController.class);
     private final StaffService staffService;
     private final SubjectService subjectService;
     private final SchoolClassService schoolClassService;
     private final RoleService roleService;
-    private final UserService userService;
-    private final UserRepository userRepository;
-    private final SchoolClassRepository schoolClassRepository;
     private final StaffRepository staffRepository;
 
     public StaffController(StaffService staffService, SubjectService subjectService, SchoolClassService schoolClassService, RoleService roleService, UserService userService, UserRepository userRepository, SchoolClassRepository schoolClassRepository, StaffRepository staffRepository) {
@@ -47,9 +35,6 @@ public class StaffController {
         this.subjectService = subjectService;
         this.schoolClassService = schoolClassService;
         this.roleService = roleService;
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.schoolClassRepository = schoolClassRepository;
         this.staffRepository = staffRepository;
     }
 
@@ -112,6 +97,15 @@ public class StaffController {
         return "redirect:/staffs";
     }
 
+    @GetMapping("/details/{id}")
+    public String getStaffDetails(@PathVariable Long id, Model model) {
+        StaffDto staff = staffService.getStaffById(id);
+        model.addAttribute("staff", staff);
+
+        return "staffs/details";
+    }
+
+
     @GetMapping("/edit/{id}")
     public String updateStaffForm(@PathVariable Long id, Model model) {
         StaffDto staff = staffService.getStaffById(id);
@@ -143,7 +137,6 @@ public class StaffController {
 
         staff.setId(id);
         staffService.saveOrUpdateStaff(staff);
-        logger.info("About to redirect.....");
         return "redirect:/staffs";
     }
 
