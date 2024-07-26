@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface WalletTransactionRepository extends JpaRepository<WalletTransactionModel, Long> {
     List<WalletTransactionModel> findByWalletIdAndTermName(Long walletId, String termName);
+
+    List<WalletTransactionModel> findByTermName(String termName);
 }

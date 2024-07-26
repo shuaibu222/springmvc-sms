@@ -14,6 +14,7 @@ import com.shuaibu.repository.StaffRepository;
 import com.shuaibu.service.ClassTeacherService;
 import com.shuaibu.service.SchoolClassService;
 import com.shuaibu.service.StaffService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,7 @@ public class ClassTeacherImpl implements ClassTeacherService {
         return mapToDto(classTeacherRepository.findById(id).orElseThrow());
     }
 
+    @Transactional
     @Override
     public void saveOrUpdateClassTeacher(ClassTeacherDto classTeacherDto) {
         boolean isNew = classTeacherDto.getId() == null;
@@ -94,7 +96,7 @@ public class ClassTeacherImpl implements ClassTeacherService {
     }
 
 
-
+    @Transactional
     @Override
     public void deleteClassTeacher(Long id) {
         ClassTeacherModel classTeacher = classTeacherRepository.findById(id).orElseThrow();

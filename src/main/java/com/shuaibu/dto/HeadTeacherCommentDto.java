@@ -8,13 +8,14 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ClassTeacherCommentDto {
+public class HeadTeacherCommentDto {
     private Long id;
-    private String teacherId;
-    private String classId;
+
     private String teacherName;
-    private String className;
-    
+    private String teacherId;
+    private String sectionId;
+    private String sectionName;
+
     @NotNull(message = "* Range from is mandatory")
     @Min(value = 100, message = "* Cannot be less than 100")
     private Long rangeFrom;

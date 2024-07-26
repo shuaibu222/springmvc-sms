@@ -7,22 +7,24 @@
     <title>Wallets List</title>
     <script>
         function formatNumber(num) {
-            let formattedNumber = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            let sign = num < 0 ? "" : "+"; // Add + for positive numbers
-            return sign + formattedNumber + " ₦";
+            let absoluteNumber = Math.abs(num);
+            let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            if (num < 0) {
+                return `<b>- </b>₦${formattedNumber}`;
+            } else {
+                return `<b>+ </b>₦${formattedNumber}`;
+            }
         }
 
         function fetchWalletsByClass() {
-            console.log("Fetching wallets...");
             let className = document.getElementById("className").value;
-            console.log("Selected class name:", className);
+            localStorage.setItem('selectedClass', className); // Store the selected class in local storage
             let url = "/fees/walletsByClass?className=" + encodeURIComponent(className);
-            console.log("Fetching from URL:", url);
 
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Data received:", data);
                     let table = document.getElementById("walletsTable");
                     table.innerHTML = `
                         <tr>
@@ -38,7 +40,6 @@
                     `;
                     let totalDebt = 0;
                     data.forEach(wallet => {
-                        // Sum only negative balances (debts)
                         if (wallet.balance < 0) {
                             totalDebt += wallet.balance;
                         }
@@ -59,7 +60,7 @@
                         payLink.innerText = "Pay";
                         actionsCell.appendChild(payLink);
 
-                        actionsCell.innerHTML += "&nbsp;"; // Add a space
+                        actionsCell.innerHTML += "&nbsp;";
 
                         let viewTransactionsLink = document.createElement("a");
                         viewTransactionsLink.className = "dynamic-link";
@@ -67,16 +68,15 @@
                         viewTransactionsLink.innerText = "Transactions";
                         actionsCell.appendChild(viewTransactionsLink);
 
-                        actionsCell.innerHTML += "&nbsp;"; // Add a space
+                        actionsCell.innerHTML += "&nbsp;";
 
                         let editBalanceLink = document.createElement("a");
-                        viewTransactionsLink.className = "dynamic-link";
-                        viewTransactionsLink.href = "/fees/edit/" + wallet.id;
-                        viewTransactionsLink.innerText = "Edit Balance";
-                        actionsCell.appendChild(viewTransactionsLink);
+                        editBalanceLink.className = "dynamic-link";
+                        editBalanceLink.href = "/fees/edit/" + wallet.id;
+                        editBalanceLink.innerText = "Edit Balance";
+                        actionsCell.appendChild(editBalanceLink);
                     });
 
-                    // Add total debt row
                     let totalRow = table.insertRow();
                     let cell = totalRow.insertCell(0);
                     cell.colSpan = 7;
@@ -87,10 +87,32 @@
                 .catch(error => console.error('Error fetching wallets:', error));
         }
 
-        // Function to call fetchWalletsByClass on page load if className has a value
+        function submitDebtForm(event) {
+            event.preventDefault();
+            let form = event.target;
+            let formData = new FormData(form);
+            let url = form.action;
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        fetchWalletsByClass();
+                    } else {
+                        console.error('Error setting debt:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error setting debt:', error));
+        }
+
         window.onload = function() {
             let classSelect = document.getElementById("className");
-            if (classSelect.value) {
+            let selectedClass = localStorage.getItem('selectedClass'); // Retrieve the selected class from local storage
+
+            if (selectedClass) {
+                classSelect.value = selectedClass; // Set the selected class
                 fetchWalletsByClass();
             }
         };
@@ -103,8 +125,7 @@
             <h1>Wallets List</h1>
         </div>
 
-        <!-- Form to filter students by class -->
-        <form class="list-form-layout" method="post" th:action="@{/fees/setTermDebt}">
+        <form class="list-form-layout" method="post" th:action="@{/fees/setTermDebt}" onsubmit="submitDebtForm(event)">
             <div class="list-form">
                 <div class="form-group">
                     <label for="className">Select Class:</label>

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class HeadTeacherModel {
+public class HeadTeacherCommentModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,8 @@ public class HeadTeacherModel {
     private String sectionId;
     private String teacherName;
     private String sectionName;
+    private Long rangeFrom;
+    private Long rangeTo;
+    private String remark;
 
 }

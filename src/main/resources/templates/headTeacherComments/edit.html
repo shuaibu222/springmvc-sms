@@ -3,23 +3,22 @@
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
-    lang="en"
     >
 <head>
-    <title>Edit Class Teacher Comment</title>
+    <title>Edit Head Comment</title>
 </head>
 <body>
     <section layout:fragment="body">
         <section class="form-container">
-            <a href="/classTeacherComments" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+            <a href="/headTeacherComments" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
                 <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
             </a>
-            <h1>Edit ClassTeacherComment</h1>
-            <form role="form" th:action="@{/classTeacherComments/update/{id}(id=${classTeacherComment.id})}" th:object="${classTeacherComment}" method="post">
+            <h1>Edit Head Comment</h1>
+            <form role="form" th:action="@{/headTeacherComments/update/{id}(id=${headTeacherComment.id})}" th:object="${headTeacherComment}" method="post">
                 <div>
                     <label for="teacherId">Staffs:</label>
                     <select id="teacherId" th:field="*{teacherId}" th:name="teacherId">
-                        <option th:each="staff : ${classTeachers}" th:value="${staff.id}" th:text="${staff.teacherName}"></option>
+                        <option th:each="staff : ${headTeachers}" th:value="${staff.id}" th:text="${staff.teacherName}"></option>
                     </select>
                 </div>
                 <div>

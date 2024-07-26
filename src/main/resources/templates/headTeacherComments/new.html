@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html 
-    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:th="http://thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
-    lang="en"
     >
 <head>
-    <title>Edit Class Teacher Comment</title>
+    <title>Create New Class Teacher Comment</title>
 </head>
 <body>
     <section layout:fragment="body">
@@ -14,14 +13,8 @@
             <a href="/classTeacherComments" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
                 <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
             </a>
-            <h1>Edit ClassTeacherComment</h1>
-            <form role="form" th:action="@{/classTeacherComments/update/{id}(id=${classTeacherComment.id})}" th:object="${classTeacherComment}" method="post">
-                <div>
-                    <label for="teacherId">Staffs:</label>
-                    <select id="teacherId" th:field="*{teacherId}" th:name="teacherId">
-                        <option th:each="staff : ${classTeachers}" th:value="${staff.id}" th:text="${staff.teacherName}"></option>
-                    </select>
-                </div>
+            <h1>Create New Class Teacher Comment</h1>
+            <form th:action="@{/classTeacherComments/create}" th:object="${classTeacherComment}" method="post">
                 <div>
                     <label for="rangeFrom">From:</label>
                     <input id="rangeFrom" type="text" th:field="*{rangeFrom}" />
@@ -38,7 +31,7 @@
                     <p th:if="${#fields.hasErrors('remark')}" th:errors="*{remark}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
-                    <button type="submit">Update</button>
+                    <button type="submit">Save</button>
                 </div>
             </form>
         </section>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{layout}"
+      lang="en">
+<head>
+  <title>Finance Analysis</title>
+  <script>
+    function formatNumber(num) {
+      let absoluteNumber = Math.abs(num);
+      let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      if (num < 0) {
+        return `<b>- </b>₦${formattedNumber}`;
+      } else {
+        return `<b>+ </b>₦${formattedNumber}`;
+      }
+    }
+
+    function removeMinus(num) {
+      let absoluteNumber = Math.abs(num);
+      let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return `₦${formattedNumber}`;
+    }
+
+    function updateFormattedNumbers() {
+      const balanceElements = document.querySelectorAll('.balance');
+      balanceElements.forEach(element => {
+        const value = parseFloat(element.textContent);
+        element.innerHTML = formatNumber(value);
+      });
+
+      const totalFeesCollected = parseFloat(document.getElementById('totalFeesCollected').textContent);
+      const totalDebts = parseFloat(document.getElementById('totalDebts').textContent);
+      const total = parseFloat(document.getElementById('total').textContent);
+
+      document.getElementById('totalFeesCollected').innerHTML = formatNumber(totalFeesCollected);
+      document.getElementById('totalDebts').innerHTML = formatNumber(totalDebts);
+      document.getElementById('total').innerHTML = removeMinus(total);
+    }
+
+    document.addEventListener('DOMContentLoaded', updateFormattedNumbers);
+  </script>
+</head>
+<body>
+<section layout:fragment="body">
+  <h2 style="margin-bottom: 1rem">Dashboard</h2>
+  <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 1rem">
+    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: green; color: white">Total Fees Collected: <br><span style="font-size: 2rem; font-weight: bold" id="totalFeesCollected" th:text="${totalFeesCollected}"></span></p>
+    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: darkred; color: white">Total Debts: <br><span style="font-size: 2rem; font-weight: bold" id="totalDebts" th:text="${totalDebts}"></span></p>
+    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: black; color: white">Total Term Revenue: <br><span style="font-size: 2rem; font-weight: bold" id="total" th:text="${total}"></span></p>
+    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: midnightblue; color: white">Total Paid Students: <br><span style="font-size: 2rem; font-weight: bold" th:text="${paidStudent}"></span></p>
+    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: yellow;">Total Pending Students: <br><span style="font-size: 2rem; font-weight: bold" th:text="${notPaidStudent}"></span></p>
+  </div>
+
+  <div sec:authorize="hasRole('ADMIN')" class="table-container">
+    <h2>Pending Students</h2>
+    <table>
+      <tr>
+        <th>Student Name</th>
+        <th>Class</th>
+        <th>Reg No.</th>
+        <th>Admission Type</th>
+        <th>Phone Number</th>
+        <th>Balance</th>
+      </tr>
+      <tr th:each="record : ${records}">
+        <td th:text="${record.studentName}"></td>
+        <td th:text="${record.getStudentClass()}"></td>
+        <td th:text="${record.regNo}"></td>
+        <td th:text="${record.admissionType}"></td>
+        <td th:text="${record.phoneNumber}"></td>
+        <td class="balance" th:text="${record.balance}"></td>
+      </tr>
+    </table>
+  </div>
+</section>
+</body>
+</html>

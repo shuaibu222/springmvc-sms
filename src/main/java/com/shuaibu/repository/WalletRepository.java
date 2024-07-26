@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface WalletRepository extends JpaRepository<WalletModel, Long> {
     List<WalletModel> findByStudentClass(String className);
+    List<WalletModel> findByIdIn(List<Long> studentId);
 }

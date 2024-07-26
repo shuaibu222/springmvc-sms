@@ -27,6 +27,8 @@ public class WalletModel {
     private String regNo;
     private String admissionType;
     private String isActive;
+    // New field to track payment status
+    private Boolean hasPaid = false;
 
     @ElementCollection
     private List<Long> transactionIds;

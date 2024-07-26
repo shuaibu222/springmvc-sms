@@ -51,9 +51,9 @@
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sportHouses"><i class="fa fa-running"></i> Sport Houses</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/events"><i class="fas fa-calendar"></i> Event</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/classTeachers"><i class="fas fa-chalkboard-teacher"></i> Class Teachers</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/classTeacherComments"><i class="fas fa-comment"></i> *Class Comment</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/classTeacherComments"><i class="fas fa-comment"></i> Class Comment</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/headTeachers"><i class="fas fa-user-tie"></i> Head Teacher</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/headTeacherComments"><i class="fas fa-comment-alt"></i> *Head Comment</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/headTeacherComments"><i class="fas fa-comment-alt"></i> Head Comment</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/resultCheckings"><i class="fa fa-file-alt"></i> Result Checking</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/notifications"><i class="fas fa-bell"></i> Notifications</a></li>
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>

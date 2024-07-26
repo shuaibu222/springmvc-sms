@@ -5,22 +5,21 @@
         layout:decorate="~{layout}"
         lang="en">
 <head>
-    <title>Class Teacher</title>
+    <title>Head Teacher Comments</title>
 </head>
 <body>
 <section layout:fragment="body">
     <article class="list-page">
         <div class="list-header">
-            <h1>Class Teacher</h1>
-<!--            <a href="/classTeacherComments/new">Add New Class Teacher Comment</a>-->
+            <h1>Head Teacher Comments</h1>
         </div>
 
-        <form th:action="@{/classTeacherComments}" th:object="${classTeacherCommentDto}" class="list-form-layout" method="post">
+        <form th:action="@{/headTeacherComments}" th:object="${headTeacherCommentDto}" class="list-form-layout" method="post">
             <div class="list-form">
                 <div class="form-group">
                     <label for="teacherId">Staffs:</label>
                     <select id="teacherId" th:field="*{teacherId}" th:name="teacherId">
-                        <option th:each="staff : ${classTeachers}" th:value="${staff.id}" th:text="${staff.teacherName}"></option>
+                        <option th:each="staff : ${headTeachers}" th:value="${staff.id}" th:text="${staff.teacherName}"></option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -49,20 +48,20 @@
                 <tr>
                     <th>ID</th>
                     <th>Staff Name</th>
-                    <th>Class Name</th>
+                    <th>Section Name</th>
                     <th>Marks Range</th>
                     <th>Remarks</th>
                     <th>Actions</th>
                 </tr>
-                <tr th:each="classTeacherComment : ${classTeacherComments}">
-                    <td th:text="${classTeacherComment.id}"></td>
-                    <td th:text="${classTeacherComment.teacherName}"></td>
-                    <td th:text="${classTeacherComment.className}"></td>
-                    <td th:text="${classTeacherComment.rangeFrom + '-' + classTeacherComment.rangeTo}"></td>
-                    <td th:text="${classTeacherComment.remark}"></td>
+                <tr th:each="headTeacherComment : ${headTeacherComments}">
+                    <td th:text="${headTeacherComment.id}"></td>
+                    <td th:text="${headTeacherComment.teacherName}"></td>
+                    <td th:text="${headTeacherComment.sectionName}"></td>
+                    <td th:text="${headTeacherComment.rangeFrom + '-' + headTeacherComment.rangeTo}"></td>
+                    <td th:text="${headTeacherComment.remark}"></td>
                     <td>
-                        <a class="dynamic-link blue-details" th:href="@{'/classTeacherComments/edit/' + ${classTeacherComment.id}}">Edit</a>
-                        <a class="dynamic-link red-details" th:href="@{'/classTeacherComments/delete/' + ${classTeacherComment.id}}">Delete</a>
+                        <a class="dynamic-link blue-details" th:href="@{'/headTeacherComments/edit/' + ${headTeacherComment.id}}">Edit</a>
+                        <a class="dynamic-link red-details" th:href="@{'/headTeacherComments/delete/' + ${headTeacherComment.id}}">Delete</a>
                     </td>
                 </tr>
             </table>

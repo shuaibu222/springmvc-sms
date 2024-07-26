@@ -5,27 +5,55 @@
       lang="en">
 <head>
     <title>Wallet Transactions</title>
+    <script>
+        function formatNumber(num) {
+            let absoluteNumber = Math.abs(num); // Remove the sign for formatting
+            let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            if (num < 0) {
+                return `- ₦${formattedNumber}`;
+            } else {
+                return `+ ₦${formattedNumber}`;
+            }
+        }
+
+        window.onload = function() {
+            const walletBalanceElem = document.getElementById("walletBalance");
+            if (walletBalanceElem) {
+                const balance = parseFloat(walletBalanceElem.textContent);
+                walletBalanceElem.textContent = formatNumber(balance);
+            }
+
+            document.querySelectorAll(".transactionAmount").forEach(elem => {
+                const amount = parseFloat(elem.textContent);
+                elem.textContent = formatNumber(amount);
+            });
+
+            // Set back button to retain selected class
+            document.getElementById("backButton").addEventListener("click", function() {
+                window.location.href = "/fees";
+            });
+        };
+    </script>
 </head>
 <body>
 <section layout:fragment="body">
     <article class="transactions-page">
-        <a href="/fees" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+        <a id="backButton" href="javascript:void(0)" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
             <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
         </a>
         <div class="transactions-header">
             <h1>Wallet Transactions</h1>
         </div>
 
-        <!-- Display wallet information -->
         <div class="wallet-info">
             <h2>Wallet Information</h2>
             <p><strong>Student Name:</strong> <span th:text="${wallet.studentName}"></span></p>
             <p><strong>Class:</strong> <span th:text="${wallet.studentClass}"></span></p>
             <p><strong>Registration No.:</strong> <span th:text="${wallet.regNo}"></span></p>
-            <p><strong>Current Balance:</strong> <span th:text="${'₦ ' + wallet.balance}"></span></p>
+            <p><strong>Current Balance:</strong> <span id="walletBalance" th:text="${wallet.balance}"></span></p>
         </div>
 
-        <!-- Display transactions -->
         <div class="transactions-list">
             <h2>Transactions</h2>
             <table>
@@ -48,7 +76,7 @@
                     <td th:text="${transaction.transactionDate}"></td>
                     <td th:text="${transaction.termName}"></td>
                     <td th:text="${transaction.sessionName}"></td>
-                    <td th:text="${transaction.amount}"></td>
+                    <td class="transactionAmount" th:text="${transaction.amount}"></td>
                 </tr>
                 </tbody>
             </table>

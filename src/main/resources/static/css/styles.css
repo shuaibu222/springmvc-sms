@@ -711,6 +711,59 @@ td a:nth-child(3):hover {
     }
 }
 
+/* Print styles */
+@media print {
+    body {
+        visibility: hidden;
+    }
+
+    .details-page,
+    .details-page * {
+        visibility: visible;
+    }
+
+    .details-page {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0; /* Remove padding for print */
+    }
+
+    .detail-container {
+        box-shadow: none; /* Remove box shadow for print */
+        border: none; /* Remove border for print */
+        padding: 0; /* Remove padding for print */
+        background: none; /* Remove background for print */
+    }
+
+    .student-details {
+        display: block; /* Change grid layout to block for print */
+    }
+
+    .staff-details {
+        display: block; /* Change grid layout to block for print */
+    }
+
+    .detail-item {
+        margin-bottom: 1rem; /* Add margin for readability */
+    }
+
+    .label {
+        font-weight: bold; /* Ensure labels are bold */
+    }
+
+    .value {
+        font-weight: normal; /* Ensure values are normal weight */
+    }
+
+    @page {
+        size: auto; /* Use auto size for pages */
+        margin: 1in; /* Set margin for the print */
+    }
+}
+
+
 
 /* Transactions Page Styles */
 .transactions-page {

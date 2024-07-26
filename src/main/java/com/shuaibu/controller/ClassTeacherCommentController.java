@@ -7,6 +7,7 @@ import com.shuaibu.mapper.SchoolClassMapper;
 import com.shuaibu.mapper.StaffMapper;
 import com.shuaibu.model.ClassTeacherModel;
 import com.shuaibu.repository.ClassTeacherCommentRepository;
+import com.shuaibu.repository.ClassTeacherRepository;
 import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.StaffRepository;
 import com.shuaibu.service.SchoolClassService;
@@ -36,62 +37,42 @@ public class ClassTeacherCommentController {
     private final ClassTeacherCommentRepository classTeacherCommentRepository;
     private final SchoolClassRepository schoolClassRepository;
     private final StaffRepository staffRepository;
+    private final ClassTeacherRepository classTeacherRepository;
 
-    public ClassTeacherCommentController(ClassTeacherCommentService classTeacherCommentService, StaffService staffService, SchoolClassService schoolClassService, ClassTeacherCommentRepository classTeacherCommentRepository, SchoolClassRepository schoolClassRepository, StaffRepository staffRepository) {
+    public ClassTeacherCommentController(ClassTeacherCommentService classTeacherCommentService, StaffService staffService, SchoolClassService schoolClassService, ClassTeacherCommentRepository classTeacherCommentRepository, SchoolClassRepository schoolClassRepository, StaffRepository staffRepository, ClassTeacherRepository classTeacherRepository) {
         this.classTeacherCommentService = classTeacherCommentService;
         this.staffService = staffService;
         this.schoolClassService = schoolClassService;
         this.classTeacherCommentRepository = classTeacherCommentRepository;
         this.schoolClassRepository = schoolClassRepository;
         this.staffRepository = staffRepository;
+        this.classTeacherRepository = classTeacherRepository;
     }
 
     @GetMapping
-    public String assignClassTeacherForm(Model model) {
-        model.addAttribute("classTeacherDto", new ClassTeacherModel());
-        model.addAttribute("staffs", staffService.getAllStaffs());
-        model.addAttribute("classes", schoolClassService.getAllSchoolClass());
+    public String classTeacherCommentsForm(Model model) {
+        model.addAttribute("classTeacherCommentDto", new ClassTeacherCommentModel());
+        model.addAttribute("classTeachers", classTeacherRepository.findAll());
         model.addAttribute("classTeacherComments", classTeacherCommentService.getAllClassTeacherComments());
         return "classTeacherComments/list";
     }
 
-//    TODO: edit class teacher, and create new repo for class teacher
-
     @PostMapping
-    public String saveAssignClassTeacher(@Valid @ModelAttribute("classTeacherDto") ClassTeacherDto classTeacherDto, BindingResult result, Model model) {
+    public String saveClassTeacherComment(@Valid @ModelAttribute("classTeacherCommentDto") ClassTeacherCommentDto classTeacherComment,
+                                            BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("staffs", staffService.getAllStaffs());
-            model.addAttribute("classes", schoolClassService.getAllSchoolClass());
+            model.addAttribute("classTeachers", classTeacherRepository.findAll());
             model.addAttribute("classTeacherComments", classTeacherCommentService.getAllClassTeacherComments());
             return "classTeacherComments/list";
         }
-
-        // for linking class and class teacher
-//        StaffDto staffDto = staffService.getStaffById(Long.valueOf(classTeacherDto.getTeacherName()));
-//        SchoolClassDto schoolClassDto = schoolClassService.getSchoolClassById(Long.valueOf(classTeacherDto.getClassName()));
-//
-//        // link class with teacher id as class teacher
-//        schoolClassDto.setClassTeacher(String.valueOf(staffDto.getId()));
-//        schoolClassRepository.save(SchoolClassMapper.mapToModel(schoolClassDto));
-//
-//        // link teacher with class id as class teacher
-//        staffDto.setClassTeacherOfId(String.valueOf(schoolClassDto.getId()));
-//        staffRepository.save(StaffMapper.mapToModel(staffDto));
-//
-//        // save it to class teacher repo
-//        ClassTeacherCommentModel classTeacherCommentModel = new ClassTeacherCommentModel();
-//        classTeacherCommentModel.setTeacherName(staffDto.getFirstName() + " " + staffDto.getLastName());
-//        classTeacherCommentModel.setClassName(schoolClassDto.getSectionId() + " " + schoolClassDto.getClassName());
-//        classTeacherCommentRepository.save(classTeacherCommentModel);
-
+        classTeacherCommentService.saveOrUpdateClassTeacherComment(classTeacherComment);
         return "redirect:/classTeacherComments";
     }
 
-    // TODO: update comment
-    // we don't need new because we will be updating all the time
     @GetMapping("/edit/{id}")
     public String updateClassTeacherCommentForm(@PathVariable Long id, Model model) {
         ClassTeacherCommentDto classTeacherComment = classTeacherCommentService.getClassTeacherCommentById(id);
+        model.addAttribute("classTeachers", classTeacherRepository.findAll());
         model.addAttribute("classTeacherComment", classTeacherComment);
         return "classTeacherComments/edit";
     }
@@ -101,6 +82,8 @@ public class ClassTeacherCommentController {
                                 @Valid @ModelAttribute("classTeacherComment") ClassTeacherCommentDto classTeacherComment, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("classTeachers", classTeacherRepository.findAll());
+            model.addAttribute("classTeacherComments", classTeacherCommentService.getAllClassTeacherComments());
             return "classTeacherComments/edit";
         }
         classTeacherComment.setId(id);

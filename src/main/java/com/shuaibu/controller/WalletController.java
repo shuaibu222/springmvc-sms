@@ -1,12 +1,12 @@
 package com.shuaibu.controller;
 
+import com.shuaibu.dto.SessionDto;
+import com.shuaibu.dto.TermDto;
+import com.shuaibu.model.ExpectedTermFeesModel;
 import com.shuaibu.model.TermModel;
 import com.shuaibu.model.WalletModel;
 import com.shuaibu.model.WalletTransactionModel;
-import com.shuaibu.repository.SchoolClassRepository;
-import com.shuaibu.repository.TermRepository;
-import com.shuaibu.repository.WalletRepository;
-import com.shuaibu.repository.WalletTransactionRepository;
+import com.shuaibu.repository.*;
 import com.shuaibu.service.SessionService;
 import com.shuaibu.service.TermService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,16 +27,18 @@ public class WalletController {
     private final TermRepository termRepository;
     private final TermService termService;
     private final SessionService sessionService;
+    private final ExpectedTermFeesRepository expectedTermFeesRepository;
 
     public WalletController(WalletRepository walletRepository,
                             SchoolClassRepository schoolClassRepository,
-                            WalletTransactionRepository walletTransactionRepository, TermRepository termRepository, TermService termService, SessionService sessionService) {
+                            WalletTransactionRepository walletTransactionRepository, TermRepository termRepository, TermService termService, SessionService sessionService, ExpectedTermFeesRepository expectedTermFeesRepository) {
         this.walletRepository = walletRepository;
         this.schoolClassRepository = schoolClassRepository;
         this.walletTransactionRepository = walletTransactionRepository;
         this.termRepository = termRepository;
         this.termService = termService;
         this.sessionService = sessionService;
+        this.expectedTermFeesRepository = expectedTermFeesRepository;
     }
 
     @GetMapping
@@ -81,6 +83,10 @@ public class WalletController {
 
         // Update the wallet balance
         wallet.setBalance(wallet.getBalance() + walletTransactionModel.getAmount());
+        // set hasPaid to true if condition met
+        wallet.setHasPaid(wallet.getBalance() >= 0);
+
+
         wallet.getTransactionIds().add(transaction.getId());
         walletRepository.save(wallet);
 
@@ -135,22 +141,54 @@ public class WalletController {
 
     @PostMapping("/setTermDebt")
     public String setTermDebt(@RequestParam String className, @RequestParam Double full,
-                              @RequestParam Double partial) {
+                              @RequestParam Double partial, Model model) {
+        // Retrieve active session and term names
+        String activeSessionName = sessionService.getAllSessions().stream()
+                .filter(s -> s.getIsActive().equals("True"))
+                .findFirst()
+                .map(SessionDto::getSessionName)
+                .orElseThrow(() -> new IllegalStateException("No active session found"));
+
+        String activeTermName = termService.getAllTerms().stream()
+                .filter(t -> t.getIsActive().equals("True"))
+                .findFirst()
+                .map(TermDto::getTermName)
+                .orElseThrow(() -> new IllegalStateException("No active term found"));
+
+        // Retrieve or initialize ExpectedTermFeesModel
+        ExpectedTermFeesModel expectedTermFees = expectedTermFeesRepository
+                .findBySessionNameAndTermName(activeSessionName, activeTermName);
+        if (expectedTermFees == null) {
+            expectedTermFees = new ExpectedTermFeesModel();
+            expectedTermFees.setSessionName(activeSessionName);
+            expectedTermFees.setTermName(activeTermName);
+            expectedTermFees.setTotalExpectedTermFee(0.0);
+        }
+
+        // Set or update expected term fees
         List<WalletModel> wallets = walletRepository.findByStudentClass(className);
+        double additionalFees = 0.0;
 
         for (WalletModel wallet : wallets) {
             switch (wallet.getAdmissionType()) {
                 case "Fully-funded":
-                    // Add new debt to the existing balance
-                    wallet.setBalance(wallet.getBalance() - full);  // Since balance is negative, adding debt decreases it further
+                    additionalFees += full;
+                    wallet.setBalance(wallet.getBalance() - full);
                     break;
                 case "Partial-scholarship":
-                    // Add new debt to the existing balance
-                    wallet.setBalance(wallet.getBalance() - partial);  // Same here, adding debt decreases the balance
+                    additionalFees += partial;
+                    wallet.setBalance(wallet.getBalance() - partial);
                     break;
             }
             walletRepository.save(wallet);
         }
+
+        // Update expected term fees
+        expectedTermFees.setTotalExpectedTermFee(expectedTermFees.getTotalExpectedTermFee() + additionalFees);
+
+        expectedTermFeesRepository.save(expectedTermFees);
+
         return "redirect:/fees";
     }
+
 }

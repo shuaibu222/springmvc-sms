@@ -11,19 +11,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class HeadTeacherModel {
+public class ExpectedTermFeesModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    private String teacherId;
-    private String sectionId;
-    private String teacherName;
-    private String sectionName;
-
+    private String sessionName;
+    private String termName;
+    private Double totalExpectedTermFee;
 }
