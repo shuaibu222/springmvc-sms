@@ -13,7 +13,14 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Staffs List</h1>
-                <a href="/staffs/new">Add New Staff</a>
+<!--                <a href="/staffs/new">Add New Staff</a>-->
+            </div>
+
+            <div class="params success" th:if="${param.success}">
+                You successfully employed a staff.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Employment failed.
             </div>
 
             <!-- Form Section -->
@@ -106,7 +113,7 @@
                         <label>Classes:</label>
                         <div th:each="classModel : ${classModels}">
                             <input type="checkbox" th:id="${'classModel_' + classModel.id}" th:name="classModelIds" th:field="*{classModelIds}" th:value="${classModel.id}" />
-                            <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.sectionId + ' ' + classModel.className}"></label>
+                            <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.className}"></label>
                             <br/>
                         </div>
                         <p th:if="${#fields.hasErrors('classModelIds')}" th:errors="*{classModelIds}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
@@ -130,7 +137,7 @@
             <div class="table-container">
                 <table>
                     <tr>
-                        <th>ID</th>
+                        <th>S/N</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Username</th>
@@ -166,7 +173,7 @@
                         <td>
                             <a class="dynamic-link green-details" th:href="@{'/staffs/details/' + ${staff.id}}">Details</a>
                             <a class="dynamic-link blue-details" th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>
-                            <a class="dynamic-link red-details" th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>
+<!--                            <a class="dynamic-link red-details" th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>-->
                         </td>
                     </tr>
                 </table>

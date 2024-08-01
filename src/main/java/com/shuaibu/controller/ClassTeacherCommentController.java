@@ -32,20 +32,10 @@ import jakarta.validation.Valid;
 public class ClassTeacherCommentController {
     
     private final ClassTeacherCommentService classTeacherCommentService;
-    private final StaffService staffService;
-    private final SchoolClassService schoolClassService;
-    private final ClassTeacherCommentRepository classTeacherCommentRepository;
-    private final SchoolClassRepository schoolClassRepository;
-    private final StaffRepository staffRepository;
     private final ClassTeacherRepository classTeacherRepository;
 
-    public ClassTeacherCommentController(ClassTeacherCommentService classTeacherCommentService, StaffService staffService, SchoolClassService schoolClassService, ClassTeacherCommentRepository classTeacherCommentRepository, SchoolClassRepository schoolClassRepository, StaffRepository staffRepository, ClassTeacherRepository classTeacherRepository) {
+    public ClassTeacherCommentController(ClassTeacherCommentService classTeacherCommentService, ClassTeacherRepository classTeacherRepository) {
         this.classTeacherCommentService = classTeacherCommentService;
-        this.staffService = staffService;
-        this.schoolClassService = schoolClassService;
-        this.classTeacherCommentRepository = classTeacherCommentRepository;
-        this.schoolClassRepository = schoolClassRepository;
-        this.staffRepository = staffRepository;
         this.classTeacherRepository = classTeacherRepository;
     }
 
@@ -66,7 +56,7 @@ public class ClassTeacherCommentController {
             return "classTeacherComments/list";
         }
         classTeacherCommentService.saveOrUpdateClassTeacherComment(classTeacherComment);
-        return "redirect:/classTeacherComments";
+        return "redirect:/classTeacherComments?success";
     }
 
     @GetMapping("/edit/{id}")

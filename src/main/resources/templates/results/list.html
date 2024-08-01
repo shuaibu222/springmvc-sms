@@ -3,6 +3,7 @@
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout}"
+    lang="en"
 >
 <head>
     <title>Results</title>
@@ -12,10 +13,17 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Results List</h1>
-                <a th:href="@{'/results/' + ${sectionName} + '/' + ${className} + '/new'}">Add New Result</a>
+<!--                <a th:href="@{'/results/' + ${sectionName} + '/' + ${className} + '/new'}">Add New Result</a>-->
             </div>
 
-                <form th:action="@{'/results/' + ${sectionName} + '/' + ${className} + '/create'}" th:object="${result}" class="list-form-layout" method="post">
+            <div class="params success" th:if="${param.success}">
+                You successfully entered result.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Entering result failed.
+            </div>
+
+                <form th:action="@{'/results/' + ${sectionName} + '/' + ${className}}" th:object="${result}" class="list-form-layout" method="post">
                     <div class="list-form">
                         <div class="form-group">
                             <label for="student">Student Name:</label>
@@ -38,7 +46,7 @@
                         <div class="form-group">
                             <label for="studentClass">Student Class:</label>
                             <select id="studentClass" th:field="*{studentClassId}" required>
-                                <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.sectionId + ' ' + studentClass.className}"></option>
+                                <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.className}"></option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -96,7 +104,7 @@
                         <td th:text="${result.sectionId}"></td>
                         <td th:text="${result.academicSessionId}"></td>
                         <td th:text="${result.regNo}"></td>
-                        <td th:text="${result.sectionId + ' ' + result.studentClassId}"></td>
+                        <td th:text="${result.studentClassId}"></td>
                         <td th:text="${result.firstCA}"></td>
                         <td th:text="${result.secondCA}"></td>
                         <td th:text="${result.termId}"></td>
@@ -107,7 +115,7 @@
                         <td th:text="${result.remark}"></td>
                         <td>
                             <a class="dynamic-link" th:href="@{'/results/' + ${sectionName} + '/' + ${className} + '/edit/' + ${result.id}}">Edit</a>
-                            <a class="dynamic-link" th:href="@{'/results/' + ${sectionName} + '/' + ${className} + '/delete/' + ${result.id}}">Delete</a>
+                            <a class="dynamic-link" style="background: red; border: 2px solid red; color: white" th:href="@{'/results/' + ${sectionName} + '/' + ${className} + '/delete/' + ${result.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

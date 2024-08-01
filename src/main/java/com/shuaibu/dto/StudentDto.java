@@ -35,11 +35,10 @@ public class StudentDto {
     private String regNo;
 
     @NotNull(message = "* Date fo Birth cannot be empty")
-    @Past(message = "* Date of birth cannot be in the future")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @NotNull(message = "* Employed Date cannot be empty")
-    private LocalDate admissionDate;
+    private String admissionDate;
 
     @NotEmpty(message = "* Home address is mandatory")
     private String homeAddress;
@@ -81,8 +80,6 @@ public class StudentDto {
 
     @NotEmpty(message = "* Is student currently active in school")
     private String isActive;
-
-    private Double balance;
 
     @NotEmpty(message = "* Admission Type is mandatory")
     private String admissionType;

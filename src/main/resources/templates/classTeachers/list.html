@@ -14,12 +14,19 @@
 <!--            <a href="/classTeacherComments/new">Add New Class Teacher Comment</a>-->
         </div>
 
+        <div class="params success" th:if="${param.success}">
+            You successfully join a teacher with a class.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Joining failed.
+        </div>
+
         <form th:action="@{/classTeachers}" th:object="${classTeacherDto}" class="list-form-layout" method="post">
             <div class="list-form">
                 <div class="form-group">
                     <label for="className">Class:</label>
                     <select id="className" th:field="*{classId}" th:name="className">
-                        <option th:each="className : ${classes}" th:value="${className.id}" th:text="${className.sectionId + ' ' + className.className}"></option>
+                        <option th:each="className : ${classes}" th:value="${className.id}" th:text="${className.className}"></option>
                     </select>
                     <p th:if="${#fields.hasErrors('className')}" th:errors="*{className}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
@@ -52,7 +59,7 @@
                     <td th:text="${classTeacher.className}"></td>
                     <td>
                         <a class="dynamic-link" th:href="@{'/classTeachers/edit/' + ${classTeacher.id}}">Edit</a>
-                        <a class="dynamic-link" th:href="@{'/classTeachers/delete/' + ${classTeacher.id}}">Delete</a>
+<!--                        <a class="dynamic-link" th:href="@{'/classTeachers/delete/' + ${classTeacher.id}}">Delete</a>-->
                     </td>
                 </tr>
             </table>

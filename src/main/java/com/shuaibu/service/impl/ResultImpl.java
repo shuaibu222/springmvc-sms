@@ -122,7 +122,7 @@ public class ResultImpl implements ResultService {
         // Find the matching GradeDto based on total score
         List<GradeDto> gradeList = gradeService.getAllGrades();
         GradeDto matchingGrade = gradeList.stream()
-                .filter(grade -> totalMark >= grade.getRangeFrom() && totalMark <= grade.getRangeTo())
+                .filter(grade -> totalMark >= grade.getRangeFrom() && totalMark <= grade.getRangeTo() && section.getSectionName().equals(grade.getSectionId()))
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("No grade found for total marks: " + totalMark));
 
@@ -133,14 +133,15 @@ public class ResultImpl implements ResultService {
         // Save the result model
         resultRepository.save(resultModel);
     }
-    
+
     @Override
     public void deleteResult(Long id) {
         resultRepository.deleteById(id);
     }
 
+
     @Override
-    public List<ResultModel> getResultModelsBySectionIdAndStudentClassId(String section, String classId) {
-        return resultRepository.findResultModelsBySectionIdAndStudentClassId(section, classId);
+    public List<ResultModel> getResultModelsByStudentClassId(String classId) {
+        return resultRepository.findResultModelsByStudentClassId(classId);
     }
 }

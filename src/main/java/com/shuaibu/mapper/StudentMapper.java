@@ -32,7 +32,6 @@ public class StudentMapper {
                 .gender(studentModel.getGender())
                 .profilePicture(studentModel.getProfilePicture())
                 .isActive(studentModel.getIsActive())
-                .balance(studentModel.getBalance())
                 .admissionType(studentModel.getAdmissionType())
                 .phoneNumber(studentModel.getPhoneNumber())
         .build();
@@ -65,7 +64,6 @@ public class StudentMapper {
                 .gender(studentDto.getGender())
                 .profilePicture(studentDto.getProfilePicture())
                 .isActive(studentDto.getIsActive())
-                .balance(studentDto.getBalance())
                 .admissionType(studentDto.getAdmissionType())
                 .phoneNumber(studentDto.getPhoneNumber())
         .build();

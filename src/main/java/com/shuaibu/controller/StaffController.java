@@ -27,14 +27,12 @@ public class StaffController {
     private final StaffService staffService;
     private final SubjectService subjectService;
     private final SchoolClassService schoolClassService;
-    private final RoleService roleService;
     private final StaffRepository staffRepository;
 
-    public StaffController(StaffService staffService, SubjectService subjectService, SchoolClassService schoolClassService, RoleService roleService, UserService userService, UserRepository userRepository, SchoolClassRepository schoolClassRepository, StaffRepository staffRepository) {
+    public StaffController(StaffService staffService, SubjectService subjectService, SchoolClassService schoolClassService, UserService userService, UserRepository userRepository, SchoolClassRepository schoolClassRepository, StaffRepository staffRepository) {
         this.staffService = staffService;
         this.subjectService = subjectService;
         this.schoolClassService = schoolClassService;
-        this.roleService = roleService;
         this.staffRepository = staffRepository;
     }
 
@@ -43,7 +41,6 @@ public class StaffController {
     @GetMapping
     public String listStaffs(Model model) {
         model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
-        model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("staff", new StaffModel());
         model.addAttribute("staffs", staffRepository.findAll());
         model.addAttribute("subjects", subjectService.getAllSubjects());
@@ -57,7 +54,6 @@ public class StaffController {
         if (result.hasErrors()) {
             model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
             model.addAttribute("subjects", subjectService.getAllSubjects());
-            model.addAttribute("roles", roleService.getAllRoles());
             model.addAttribute("gender", Arrays.asList("Male", "Female"));
             model.addAttribute("isActive", Arrays.asList("True", "False"));
 
@@ -65,7 +61,7 @@ public class StaffController {
         }
 
         staffService.saveOrUpdateStaff(staff);
-        return "redirect:/staffs";
+        return "redirect:/staffs?success";
     }
 
     @GetMapping("/new")
@@ -73,7 +69,6 @@ public class StaffController {
         model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
         model.addAttribute("staff", new StaffModel());
         model.addAttribute("subjects", subjectService.getAllSubjects());
-        model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("gender", Arrays.asList("Male", "Female"));
         model.addAttribute("isActive", Arrays.asList("True", "False"));
         
@@ -86,7 +81,6 @@ public class StaffController {
             model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
             model.addAttribute("staff", staff);
             model.addAttribute("subjects", subjectService.getAllSubjects());
-            model.addAttribute("roles", roleService.getAllRoles());
             model.addAttribute("gender", Arrays.asList("Male", "Female"));
             model.addAttribute("isActive", Arrays.asList("True", "False"));
 
@@ -113,7 +107,6 @@ public class StaffController {
         model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("staff", staff);
-        model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("gender", Arrays.asList("Male", "Female"));
         model.addAttribute("isActive", Arrays.asList("True", "False"));
 
@@ -128,7 +121,6 @@ public class StaffController {
             model.addAttribute("classModels", schoolClassService.getAllSchoolClass());
             model.addAttribute("subjects", subjectService.getAllSubjects());
             model.addAttribute("staff", staff);
-            model.addAttribute("roles", roleService.getAllRoles());
             model.addAttribute("gender", Arrays.asList("Male", "Female"));
             model.addAttribute("isActive", Arrays.asList("True", "False"));
 

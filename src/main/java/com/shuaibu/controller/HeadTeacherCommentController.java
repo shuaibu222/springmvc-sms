@@ -42,7 +42,7 @@ public class HeadTeacherCommentController {
             return "headTeacherComments/list";
         }
         headTeacherCommentService.saveOrUpdateHeadTeacherComment(headTeacherComment);
-        return "redirect:/headTeacherComments";
+        return "redirect:/headTeacherComments?success";
     }
 
     @GetMapping("/edit/{id}")

@@ -45,7 +45,7 @@ public class SessionController {
             return "sessions/list";
         }
         sessionService.saveOrUpdateSession(session);
-        return "redirect:/sessions";
+        return "redirect:/sessions?success";
     }
 
     @GetMapping("/new")

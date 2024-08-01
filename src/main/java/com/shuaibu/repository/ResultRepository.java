@@ -14,5 +14,7 @@ public interface ResultRepository extends JpaRepository<ResultModel, Long> {
     List<ResultModel> findResultModelsBySectionIdAndStudentClassId(String section, String classId);
 
     ResultModel findByRegNo(@NotEmpty(message = "* Reg no. is mandatory") String regNo);
+
+    List<ResultModel> findResultModelsByStudentClassId(String classId);
 }
 

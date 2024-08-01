@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/fees")
@@ -43,9 +44,14 @@ public class WalletController {
 
     @GetMapping
     public String walletPage(Model model) {
+        List<WalletModel> wallets = walletRepository.findAll()
+                        .stream()
+                                .filter(w -> w.getIsActive().equals("True"))
+                                        .collect(Collectors.toList());
+
         model.addAttribute("wallet", new WalletModel());
         model.addAttribute("classes", schoolClassRepository.findAll());
-        model.addAttribute("wallets", walletRepository.findAll());
+        model.addAttribute("wallets", wallets);
         return "wallets/list";
     }
 
@@ -97,7 +103,7 @@ public class WalletController {
     @GetMapping("/walletsByClass")
     @ResponseBody
     public List<WalletModel> getWalletsByClass(@RequestParam String className) {
-        return walletRepository.findByStudentClass(className);
+        return walletRepository.findByStudentClassAndIsActive(className, "True");
     }
 
     @GetMapping("/transactions/{walletId}")
@@ -141,7 +147,7 @@ public class WalletController {
 
     @PostMapping("/setTermDebt")
     public String setTermDebt(@RequestParam String className, @RequestParam Double full,
-                              @RequestParam Double partial, Model model) {
+                            @RequestParam Double partial, Model model) {
         // Retrieve active session and term names
         String activeSessionName = sessionService.getAllSessions().stream()
                 .filter(s -> s.getIsActive().equals("True"))
@@ -166,7 +172,7 @@ public class WalletController {
         }
 
         // Set or update expected term fees
-        List<WalletModel> wallets = walletRepository.findByStudentClass(className);
+        List<WalletModel> wallets = walletRepository.findByStudentClassAndIsActive(className, "True");
         double additionalFees = 0.0;
 
         for (WalletModel wallet : wallets) {

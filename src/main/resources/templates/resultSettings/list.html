@@ -12,7 +12,14 @@
     <article class="list-page">
         <div class="list-header">
             <h1>Results Setting List</h1>
-            <a href="/resultSettings/new">Add New Results Setting</a>
+<!--            <a href="/resultSettings/new">Add New Results Setting</a>-->
+        </div>
+
+        <div class="params success" th:if="${param.success}">
+            You successfully created a result setting.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Result setting creation failed.
         </div>
 
         <!-- Form Section -->
@@ -82,7 +89,7 @@
                     <td th:text="${resultSetting.total}"></td>
                     <td>
                         <a class="dynamic-link" th:href="@{'/resultSettings/edit/' + ${resultSetting.id}}">Edit</a>
-                        <a class="dynamic-link" th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
+                        <a class="dynamic-link" style="background: red; border: 2px solid red; color: white"  th:href="@{'/resultSettings/delete/' + ${resultSetting.id}}">Delete</a>
                     </td>
                 </tr>
             </table>

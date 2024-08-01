@@ -8,7 +8,5 @@ import com.shuaibu.model.SchoolClassModel;
 @Repository
 public interface SchoolClassRepository extends JpaRepository<SchoolClassModel, Long> {
     SchoolClassModel findByClassName(String classId);
-
-    SchoolClassModel findSchoolClassModelByClassNameAndSectionId(String studentClassName, String sectionId);
 }
 

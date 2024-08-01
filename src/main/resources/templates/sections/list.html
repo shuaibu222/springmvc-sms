@@ -13,7 +13,14 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Sections List</h1>
-                <a href="/sections/new">Add New Section</a>
+<!--                <a href="/sections/new">Add New Section</a>-->
+            </div>
+
+            <div class="params success" th:if="${param.success}">
+                You successfully created a section.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Section creation failed.
             </div>
 
             <form th:action="@{/sections}" th:object="${section}" class="list-form-layout" method="post">
@@ -42,7 +49,7 @@
                         <td th:text="${section.sectionName}"></td>
                         <td>
                             <a class="dynamic-link" th:href="@{'/sections/edit/' + ${section.id}}">Edit</a>
-                            <a class="dynamic-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>
+<!--                            <a class="dynamic-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/sections/delete/' + ${section.id}}">Delete</a>-->
                         </td>
                     </tr>
                 </table>

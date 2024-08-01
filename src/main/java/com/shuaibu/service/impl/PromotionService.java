@@ -32,9 +32,8 @@ public class PromotionService {
         List<StudentModel> students = studentRepository.findAllById(studentIds);
 
         for (StudentModel student : students) {
-            if (student.getStudentClassName().equalsIgnoreCase("three") ||
-                    student.getStudentClassName().equalsIgnoreCase("3") &&
-                            student.getSectionName().equalsIgnoreCase("sss")) {
+            if (student.getStudentClassName().equalsIgnoreCase("sss three") ||
+                    student.getStudentClassName().equalsIgnoreCase("sss 3")) {
                 student.setStudentClassId(null);
                 student.setStudentClassName("Graduated");
                 student.setSectionId(null);

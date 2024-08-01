@@ -38,7 +38,7 @@ public class SubjectController {
             return "subjects/list";
         }
         subjectService.saveSubject(subject);
-        return "redirect:/subjects";
+        return "redirect:/subjects?success";
     }
 
     @GetMapping("/new")

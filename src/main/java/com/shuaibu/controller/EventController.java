@@ -33,6 +33,20 @@ public class EventController {
         return "events/list";
     }
 
+    @PostMapping
+    public String saveListEvent(@Valid @ModelAttribute("event") EventDto event, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("event", event);
+            model.addAttribute("events", eventService.getAllEvent());
+            return "events/list";
+        }
+
+        eventService.saveOrUpdateEvent(event);
+
+
+        return "redirect:/events?success";
+    }
+
     @GetMapping("/new")
     public String createEventForm(Model model) {
         model.addAttribute("event", new EventModel());

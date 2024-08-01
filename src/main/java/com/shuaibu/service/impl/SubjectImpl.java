@@ -30,7 +30,7 @@ public class SubjectImpl implements SubjectService {
 
     @Override
     public SubjectDto getSubjectById(Long id) {
-        return mapToDto(subjectRepository.findById(id).get());
+        return mapToDto(subjectRepository.findById(id).orElseThrow());
     }
 
     @Override

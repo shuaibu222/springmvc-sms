@@ -2,9 +2,7 @@ package com.shuaibu.controller;
 
 import com.shuaibu.dto.*;
 import com.shuaibu.mapper.*;
-import com.shuaibu.model.SchoolClassModel;
-import com.shuaibu.model.SectionModel;
-import com.shuaibu.model.StaffModel;
+import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
 import com.shuaibu.service.*;
 import org.slf4j.Logger;
@@ -17,12 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.shuaibu.model.ResultModel;
-
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
@@ -72,62 +70,49 @@ public class ResultController {
                               @PathVariable("className") String className,
                               Model model) {
 
-        // fetch subject based on teacher id
-        List<SubjectDto> subjectDtoList = new ArrayList<>();
+        // Fetch subject based on teacher id
+        List<SubjectModel> subjectModelList = new ArrayList<>();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName(); // Retrieve username directly
+            String username = authentication.getName();
             logger.info("Authenticated username: {}", username);
 
             StaffModel staffModel = staffRepository.findByUserName(username);
             if (staffModel != null) {
-                logger.info("Found UserModel: {}", staffModel);
-
-                // Filter classes to find all matching staffClasses
+                logger.info("Found StaffModel: {}", staffModel);
                 for (Long subjectId : staffModel.getSubjectModelIds()) {
-                    SubjectDto subjectDto = subjectService.getSubjectById(subjectId);
-                    subjectDtoList.add(subjectDto);
+                    SubjectModel subjectModel = subjectRepository.findById(subjectId)
+                            .orElseThrow(() -> new NoSuchElementException("No subject found."));
+                    subjectModelList.add(subjectModel);
                 }
             } else {
-                logger.warn("UserModel not found for username: {}", username);
+                logger.warn("StaffModel not found for username: {}", username);
             }
         } else {
             logger.warn("Authentication is null or not authenticated");
         }
 
         // Get the specific section and class based on the path variables
-        List<SectionModel> filteredSections = sectionRepository.findAll()
-                .stream()
-                .filter(sec -> sec.getSectionName().equals(sectionName))
-                .collect(Collectors.toList());
-
-        SchoolClassModel filteredClasses = schoolClassRepository.findAll()
-                .stream()
-                .filter(cls -> cls.getSectionId().equals(sectionName) && cls.getClassName().equals(className))
-                .findFirst()
-                .orElseThrow();
+        SectionModel filteredSections = sectionRepository.findBySectionName(sectionName);
+        SchoolClassModel filteredClasses = schoolClassRepository.findByClassName(className);
 
         List<StudentDto> filteredStudents = studentService.getAllStudents()
                 .stream()
-                .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
+                .filter(cts -> cts.getStudentClassName().equals(className))
                 .collect(Collectors.toList());
 
-        // Filter result list based on section and classId
-        List<ResultModel> filteredResults = resultService.getResultModelsBySectionIdAndStudentClassId(sectionName, className);
+        List<ResultModel> filteredResults = resultService.getResultModelsByStudentClassId(className);
 
-        // filter again based on class subjects
-        List<SubjectDto> filteredSubjectDtoList = null;
+        // Filter subjects based on the class subjects
+        List<SubjectModel> filteredSubjectModelList = null;
         if (filteredClasses != null) {
-            // Filter the subjects based on the class subjects
-            filteredSubjectDtoList = subjectDtoList
+            filteredSubjectModelList = subjectModelList
                     .stream()
                     .filter(s -> filteredClasses.getSubjectModels().contains(s.getId()))
                     .collect(Collectors.toList());
-
-            // Use the filtered list as needed
         } else {
-            logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+            logger.warn("No matching SchoolClassModel found for sectionName: {} and className: {}", sectionName, className);
         }
 
         model.addAttribute("students", filteredStudents);
@@ -137,7 +122,7 @@ public class ResultController {
         model.addAttribute("academicSessions", sessionService.getAllSessions());
         model.addAttribute("studentClasses", filteredClasses);
         model.addAttribute("terms", termService.getAllTerms());
-        model.addAttribute("subjects", filteredSubjectDtoList);
+        model.addAttribute("subjects", filteredSubjectModelList);
 
         model.addAttribute("sectionName", sectionName);
         model.addAttribute("className", className);
@@ -145,82 +130,84 @@ public class ResultController {
         return "results/list";
     }
 
-    @GetMapping("/{sectionName}/{className}/new")
-    public String createResultForm(@PathVariable("sectionName") String sectionName,
-                                   @PathVariable("className") String className,
-                                    Model model) {
-        // fetch subject based on teacher id
-        List<SubjectDto> subjectDtoList = new ArrayList<>();
+// create new here
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName(); // Retrieve username directly
-            logger.info("Authenticated username: {}", username);
+//    @GetMapping("/{sectionName}/{className}/new")
+//    public String createResultForm(@PathVariable("sectionName") String sectionName,
+//                                   @PathVariable("className") String className,
+//                                    Model model) {
+//        // fetch subject based on teacher id
+//        List<SubjectDto> subjectDtoList = new ArrayList<>();
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            String username = authentication.getName(); // Retrieve username directly
+//            logger.info("Authenticated username: {}", username);
+//
+//            StaffModel staffModel = staffRepository.findByUserName(username);
+//            if (staffModel != null) {
+//                logger.info("Found UserModel: {}", staffModel);
+//
+//                // Filter classes to find all matching staffClasses
+//                for (Long subjectId : staffModel.getSubjectModelIds()) {
+//                    SubjectDto subjectDto = subjectService.getSubjectById(subjectId);
+//                    subjectDtoList.add(subjectDto);
+//                }
+//            } else {
+//                logger.warn("UserModel not found for username: {}", username);
+//            }
+//        } else {
+//            logger.warn("Authentication is null or not authenticated");
+//        }
+//
+//
+//        model.addAttribute("result", new ResultModel());
+//
+//        List<SectionModel> filteredSections = sectionRepository.findAll()
+//                .stream()
+//                .filter(sec -> sec.getSectionName().equals(sectionName))
+//                .collect(Collectors.toList());
+//
+//        SchoolClassModel filteredClasses = schoolClassRepository.findAll()
+//                .stream()
+//                .filter(cls -> cls.getClassName().equals(className))
+//                .findFirst()
+//                .orElseThrow();
+//
+//        List<StudentDto> filteredStudents = studentService.getAllStudents()
+//                .stream()
+//                .filter(cts -> cts.getStudentClassId().equals(className))
+//                .collect(Collectors.toList());
+//
+//        // filter again based on class subjects
+//        List<SubjectDto> filteredSubjectDtoList = null;
+//        if (filteredClasses != null) {
+//            // Filter the subjects based on the class subjects
+//            filteredSubjectDtoList = subjectDtoList
+//                    .stream()
+//                    .filter(s -> filteredClasses.getSubjectModels().contains(s.getId()))
+//                    .collect(Collectors.toList());
+//
+//            // Use the filtered list as needed
+//        } else {
+//            logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
+//        }
+//
+//        model.addAttribute("students", filteredStudents);
+//        model.addAttribute("result", new ResultModel());
+//        model.addAttribute("sections", filteredSections);
+//        model.addAttribute("academicSessions", sessionService.getAllSessions());
+//        model.addAttribute("studentClasses", filteredClasses);
+//        model.addAttribute("terms", termService.getAllTerms());
+//        model.addAttribute("subjects", filteredSubjectDtoList);
+//
+//        model.addAttribute("sectionName", sectionName);
+//        model.addAttribute("className", className);
+//
+//        return "results/new";
+//    }
 
-            StaffModel staffModel = staffRepository.findByUserName(username);
-            if (staffModel != null) {
-                logger.info("Found UserModel: {}", staffModel);
-
-                // Filter classes to find all matching staffClasses
-                for (Long subjectId : staffModel.getSubjectModelIds()) {
-                    SubjectDto subjectDto = subjectService.getSubjectById(subjectId);
-                    subjectDtoList.add(subjectDto);
-                }
-            } else {
-                logger.warn("UserModel not found for username: {}", username);
-            }
-        } else {
-            logger.warn("Authentication is null or not authenticated");
-        }
-
-
-        model.addAttribute("result", new ResultModel());
-
-        List<SectionModel> filteredSections = sectionRepository.findAll()
-                .stream()
-                .filter(sec -> sec.getSectionName().equals(sectionName))
-                .collect(Collectors.toList());
-
-        SchoolClassModel filteredClasses = schoolClassRepository.findAll()
-                .stream()
-                .filter(cls -> cls.getSectionId().equals(sectionName) && cls.getClassName().equals(className))
-                .findFirst()
-                .orElseThrow();
-
-        List<StudentDto> filteredStudents = studentService.getAllStudents()
-                .stream()
-                .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
-                .collect(Collectors.toList());
-
-        // filter again based on class subjects
-        List<SubjectDto> filteredSubjectDtoList = null;
-        if (filteredClasses != null) {
-            // Filter the subjects based on the class subjects
-            filteredSubjectDtoList = subjectDtoList
-                    .stream()
-                    .filter(s -> filteredClasses.getSubjectModels().contains(s.getId()))
-                    .collect(Collectors.toList());
-
-            // Use the filtered list as needed
-        } else {
-            logger.warn("SchoolClassModel not found for sectionName: {} and className: {}", sectionName, className);
-        }
-
-        model.addAttribute("students", filteredStudents);
-        model.addAttribute("result", new ResultModel());
-        model.addAttribute("sections", filteredSections);
-        model.addAttribute("academicSessions", sessionService.getAllSessions());
-        model.addAttribute("studentClasses", filteredClasses);
-        model.addAttribute("terms", termService.getAllTerms());
-        model.addAttribute("subjects", filteredSubjectDtoList);
-
-        model.addAttribute("sectionName", sectionName);
-        model.addAttribute("className", className);
-
-        return "results/new";
-    }
-
-    @PostMapping("/{sectionName}/{className}/create")
+    @PostMapping("/{sectionName}/{className}")
     public String saveResult(@Valid @ModelAttribute("result") ResultDto resultDto,
                              @PathVariable("sectionName") String sectionName,
                              @PathVariable("className") String className,
@@ -260,13 +247,13 @@ public class ResultController {
 
             SchoolClassModel filteredClasses = schoolClassRepository.findAll()
                     .stream()
-                    .filter(cls -> cls.getSectionId().equals(sectionName) && cls.getClassName().equals(className))
+                    .filter(cls -> cls.getClassName().equals(className))
                     .findFirst()
                     .orElseThrow();
 
             List<StudentDto> filteredStudents = studentService.getAllStudents()
                     .stream()
-                    .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
+                    .filter(cts -> cts.getStudentClassName().equals(className))
                     .collect(Collectors.toList());
 
             // filter again based on class subjects
@@ -295,10 +282,10 @@ public class ResultController {
             model.addAttribute("sectionName", sectionName);
             model.addAttribute("className", className);
 
-            return "results/new";
+            return "results/list";
         }
         resultService.saveOrUpdateResult(resultDto);
-        return "redirect:/results/" + sectionName + "/" + className;
+        return "redirect:/results/" + sectionName + "/" + className + "?success";
     }
 
     @GetMapping("/{sectionName}/{className}/edit/{id}")
@@ -335,12 +322,12 @@ public class ResultController {
         model.addAttribute("result", result);
 
         SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(result.getSectionId()));
-        SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findSchoolClassModelByClassNameAndSectionId(result.getStudentClassId(), result.getSectionId()));
+        SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findByClassName(result.getStudentClassId()));
         SubjectDto subjectDto = SubjectMapper.mapToDto(subjectRepository.findBySubjectName(result.getSubjectId()));
 
         List<StudentDto> filteredStudents = studentService.getAllStudents()
                 .stream()
-                .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
+                .filter(cts -> cts.getStudentClassName().equals(className))
                 .collect(Collectors.toList());
 
         // filter again based on class subjects
@@ -407,12 +394,12 @@ public class ResultController {
             ResultDto resultData = resultService.getResultById(id);
 
             SectionDto sectionDto = SectionMapper.mapToDto(sectionRepository.findBySectionName(resultData.getSectionId()));
-            SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findSchoolClassModelByClassNameAndSectionId(resultData.getStudentClassId(), resultData.getSectionId()));
+            SchoolClassDto schoolClassDto = SchoolClassMapper.mapToDto(schoolClassRepository.findByClassName(resultData.getStudentClassId()));
             SubjectDto subjectDto = SubjectMapper.mapToDto(subjectRepository.findBySubjectName(resultData.getSubjectId()));
 
             List<StudentDto> filteredStudents = studentService.getAllStudents()
                     .stream()
-                    .filter(cts -> cts.getSectionId().equals(sectionName) && cts.getStudentClassId().equals(className))
+                    .filter(cts -> cts.getStudentClassName().equals(className))
                     .collect(Collectors.toList());
 
             // filter again based on class subjects

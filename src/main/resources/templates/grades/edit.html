@@ -17,6 +17,12 @@
             <h1>Edit Grade</h1>
             <form role="form" action="#" th:action="@{/grades/update/{id}(id=${grade.id})}" th:object="${grade}" method="post">
                 <div>
+                    <label for="section">Section:</label>
+                    <select id="section" th:field="*{sectionId}">
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
+                </div>
+                <div>
                     <label for="rangeFrom">From:</label>
                     <input id="rangeFrom" type="text" th:field="*{rangeFrom}" />
                     <p th:if="${#fields.hasErrors('rangeFrom')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{rangeFrom}"></p>

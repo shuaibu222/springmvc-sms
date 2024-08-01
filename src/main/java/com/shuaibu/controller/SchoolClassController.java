@@ -65,7 +65,7 @@ public class SchoolClassController {
         // Handle saving logic
         schoolClassService.saveOrUpdateSchoolClass(schoolClass);
 
-        return "redirect:/classes"; // Redirect to list page after successful submission
+        return "redirect:/classes?success"; // Redirect to list page after successful submission
     }
 
 

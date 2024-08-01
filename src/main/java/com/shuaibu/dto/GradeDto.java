@@ -12,6 +12,8 @@ import lombok.Data;
 public class GradeDto {
     private Long id;
 
+    private String sectionId;
+
     @NotNull(message = "* Must specify range from in numbers")
     @Min(value = 0, message = "* Range from must be a positive number")
     private Long rangeFrom;

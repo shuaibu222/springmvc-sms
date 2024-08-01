@@ -47,7 +47,7 @@ public class HeadTeacherController {
         }
 
         headTeacherService.saveOrUpdateHeadTeacher(headTeacherDto);
-        return "redirect:/headTeachers";
+        return "redirect:/headTeachers?success";
     }
 
     @GetMapping("/edit/{id}")

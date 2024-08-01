@@ -13,7 +13,14 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Sessions List</h1>
-                <a href="/sessions/new">Add New Session</a>
+<!--                <a href="/sessions/new">Add New Session</a>-->
+            </div>
+
+            <div class="params success" th:if="${param.success}">
+                You successfully created a session.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Session creation failed.
             </div>
 
             <form th:action="@{/sessions}" th:object="${academicSession}" class="list-form-layout" method="post">
@@ -49,7 +56,7 @@
                         <td th:text="${academicSession.isActive}"></td>
                         <td>
                             <a class="dynamic-link" th:href="@{'/sessions/edit/' + ${academicSession.id}}">Edit</a>
-                            <a class="dynamic-link" th:href="@{'/sessions/delete/' + ${academicSession.id}}">Delete</a>
+                            <a class="dynamic-link" style="background: red; border: 2px solid red; color: white" th:href="@{'/sessions/delete/' + ${academicSession.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

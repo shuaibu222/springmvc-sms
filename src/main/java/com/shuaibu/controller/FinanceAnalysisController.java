@@ -2,6 +2,7 @@ package com.shuaibu.controller;
 
 import com.shuaibu.model.TermModel;
 import com.shuaibu.model.WalletModel;
+import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.TermRepository;
 import com.shuaibu.repository.WalletRepository;
 import com.shuaibu.service.impl.FinanceService;
@@ -23,10 +24,12 @@ public class FinanceAnalysisController {
     private static final Logger logger = LoggerFactory.getLogger(FinanceAnalysisController.class);
     private final FinanceService financeService;
     private final TermRepository termRepository;
+    private final SchoolClassRepository schoolClassRepository;
 
-    public FinanceAnalysisController(FinanceService financeService, TermRepository termRepository) {
+    public FinanceAnalysisController(FinanceService financeService, TermRepository termRepository, SchoolClassRepository schoolClassRepository) {
         this.financeService = financeService;
         this.termRepository = termRepository;
+        this.schoolClassRepository = schoolClassRepository;
     }
 
     @GetMapping
@@ -45,6 +48,7 @@ public class FinanceAnalysisController {
         model.addAttribute("paidStudent", financeService.getTotalStudentsWhoPaid());
         model.addAttribute("notPaidStudent", financeService.getTotalStudentsWhoDidNotPay());
         model.addAttribute("records", financeService.getStudentsWhoDidNotPay());
+        model.addAttribute("classes", schoolClassRepository.findAll());
         return "finances/financeAnalysis";
     }
 }

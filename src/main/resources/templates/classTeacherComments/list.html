@@ -15,6 +15,13 @@
 <!--            <a href="/classTeacherComments/new">Add New Class Teacher Comment</a>-->
         </div>
 
+        <div class="params success" th:if="${param.success}">
+            You successfully created a class teacher comment.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Comment creation failed.
+        </div>
+
         <form th:action="@{/classTeacherComments}" th:object="${classTeacherCommentDto}" class="list-form-layout" method="post">
             <div class="list-form">
                 <div class="form-group">
@@ -62,7 +69,7 @@
                     <td th:text="${classTeacherComment.remark}"></td>
                     <td>
                         <a class="dynamic-link blue-details" th:href="@{'/classTeacherComments/edit/' + ${classTeacherComment.id}}">Edit</a>
-                        <a class="dynamic-link red-details" th:href="@{'/classTeacherComments/delete/' + ${classTeacherComment.id}}">Delete</a>
+<!--                        <a class="dynamic-link red-details" th:href="@{'/classTeacherComments/delete/' + ${classTeacherComment.id}}">Delete</a>-->
                     </td>
                 </tr>
             </table>

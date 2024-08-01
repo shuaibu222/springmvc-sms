@@ -21,6 +21,7 @@ public class GradeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String sectionId;
     private Long rangeFrom;
     private Long rangeTo;
     private String grade;

@@ -12,7 +12,14 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Sport Houses List</h1>
-                <a href="/sportHouses/new">Add New Sport House</a>
+<!--                <a href="/sportHouses/new">Add New Sport House</a>-->
+            </div>
+
+            <div class="params success" th:if="${param.success}">
+                You successfully created a sport house.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Sport house creation failed.
             </div>
 
             <form th:action="@{/sportHouses}" th:object="${sportHouse}" class="list-form-layout" method="post">
@@ -31,7 +38,7 @@
             <div class="table-container">
                 <table>
                     <tr>
-                        <th>ID</th>
+                        <th>S/N</th>
                         <th>Sport House Name</th>
                         <th>Actions</th>
                     </tr>
@@ -40,7 +47,7 @@
                         <td th:text="${sportHouse.sportHouseName}"></td>
                         <td>
                             <a class="dynamic-link" th:href="@{'/sportHouses/edit/' + ${sportHouse.id}}">Edit</a>
-                            <a class="dynamic-link" th:href="@{'/sportHouses/delete/' + ${sportHouse.id}}">Delete</a>
+                            <a class="dynamic-link" style="background: red; border: 2px solid red; color: white" th:href="@{'/sportHouses/delete/' + ${sportHouse.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

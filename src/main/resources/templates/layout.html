@@ -25,9 +25,7 @@
     <div class="content-wrapper">
         <aside class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
-<!--                TODO: dashboard issue for both student, teacher, account officer and admin-->
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-<!--                TODO: filter student based on class-->
                 <li><a sec:authorize="hasRole('ADMIN')" href="/students"><i class="fas fa-user-graduate"></i> Students</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sections"><i class="fas fa-layer-group"></i> Sections</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/classes"><i class="fas fa-school"></i> Classes</a></li>
@@ -36,13 +34,13 @@
                     <a sec:authorize="hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
                     <ul class="submenu">
                         <li th:each="sectionClass : ${classes}">
-                            <a th:href="@{'/results/' + ${sectionClass.sectionId} + '/' + ${sectionClass.className}}" th:text="${sectionClass.sectionId} + ' ' + ${sectionClass.className}"></a>
+                            <a th:href="@{'/results/' + ${sectionClass.sectionId} + '/' + ${sectionClass.className}}" th:text="${sectionClass.className}"></a>
                         </li>
                     </ul>
                 </li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/subjects"><i class="fas fa-book"></i> Subjects</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/resultSettings"><i class="fas fa-cog"></i> Result Settings</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/sessions"><i class="fas fa-calendar-alt"></i> Academic Sessions</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/sessions"><i class="fas fa-calendar-alt"></i> Sessions</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/staffs"><i class="fas fa-users"></i> Staffs</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('FINANCE_OFFICER')" href="/fees"><i class="fas fa-money-bill-wave"></i> School Fees</a></li>
                 <li><a sec:authorize="hasRole('ADMIN') or hasRole('FINANCE_OFFICER')" href="/finances"><i class="fas fa-calculator"></i> Finance Analysis</a></li>
@@ -54,8 +52,8 @@
                 <li><a sec:authorize="hasRole('ADMIN')" href="/classTeacherComments"><i class="fas fa-comment"></i> Class Comment</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/headTeachers"><i class="fas fa-user-tie"></i> Head Teacher</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/headTeacherComments"><i class="fas fa-comment-alt"></i> Head Comment</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STUDENT')" href="/resultCheckings"><i class="fa fa-file-alt"></i> Result Checking</a></li>
-                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a sec:authorize="hasRole('STUDENT')" href="/resultCheckings"><i class="fa fa-file-alt"></i> Result Checking</a></li>
+<!--                <li><a sec:authorize="hasRole('ADMIN') or hasRole('STAFF') or hasRole('STUDENT')" href="/notifications"><i class="fas fa-bell"></i> Notifications</a></li>-->
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </aside>

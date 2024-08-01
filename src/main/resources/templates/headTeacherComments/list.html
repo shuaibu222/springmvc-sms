@@ -14,6 +14,13 @@
             <h1>Head Teacher Comments</h1>
         </div>
 
+        <div class="params success" th:if="${param.success}">
+            You successfully created a head comment.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Head comment creation failed.
+        </div>
+
         <form th:action="@{/headTeacherComments}" th:object="${headTeacherCommentDto}" class="list-form-layout" method="post">
             <div class="list-form">
                 <div class="form-group">
@@ -60,8 +67,8 @@
                     <td th:text="${headTeacherComment.rangeFrom + '-' + headTeacherComment.rangeTo}"></td>
                     <td th:text="${headTeacherComment.remark}"></td>
                     <td>
-                        <a class="dynamic-link blue-details" th:href="@{'/headTeacherComments/edit/' + ${headTeacherComment.id}}">Edit</a>
-                        <a class="dynamic-link red-details" th:href="@{'/headTeacherComments/delete/' + ${headTeacherComment.id}}">Delete</a>
+                        <a class="dynamic-link" th:href="@{'/headTeacherComments/edit/' + ${headTeacherComment.id}}">Edit</a>
+<!--                        <a class="dynamic-link"  th:href="@{'/headTeacherComments/delete/' + ${headTeacherComment.id}}">Delete</a>-->
                     </td>
                 </tr>
             </table>

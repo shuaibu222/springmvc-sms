@@ -123,6 +123,7 @@
     <article class="list-page">
         <div class="list-header">
             <h1>Wallets List</h1>
+            <a href="fees">Search Transactions</a>
         </div>
 
         <form class="list-form-layout" method="post" th:action="@{/fees/setTermDebt}" onsubmit="submitDebtForm(event)">
@@ -130,7 +131,7 @@
                 <div class="form-group">
                     <label for="className">Select Class:</label>
                     <select id="className" name="className" onchange="fetchWalletsByClass()">
-                        <option th:each="cl : ${classes}" th:value="${cl.sectionId + ' ' + cl.className}" th:text="${cl.sectionId + ' ' + cl.className}"></option>
+                        <option th:each="cl : ${classes}" th:value="${cl.className}" th:text="${cl.className}"></option>
                     </select>
                 </div>
                 <div class="form-group">

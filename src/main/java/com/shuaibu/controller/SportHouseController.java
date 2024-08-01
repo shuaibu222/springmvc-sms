@@ -39,7 +39,7 @@ public class SportHouseController {
             return "sportHouses/list";
         }
         sportHouseService.saveSportHouse(sportHouse);
-        return "redirect:/sportHouses";
+        return "redirect:/sportHouses?success";
     }
 
     @GetMapping("/new")

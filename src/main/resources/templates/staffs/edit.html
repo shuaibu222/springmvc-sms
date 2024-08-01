@@ -37,12 +37,12 @@
                 </div>
                 <div>
                     <label for="dateOfBirth">Date of Birth:</label>
-                    <input type="date" style="padding: 0.8rem" id="dateOfBirth" th:field="*{dateOfBirth}" />
+                    <input type="text" style="padding: 0.8rem" id="dateOfBirth" th:field="*{dateOfBirth}" />
                     <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
                     <label for="employedDate">Employed Date:</label>
-                    <input type="date" style="padding: 0.8rem" id="employedDate" th:field="*{employedDate}" />
+                    <input type="text" style="padding: 0.8rem" id="employedDate" th:field="*{employedDate}" />
                     <p th:if="${#fields.hasErrors('employedDate')}" th:errors="*{employedDate}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
@@ -101,7 +101,7 @@
                     <label>Classes:</label>
                     <div th:each="classModel : ${classModels}">
                         <input type="checkbox" th:id="${'classModel_' + classModel.id}" th:name="classModelIds" th:field="*{classModelIds}" th:value="${classModel.id}" />
-                        <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.sectionId + ' ' + classModel.className}"></label>
+                        <label th:for="${'classModel_' + classModel.id}" th:text="${classModel.className}"></label>
                         <br/>
                     </div>
                     <p th:if="${#fields.hasErrors('classModelIds')}" th:errors="*{classModelIds}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>

@@ -7,6 +7,7 @@
 <head>
   <title>Finance Analysis</title>
   <script>
+    // Function to format numbers
     function formatNumber(num) {
       let absoluteNumber = Math.abs(num);
       let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -18,12 +19,20 @@
       }
     }
 
-    function removeMinus(num) {
-      let absoluteNumber = Math.abs(num);
-      let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return `₦${formattedNumber}`;
+    // Function to handle class selection
+    function filterStudents() {
+      let selectedClassId = document.getElementById("classId").value;
+      let allStudents = document.querySelectorAll(".student-row");
+      allStudents.forEach(row => {
+        if (selectedClassId === "all" || row.getAttribute("data-class-id") === selectedClassId) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
     }
 
+    // Function to format balance values
     function updateFormattedNumbers() {
       const balanceElements = document.querySelectorAll('.balance');
       balanceElements.forEach(element => {
@@ -37,10 +46,13 @@
 
       document.getElementById('totalFeesCollected').innerHTML = formatNumber(totalFeesCollected);
       document.getElementById('totalDebts').innerHTML = formatNumber(totalDebts);
-      document.getElementById('total').innerHTML = removeMinus(total);
+      document.getElementById('total').innerHTML = formatNumber(total);
     }
 
-    document.addEventListener('DOMContentLoaded', updateFormattedNumbers);
+    document.addEventListener('DOMContentLoaded', () => {
+      updateFormattedNumbers();
+      filterStudents(); // Apply the default filter on page load
+    });
   </script>
 </head>
 <body>
@@ -55,24 +67,39 @@
   </div>
 
   <div sec:authorize="hasRole('ADMIN')" class="table-container">
-    <h2>Pending Students</h2>
+    <h2 class="title">Pending Students</h2>
+
+    <!-- Dropdown for selecting class -->
+    <div class="options">
+      <label for="classId">Select Class:</label>
+      <select id="classId" onchange="filterStudents()">
+        <option value="all">All Classes</option>
+        <option th:each="c : ${classes}" th:value="${c.className}" th:text="${c.className}"></option>
+      </select>
+    </div>
+
+    <!-- Table to display students -->
     <table>
-      <tr>
-        <th>Student Name</th>
-        <th>Class</th>
-        <th>Reg No.</th>
-        <th>Admission Type</th>
-        <th>Phone Number</th>
-        <th>Balance</th>
-      </tr>
-      <tr th:each="record : ${records}">
-        <td th:text="${record.studentName}"></td>
-        <td th:text="${record.getStudentClass()}"></td>
-        <td th:text="${record.regNo}"></td>
-        <td th:text="${record.admissionType}"></td>
-        <td th:text="${record.phoneNumber}"></td>
-        <td class="balance" th:text="${record.balance}"></td>
-      </tr>
+      <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Reg No.</th>
+            <th>Admission Type</th>
+            <th>Phone Number</th>
+            <th>Balance</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr th:each="record : ${records}" class="student-row" th:data-class-id="${record.studentClass}">
+            <td th:text="${record.studentName}"></td>
+            <td th:text="${record.studentClass}"></td>
+            <td th:text="${record.regNo}"></td>
+            <td th:text="${record.admissionType}"></td>
+            <td th:text="${record.phoneNumber}"></td>
+            <td class="balance" th:text="${record.balance}"></td>
+          </tr>
+      </tbody>
     </table>
   </div>
 </section>

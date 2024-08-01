@@ -29,8 +29,8 @@ public class StudentModel {
     private String userName;
     private String password;
     private String regNo;
-    private LocalDate dateOfBirth;
-    private LocalDate admissionDate;
+    private String dateOfBirth;
+    private String admissionDate;
     private String homeAddress;
     private String termId;
     private String sessionId;
@@ -47,6 +47,5 @@ public class StudentModel {
     private String profilePicture;
     private String phoneNumber;
     private String isActive;
-    private Double balance;
     private String admissionType;
 }

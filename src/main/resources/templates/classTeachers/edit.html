@@ -19,7 +19,7 @@
                     <div>
                         <label for="classId">Class:</label>
                         <select id="classId" th:field="*{classId}" th:name="classId">
-                            <option th:each="classId : ${classes}" th:value="${classId.id}" th:text="${classId.sectionId + ' ' + classId.className}"></option>
+                            <option th:each="classId : ${classes}" th:value="${classId.id}" th:text="${classId.className}"></option>
                         </select>
                         <p th:if="${#fields.hasErrors('classId')}" th:errors="*{classId}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                     </div>

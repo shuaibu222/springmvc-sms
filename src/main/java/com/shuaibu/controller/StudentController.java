@@ -72,7 +72,7 @@ public class StudentController {
         }
 
         studentService.saveOrUpdateStudent(student);
-        return "redirect:/students";
+        return "redirect:/students?success";
     }
 
     @GetMapping("/new")

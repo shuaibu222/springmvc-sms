@@ -140,10 +140,6 @@
                     <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
                 </div>
                 <div>
-                    <label for="balance">Registration Fee:</label>
-                    <input type="text" placeholder="e.g 20000" id="balance" th:field="*{balance}" required />
-                </div>
-                <div>
                     <button type="submit">Save</button>
                 </div>
             </form>

@@ -1,5 +1,7 @@
 package com.shuaibu.controller;
 
+import com.shuaibu.model.SchoolClassModel;
+import com.shuaibu.repository.SchoolClassRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +21,11 @@ import jakarta.validation.Valid;
 public class SectionController {
     
     private final SectionService sectionService;
+    private final SchoolClassRepository classRepository;
 
-    public SectionController(SectionService sectionService) {
+    public SectionController(SectionService sectionService, SchoolClassRepository classRepository) {
         this.sectionService = sectionService;
+        this.classRepository = classRepository;
     }
 
     @GetMapping
@@ -40,7 +44,7 @@ public class SectionController {
         }
 
         sectionService.saveOrUpdateSection(section);
-        return "redirect:/sections";
+        return "redirect:/sections?success";
     }
 
     @GetMapping("/new")
@@ -84,11 +88,11 @@ public class SectionController {
 
 //        // TODO
 //        // Update associated school classes (optional, see note below)
-//        if (existingSection.getClassIds() != null && !existingSection.getClassIds().isEmpty()) {
-//                SchoolClassModel classModel = schoolClassRepository.findById(Long.valueOf(existingSection.getId())).get();
-//                classModel.setSectionId(existingSection.getSectionName()); // Update reference to updated section
-//                schoolClassRepository.save(classModel);
-//        }
+        if (existingSection.getClassIds() != null && !existingSection.getClassIds().isEmpty()) {
+                SchoolClassModel classModel = classRepository.findById(Long.valueOf(existingSection.getId())).get();
+                classModel.setSectionId(existingSection.getSectionName()); // Update reference to updated section
+                classRepository.save(classModel);
+        }
 
         sectionService.saveOrUpdateSection(section);
         return "redirect:/sections";

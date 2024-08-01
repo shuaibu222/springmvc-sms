@@ -36,7 +36,7 @@
                 <div>
                     <label for="studentClass">Student Class:</label>
                     <select id="studentClass" th:field="*{studentClassId}" required>
-                        <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.sectionId + ' ' + studentClass.className}"></option>
+                        <option th:each="studentClass : ${studentClasses}" th:value="${studentClass.id}" th:text="${studentClass.className}"></option>
                     </select>
                 </div>
                 <div>

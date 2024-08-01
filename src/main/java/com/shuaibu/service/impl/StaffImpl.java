@@ -63,6 +63,7 @@ public class StaffImpl implements StaffService {
                 userModel.setId(existingStaff.getUserId());
                 userModel.setUsername(staffDto.getUserName());
                 userModel.setPassword(staffDto.getPassword());
+                userModel.setIsActive(staffDto.getIsActive());
                 userModel.setRoles(Collections.singleton("ROLE_STAFF"));
 
                 UserModel savedUser = userService.saveUser(UserMapper.mapToDto(userModel));
@@ -107,6 +108,7 @@ public class StaffImpl implements StaffService {
         UserModel userModel = new UserModel();
         userModel.setUsername(staffDto.getUserName());
         userModel.setPassword(staffDto.getPassword());
+        userModel.setIsActive(staffDto.getIsActive());
         userModel.setRoles(Collections.singleton("ROLE_STAFF"));
 
         UserModel savedUser = userService.saveUser(UserMapper.mapToDto(userModel));

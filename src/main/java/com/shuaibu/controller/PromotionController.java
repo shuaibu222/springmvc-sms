@@ -18,14 +18,12 @@ import java.util.List;
 @RequestMapping("/promotions")
 public class PromotionController {
     private final PromotionService promotionService;
-    private final StudentService studentService;
     private final SchoolClassService schoolClassService;
     private final SectionService sectionService;
     private final StudentRepository studentRepository;
 
     public PromotionController(PromotionService promotionService, StudentService studentService, SchoolClassService schoolClassService, SectionService sectionService, StudentRepository studentRepository) {
         this.promotionService = promotionService;
-        this.studentService = studentService;
         this.schoolClassService = schoolClassService;
         this.sectionService = sectionService;
         this.studentRepository = studentRepository;

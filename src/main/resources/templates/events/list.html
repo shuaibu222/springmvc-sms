@@ -14,22 +14,32 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Events List</h1>
-                <a href="/events/new">Add New Event</a>
+<!--                <a href="/events/new">Add New Event</a>-->
             </div>
 
-            <form sec:authorize="hasRole('ADMIN')" th:action="@{/events/create}" th:object="${event}" class="list-form-layout" method="post">
+            <div class="params success" th:if="${param.success}">
+                You successfully created an event.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Event creation failed.
+            </div>
+
+            <form sec:authorize="hasRole('ADMIN')" th:action="@{/events}" th:object="${event}" class="list-form-layout" method="post">
                 <div class="list-form">
                     <div class="form-group">
                         <label for="eventTitle">Event Name:</label>
                         <input id="eventTitle" type="text" th:field="*{eventTitle}" />
+                        <p th:if="${#fields.hasErrors('eventTitle')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{eventTitle}"></p>
                     </div>
                     <div class="form-group">
                         <label for="eventMessage">Event Message:</label>
                         <input id="eventMessage" type="text" th:field="*{eventMessage}" />
+                        <p th:if="${#fields.hasErrors('eventMessage')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{eventMessage}"></p>
                     </div>
                     <div class="form-group">
                         <label for="date">Event Scheduling:</label>
                         <input id="date" type="datetime-local" style="padding: 0.4rem" th:field="*{timeAndDate}" />
+                        <p th:if="${#fields.hasErrors('timeAndDate')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{timeAndDate}"></p>
                     </div>
                 </div>
                 <div class="form-group-btn">
@@ -41,7 +51,7 @@
             <div sec:authorize="hasRole('ADMIN')" class="table-container">
                 <table>
                     <tr>
-                        <th>ID</th>
+                        <th>S/N</th>
                         <th>Event Name</th>
                         <th>Event Message</th>
                         <th>Event Scheduling</th>
@@ -54,7 +64,7 @@
                         <td th:text="${event.timeAndDate.substring(0, 10) + ' ' + event.timeAndDate.substring(11, 16)}"></td>
                         <td>
                             <a class="dynamic-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/events/edit/' + ${event.id}}">Edit</a>
-                            <a class="dynamic-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{'/events/delete/' + ${event.id}}">Delete</a>
+                            <a class="dynamic-link" sec:authorize="hasAuthority('ROLE_ADMIN')" style="background: red; border: 2px solid red; color: white" th:href="@{'/events/delete/' + ${event.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

@@ -465,9 +465,11 @@ form select:focus {
 /* Status messages (params) styling */
 .params {
     margin-bottom: 1rem;
+    margin-top: 1rem;
     padding: 0.75rem 1rem;
     border-radius: 0.4rem;
     font-size: 0.9rem; /* Adjust font size for messages */
+    text-align: center;
 }
 
 .params.success {
@@ -849,4 +851,29 @@ td a:nth-child(3):hover {
         top: 0;
         width: 100%;
     }
+}
+
+/* Print styles */
+@media print {
+    /* Hide the title and options elements */
+    .table-container .title, .table-container .options {
+        display: none;
+    }
+
+    /* Show only the table container */
+    body {
+        visibility: hidden;
+    }
+
+    .table-container, .table-container * {
+        visibility: visible;
+    }
+
+    .table-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
 }

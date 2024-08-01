@@ -105,6 +105,14 @@ public class StudentImpl implements StudentService {
                     .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentDto.getId()));
             studentDto.setRegNo(existingStudent.getRegNo());
 
+            // deactivate his wallet when updating student as inactive
+            WalletModel walletModel = walletRepository.findByRegNo(existingStudent.getRegNo());
+            if (walletModel == null) {
+                throw new IllegalArgumentException("Wallet don't exists");
+            }
+
+            walletModel.setIsActive(studentDto.getIsActive());
+
             if (existingStudent.getUserId() != null) {
                 UserModel userModel = new UserModel();
                 userModel.setId(existingStudent.getUserId());
@@ -126,23 +134,27 @@ public class StudentImpl implements StudentService {
         studentDto.setSportHouseId(sportHouseModel.getSportHouseName());
 
         StudentModel createdStudent = studentRepository.save(mapToModel(studentDto));
-        WalletModel walletModel = WalletModel.builder()
-                .isActive(createdStudent.getIsActive())
-                .studentId(createdStudent.getId())
-                .studentName(createdStudent.getFirstName() + " " + createdStudent.getLastName())
-                .studentClass(createdStudent.getSectionName() + " " + createdStudent.getStudentClassName())
-                .phoneNumber(createdStudent.getPhoneNumber())
-                .regNo(createdStudent.getRegNo())
-                .admissionType(createdStudent.getAdmissionType())
-                .balance(createdStudent.getBalance())
-                .build();
-        walletRepository.save(walletModel);
+
+        if (isNew) {
+            WalletModel walletModel = WalletModel.builder()
+                    .isActive(createdStudent.getIsActive())
+                    .studentId(createdStudent.getId())
+                    .studentName(createdStudent.getFirstName() + " " + createdStudent.getLastName())
+                    .studentClass(createdStudent.getStudentClassName())
+                    .phoneNumber(createdStudent.getPhoneNumber())
+                    .regNo(createdStudent.getRegNo())
+                    .admissionType(createdStudent.getAdmissionType())
+                    .build();
+            walletRepository.save(walletModel);
+        }
+
     }
 
     @Override
     public void deleteStudent(Long id) {
         StudentModel studentModel = studentRepository.findById(id).orElseThrow();
         userRepository.deleteById(studentModel.getUserId());
+        walletRepository.deleteByStudentId(studentModel.getId());
         studentRepository.deleteById(id);
     }
 

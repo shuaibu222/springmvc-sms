@@ -13,7 +13,14 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Subjects List</h1>
-                <a href="/subjects/new">Add New Subject</a>
+<!--                <a href="/subjects/new">Add New Subject</a>-->
+            </div>
+
+            <div class="params success" th:if="${param.success}">
+                You successfully created a subject.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Subject creation failed.
             </div>
 
             <form th:action="@{/subjects}" th:object="${subject}" class="list-form-layout" method="post">
@@ -47,7 +54,7 @@
                         <td th:text="${subject.abbr}"></td>
                         <td>
                             <a class="dynamic-link" th:href="@{'/subjects/edit/' + ${subject.id}}">Edit</a>
-                            <a class="dynamic-link" th:href="@{'/subjects/delete/' + ${subject.id}}">Delete</a>
+<!--                            <a class="dynamic-link" th:href="@{'/subjects/delete/' + ${subject.id}}">Delete</a>-->
                         </td>
                     </tr>
                 </table>

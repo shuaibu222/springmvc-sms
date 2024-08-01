@@ -1,6 +1,7 @@
 package com.shuaibu.dto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,11 +10,15 @@ import lombok.Data;
 @Builder
 public class EventDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "* Event title is mandatory")
     private String eventTitle;
+
+    @NotEmpty(message = "* Event message is mandatory")
     private String eventMessage;
+
+    @NotEmpty(message = "* Event time and date is mandatory")
     private String timeAndDate;
 
 }

@@ -14,6 +14,13 @@
 <!--            <a href="/classTeacherComments/new">Add New Class Teacher Comment</a>-->
         </div>
 
+        <div class="params success" th:if="${param.success}">
+            You successfully join section to head.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Joining failed.
+        </div>
+
         <form th:action="@{/headTeachers}" th:object="${headTeacherDto}" class="list-form-layout" method="post">
             <div class="list-form">
                 <div class="form-group">
@@ -52,7 +59,7 @@
                     <td th:text="${headTeacher.sectionName}"></td>
                     <td>
                         <a class="dynamic-link" th:href="@{'/headTeachers/edit/' + ${headTeacher.id}}">Edit</a>
-                        <a class="dynamic-link" th:href="@{'/headTeachers/delete/' + ${headTeacher.id}}">Delete</a>
+<!--                        <a class="dynamic-link" style="background: red; border: 2px solid red; color: white" th:href="@{'/headTeachers/delete/' + ${headTeacher.id}}">Delete</a>-->
                     </td>
                 </tr>
             </table>

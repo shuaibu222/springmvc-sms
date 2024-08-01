@@ -46,7 +46,7 @@ public class ResultSettingsController {
             return "resultSettings/list";
         }
         resultSettingsService.saveOrUpdateResultSetting(resultSettingDto);
-        return "redirect:/resultSettings";
+        return "redirect:/resultSettings?success";
     }
 
     @GetMapping("/new")

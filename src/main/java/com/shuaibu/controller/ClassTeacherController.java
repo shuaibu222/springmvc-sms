@@ -47,7 +47,7 @@ public class ClassTeacherController {
         }
 
         classTeacherService.saveOrUpdateClassTeacher(classTeacherDto);
-        return "redirect:/classTeachers";
+        return "redirect:/classTeachers?success";
     }
 
     @GetMapping("/edit/{id}")

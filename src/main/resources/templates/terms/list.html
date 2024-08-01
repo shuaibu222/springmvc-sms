@@ -12,7 +12,7 @@
         <article class="list-page">
             <div class="list-header">
                 <h1>Terms List</h1>
-                <a href="/terms/new">Add New Term</a>
+<!--                <a href="/terms/new">Add New Term</a>-->
             </div>
 
             <form th:action="@{/terms}" th:object="${term}" class="list-form-layout" method="post">
@@ -48,7 +48,7 @@
                         <td th:text="${term.isActive}"></td>
                         <td>
                             <a class="dynamic-link" th:href="@{'/terms/edit/' + ${term.id}}">Edit</a>
-                            <a class="dynamic-link" th:href="@{'/terms/delete/' + ${term.id}}">Delete</a>
+                            <a class="dynamic-link" style="background: red; border: 2px solid red; color: white" th:href="@{'/terms/delete/' + ${term.id}}">Delete</a>
                         </td>
                     </tr>
                 </table>

@@ -28,6 +28,7 @@ public class WalletModel {
     private String admissionType;
     private String isActive;
     // New field to track payment status
+    @Builder.Default
     private Boolean hasPaid = false;
 
     @ElementCollection

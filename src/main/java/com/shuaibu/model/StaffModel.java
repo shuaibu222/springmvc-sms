@@ -27,8 +27,8 @@ public class StaffModel {
     private Long userId;
     private String userName;
     private String password;
-    private LocalDate dateOfBirth;
-    private LocalDate employedDate;
+    private String dateOfBirth;
+    private String employedDate;
     private String homeAddress;
     private String state;
     private String LGA;

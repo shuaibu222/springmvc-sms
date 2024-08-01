@@ -33,11 +33,10 @@ public class StaffDto {
     private String password;
 
     @NotNull(message = "* Date of Birth cannot be empty")
-    @Past(message = "Date of birth cannot be future")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @NotNull(message = "* Employed Date cannot be empty")
-    private LocalDate employedDate;
+    private String employedDate;
 
     @NotBlank(message = "* Home address is mandatory")
     private String homeAddress;

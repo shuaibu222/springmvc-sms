@@ -9,6 +9,7 @@ public class GradeMapper {
 
         return GradeDto.builder()
                 .id(gradeModel.getId())
+                .sectionId(gradeModel.getSectionId())
                 .rangeFrom(gradeModel.getRangeFrom())
                 .rangeTo(gradeModel.getRangeTo())
                 .grade(gradeModel.getGrade())
@@ -20,6 +21,7 @@ public class GradeMapper {
 
         return GradeModel.builder()
                 .id(gradeDto.getId())
+                .sectionId(gradeDto.getSectionId())
                 .rangeFrom(gradeDto.getRangeFrom())
                 .rangeTo(gradeDto.getRangeTo())
                 .grade(gradeDto.getGrade())
