@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--suppress ALL, XmlHighlighting -->
+<html
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+    >
+<head>
+    <title>Edit Reportsheet Grade</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <section class="form-container">
+            <a href="/reportSheetGrades" style="padding: 0.5rem 1.2rem; text-decoration: none; cursor: pointer; width: fit-content; background: black; color: white; border-radius: 0.5rem">
+                <i class="fa fa-arrow-left" style="font-size: 1rem; margin-right: 0.2rem"></i> Back
+            </a>
+            <h1>Edit Reportsheet Grade</h1>
+            <form role="form" th:action="@{/reportSheetGrades/update/{id}(id=${reportSheetGrade.id})}" th:object="${reportSheetGrade}" method="post">
+                <div>
+                    <label for="section">Section:</label>
+                    <select id="section" th:field="*{sectionId}">
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label for="rangeFrom">From:</label>
+                    <input id="rangeFrom" type="text" th:field="*{rangeFrom}" />
+                    <p th:if="${#fields.hasErrors('rangeFrom')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{rangeFrom}"></p>
+                </div>
+                <div>
+                    <label for="rangeTo">To:</label>
+                    <input id="rangeTo" type="text" th:field="*{rangeTo}" />
+                    <p th:if="${#fields.hasErrors('rangeTo')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{rangeTo}"></p>
+                </div>
+                <div>
+                    <label for="grade">Grades:</label>
+                    <input id="grade" type="text" placeholder="e.g A" th:field="*{grade}" />
+                    <p th:if="${#fields.hasErrors('grade')}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;" th:errors="*{grade}"></p>
+                </div>
+                <div>
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </section>
+    </section>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+    lang="en"
+>
+<head>
+    <title>Observations</title>
+</head>
+<body>
+    <section layout:fragment="body">
+        <article class="list-page">
+            <div class="list-header">
+                <h1>Observations List</h1>
+            </div>
+
+            <div class="params success" th:if="${param.success}">
+                You successfully entered observations.
+            </div>
+            <div class="params error" th:if="${param.error}">
+                Entering observations failed.
+            </div>
+
+            <form th:action="@{'/observations/' + ${className}}" th:object="${result}" class="list-form-layout" method="post">
+                    <div class="list-form">
+                        <div class="form-group">
+                            <label for="student">Student Name:</label>
+                            <select id="student" name="regNo" required>
+                                <option th:each="student : ${students}" th:value="${student.regNo}" th:text="${student.firstName + ' ' + student.lastName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="observations">Observations:</label>
+                            <select id="observations" name="observations" required>
+                                <option th:each="observation : ${observations}" th:value="${observation}" th:text="${observation}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scale">Scales:</label>
+                            <select id="scale" name="scale" required>
+                                <option th:each="scale : ${scale}" th:value="${scale}" th:text="${scale}"></option>
+                            </select>
+                        </div>
+                    </div>   
+                <div class="form-group-btn">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Full Name</th>
+                        <th>Fluency</th>
+                        <th>Adjustment to Class</th>
+                        <th>Responsiveness</th>
+                        <th>Sense of Responsibility</th>
+                        <th>Relationship</th>
+                        <th>Hand Writing</th>
+                        <th>App. to Work</th>
+                    </tr>
+                    <tr th:each="reportsheet: ${reportsheets}">
+                        <td th:text="${reportsheet.id}"></td>
+                        <td th:text="${reportsheet.name}"></td>
+                        <td th:text="${reportsheet.fluency}"></td>
+                        <td th:text="${reportsheet.adjustmentToClass}"></td>
+                        <td th:text="${reportsheet.responsiveness}"></td>
+                        <td th:text="${reportsheet.senseOfResponsibility}"></td>
+                        <td th:text="${reportsheet.relationshipsWithOtherPupils}"></td>
+                        <td th:text="${reportsheet.handWriting}"></td>
+                        <td th:text="${reportsheet.applicationToWork}"></td>
+                    </tr> 
+                </table>
+            </div>
+        </article>
+    </section>
+</body>
+</html>

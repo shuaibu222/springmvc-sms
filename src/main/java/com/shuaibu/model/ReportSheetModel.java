@@ -37,6 +37,15 @@ public class ReportSheetModel {
     private String nextTermBegins;
     private String signature;
 
+    // General Observations fields
+    private String fluency;
+    private String adjustmentToClass;
+    private String responsiveness;
+    private String senseOfResponsibility;
+    private String relationshipsWithOtherPupils;
+    private String handWriting;
+    private String applicationToWork;
+
     @ElementCollection
     private Set<Long> results;
 

@@ -29,12 +29,21 @@
                 <li><a sec:authorize="hasRole('ADMIN')" href="/students"><i class="fas fa-user-graduate"></i> Students</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/sections"><i class="fas fa-layer-group"></i> Sections</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/classes"><i class="fas fa-school"></i> Classes</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/grades"><i class="fa fa-clipboard-list"></i> Grades</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/grades"><i class="fa fa-thumbs-up"></i> Grades</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/reportSheetGrades"><i class="fa fa-star"></i> Sheet Grades</a></li>
                 <li>
                     <a sec:authorize="hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-chart-line"></i> Result Entry <i class="fas fa-chevron-down dropdown-icon"></i></a>
                     <ul class="submenu">
                         <li th:each="sectionClass : ${classes}">
                             <a th:href="@{'/results/' + ${sectionClass.sectionId} + '/' + ${sectionClass.className}}" th:text="${sectionClass.className}"></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a sec:authorize="hasRole('STAFF')" href="#" class="has-submenu"><i class="fas fa-check-circle"></i> Observations <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <ul class="submenu">
+                        <li th:each="sectionClass : ${staffClasses}">
+                            <a th:href="@{'/observations/' + ${sectionClass.className}}" th:text="${sectionClass.className}"></a>
                         </li>
                     </ul>
                 </li>

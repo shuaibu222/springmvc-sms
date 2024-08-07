@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Grading System</title>
+    <style>
+        .fa-star { color: gold; }
+        .fa-thumbs-up { color: green; }
+        .fa-check { color: blue; }
+        .fa-exclamation { color: orange; }
+        .fa-times { color: red; }
+    </style>
+</head>
+<body>
+<section layout:fragment="body">
+    <article class="list-page">
+        <div class="list-header">
+            <h1>Gradings List</h1>
+        </div>
+
+        <div class="params success" th:if="${param.success}">
+            You successfully created a reportsheet Grade.
+        </div>
+        <div class="params error" th:if="${param.error}">
+            Reportsheet grade creation failed.
+        </div>
+
+        <!-- Form Section -->
+        <form th:action="@{/reportSheetGrades}" th:object="${reportSheetGrade}" class="list-form-layout" method="post">
+            <div class="list-form">
+                <div class="form-group">
+                    <label for="section">Section:</label>
+                    <select id="section" th:field="*{sectionId}">
+                        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.sectionName}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rangeFrom">Marks Range From:</label>
+                    <input type="text" id="rangeFrom" th:field="*{rangeFrom}" />
+                    <p th:if="${#fields.hasErrors('rangeFrom')}" th:errors="*{rangeFrom}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+                <div class="form-group">
+                    <label for="rangeTo">Marks Range To:</label>
+                    <input type="text" id="rangeTo" th:field="*{rangeTo}" />
+                    <p th:if="${#fields.hasErrors('rangeTo')}" th:errors="*{rangeTo}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+                <div class="form-group">
+                    <label for="grade">Grade:</label>
+                    <input type="text" id="grade" placeholder="e.g A" th:field="*{grade}" />
+                    <p th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}" style="color: #ff253a; font-style: italic; font-size: 0.9rem;"></p>
+                </div>
+            </div>
+            <div class="form-group-btn">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Section</th>
+                    <th>Marks Range</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reportSheetGrade : ${reportSheetGrades}">
+                    <td th:text="${reportSheetGrade.id}"></td>
+                    <td th:text="${reportSheetGrade.sectionId}"></td>
+                    <td th:text="${reportSheetGrade.rangeFrom + '-' + reportSheetGrade.rangeTo}"></td>
+                    <td th:text="${reportSheetGrade.grade}"></td>
+                    <td>
+                        <a class="dynamic-link" th:href="@{'/reportSheetGrades/edit/' + ${reportSheetGrade.id}}">Edit</a>
+<!--                        <a class="dynamic-link" th:href="@{'/reportSheetGrades/delete/' + ${reportSheetGrade.id}}">Delete</a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</section>
+</body>
+</html>

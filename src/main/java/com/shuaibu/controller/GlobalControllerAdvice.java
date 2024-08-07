@@ -56,4 +56,34 @@ public class GlobalControllerAdvice {
 
         model.addAttribute("classes", staffClasses);
     }
+
+    @ModelAttribute
+    public void populateClasses(Model model) {
+        List<SchoolClassDto> classes = schoolClassService.getAllSchoolClass();
+        List<SchoolClassDto> staffClasses = new ArrayList<>();
+
+        // for extracting user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName(); // Retrieve username directly
+            logger.info("Authenticated username: {}", username);
+
+            StaffModel staffModel = staffRepository.findByUserName(username);
+            if (staffModel != null) {
+                logger.info("Found UserModel: {}", staffModel);
+
+                // Filter classes to find all matching staffClasses
+                for (SchoolClassDto classDto : classes) {
+                    if (classDto.getClassTeacher() != null && classDto.getClassTeacher().equals(String.valueOf(staffModel.getId()))) {
+                        staffClasses.add(classDto);
+                    }
+                    logger.error("No class for class teacher!");
+                }
+            }
+        } else {
+            logger.warn("Authentication is null or not authenticated");
+        }
+
+        model.addAttribute("staffClasses", staffClasses);
+    }
 }

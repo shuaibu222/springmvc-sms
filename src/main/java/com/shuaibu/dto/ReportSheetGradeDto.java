@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class GradeDto {
+public class ReportSheetGradeDto {
     private Long id;
 
     private String sectionId;
@@ -24,7 +24,5 @@ public class GradeDto {
 
     @NotEmpty(message = "* Must specify grade in letter. e.g A, B")
     private String grade;
-
-    @NotEmpty(message = "* Must specify remark. e.g EXCELLENT")
-    private String remark;
+    
 }

@@ -911,3 +911,108 @@ td a:nth-child(3):hover {
     font-size: 2.3rem; 
     font-weight: bold
 }
+
+/* Matching color for each nav item */
+.sidebar-menu li a {
+    color: #000; /* Default text color */
+}
+
+.sidebar-menu li a:hover {
+    color: #fff; /* Text color on hover */
+}
+
+.sidebar-menu li a .fa-tachometer-alt {
+    color: #4CAF50;
+}
+
+.sidebar-menu li a .fa-user-graduate {
+    color: #2196F3;
+}
+
+.sidebar-menu li a .fa-layer-group {
+    color: #FFC107;
+}
+
+.sidebar-menu li a .fa-school {
+    color: #9C27B0;
+}
+
+.sidebar-menu li a .fa-thumbs-up {
+    color: #FF5722;
+}
+
+.sidebar-menu li a .fa-star {
+    color: #FFEB3B;
+}
+
+.sidebar-menu li a .fa-chart-line {
+    color: #673AB7;
+}
+
+.sidebar-menu li a .fa-check-circle {
+    color: #3F51B5;
+}
+
+.sidebar-menu li a .fa-book {
+    color: #00BCD4;
+}
+
+.sidebar-menu li a .fa-cog {
+    color: #607D8B;
+}
+
+.sidebar-menu li a .fa-calendar-alt {
+    color: #FF9800;
+}
+
+.sidebar-menu li a .fa-users {
+    color: #009688;
+}
+
+.sidebar-menu li a .fa-money-bill-wave {
+    color: #8BC34A;
+}
+
+.sidebar-menu li a .fa-calculator {
+    color: #CDDC39;
+}
+
+.sidebar-menu li a .fa-arrows-up-to-line {
+    color: #795548;
+}
+
+.sidebar-menu li a .fa-graduation-cap {
+    color: #E91E63;
+}
+
+.sidebar-menu li a .fa-running {
+    color: #F44336;
+}
+
+.sidebar-menu li a .fa-calendar {
+    color: #03A9F4;
+}
+
+.sidebar-menu li a .fa-chalkboard-teacher {
+    color: #009688;
+}
+
+.sidebar-menu li a .fa-comment {
+    color: #FF5722;
+}
+
+.sidebar-menu li a .fa-user-tie {
+    color: #3F51B5;
+}
+
+.sidebar-menu li a .fa-comment-alt {
+    color: #9E9E9E;
+}
+
+.sidebar-menu li a .fa-file-alt {
+    color: #4CAF50;
+}
+
+.sidebar-menu li a .fa-sign-out-alt {
+    color: #f44336;
+}

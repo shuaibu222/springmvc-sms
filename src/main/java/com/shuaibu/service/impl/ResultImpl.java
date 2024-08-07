@@ -15,10 +15,12 @@ import org.springframework.stereotype.Service;
 import com.shuaibu.dto.ClassTeacherCommentDto;
 import com.shuaibu.dto.GradeDto;
 import com.shuaibu.dto.HeadTeacherCommentDto;
+import com.shuaibu.dto.ReportSheetGradeDto;
 import com.shuaibu.dto.ResultDto;
 import com.shuaibu.service.ClassTeacherCommentService;
 import com.shuaibu.service.GradeService;
 import com.shuaibu.service.HeadTeacherCommentService;
+import com.shuaibu.service.ReportSheetGradeService;
 import com.shuaibu.service.ResultService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -46,11 +48,12 @@ public class ResultImpl implements ResultService {
     private final SessionService sessionService;
     private final ClassTeacherCommentService classTeacherCommentService;
     private final HeadTeacherCommentService headTeacherCommentService;
+    private final ReportSheetGradeService reportSheetGradeService;
 
 
     public ResultImpl(ResultRepository resultRepository, SectionRepository sectionRepository,
                     SessionRepository sessionRepository, SchoolClassRepository schoolClassRepository,
-                    TermRepository termRepository, SubjectRepository subjectRepository, GradeService gradeService, ResultSettingsService resultSettingsService, StudentRepository studentRepository, ReportSheetRepository reportSheetRepository, SessionService sessionService, TermService termService, ClassTeacherCommentService classTeacherCommentService, HeadTeacherCommentService headTeacherCommentService) {
+                    TermRepository termRepository, SubjectRepository subjectRepository, GradeService gradeService, ResultSettingsService resultSettingsService, StudentRepository studentRepository, ReportSheetRepository reportSheetRepository, SessionService sessionService, TermService termService, ClassTeacherCommentService classTeacherCommentService, HeadTeacherCommentService headTeacherCommentService, ReportSheetGradeService reportSheetGradeService) {
         this.resultRepository = resultRepository;
         this.sectionRepository = sectionRepository;
         this.sessionRepository = sessionRepository;
@@ -65,6 +68,7 @@ public class ResultImpl implements ResultService {
         this.sessionService = sessionService;
         this.classTeacherCommentService = classTeacherCommentService;
         this.headTeacherCommentService = headTeacherCommentService;
+        this.reportSheetGradeService = reportSheetGradeService;
     }
 
     @Override
@@ -198,8 +202,6 @@ public class ResultImpl implements ResultService {
             reportSheet.setSectionName(resultModel.getSectionId());
             reportSheet.setNoOfStudents(String.valueOf(noOfStudents));
             reportSheet.setSignature("signature");
-            reportSheet.setTermEnding("2024-01-01");
-            reportSheet.setNextTermBegins("2025-01-01");
             reportSheet.setTotalMarks(resultModel.getTotal() + 0);
             reportSheet.setResults(Set.of(resultModel.getId()));
 
@@ -209,7 +211,6 @@ public class ResultImpl implements ResultService {
 
             // for existing report sheet
             List<ResultModel> resultModels = resultRepository.findAllByRegNoAndTermIdAndAcademicSessionId(regNo, activeTermName, activeSessionName);
-            System.out.println(resultModels);
 
             int trackRes = 0; // track total of individual student results
 
@@ -242,6 +243,14 @@ public class ResultImpl implements ResultService {
                                 .orElseThrow();
 
             savedReportSheet.setHeadTeacherComment(headTeacherComment.getRemark());
+
+            List<ReportSheetGradeDto> reportSheetGrades = reportSheetGradeService.getAllReportSheetGrades();
+            ReportSheetGradeDto reportSheetGrade = reportSheetGrades.stream()
+                                .filter(ctc -> ctc.getSectionId().equals(savedReportSheet.getSectionName()) && savedReportSheet.getTotalMarks() >= ctc.getRangeFrom()  && savedReportSheet.getTotalMarks() <= ctc.getRangeTo())
+                                .findFirst()
+                                .orElseThrow();
+
+            savedReportSheet.setFinalGrade(reportSheetGrade.getGrade());
 
             // save it again after commenting is done!
             reportSheetRepository.save(reportSheetModel);
