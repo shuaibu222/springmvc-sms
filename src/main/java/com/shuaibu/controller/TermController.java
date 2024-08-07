@@ -38,8 +38,8 @@ public class TermController {
     }
 
     @PostMapping
-    public String saveListTerm(@Valid @ModelAttribute("term") TermDto term,
-                           BindingResult result, Model model) {
+    public String saveListTerm(@Valid @ModelAttribute TermDto term,
+                            BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("terms", termRepository.findAll());
             model.addAttribute("isActive", Arrays.asList("True", "False"));
@@ -57,7 +57,7 @@ public class TermController {
     }
 
     @PostMapping("/create")
-    public String saveTerm(@Valid @ModelAttribute("term") TermDto term, 
+    public String saveTerm(@Valid @ModelAttribute TermDto term, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("term", term);
@@ -78,7 +78,7 @@ public class TermController {
 
     @PostMapping("/update/{id}")
     public String updateTerm(@PathVariable Long id,
-                                @Valid @ModelAttribute("term") TermDto term, 
+                                @Valid @ModelAttribute TermDto term, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("term", term);

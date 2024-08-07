@@ -32,7 +32,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public String saveListSubject(@Valid @ModelAttribute("subject") SubjectDto subject, BindingResult result, Model model) {
+    public String saveListSubject(@Valid @ModelAttribute SubjectDto subject, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("subjects", subjectService.getAllSubjects());
             return "subjects/list";
@@ -48,7 +48,7 @@ public class SubjectController {
     }
 
     @PostMapping("/create")
-    public String saveSubject(@Valid @ModelAttribute("subject") SubjectDto subject, BindingResult result, Model model) {
+    public String saveSubject(@Valid @ModelAttribute SubjectDto subject, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("subject", subject);
             return "subjects/new";
@@ -66,7 +66,7 @@ public class SubjectController {
 
     @PostMapping("/update/{id}")
     public String updateSubject(@PathVariable Long id,
-                                @Valid @ModelAttribute("subject") SubjectDto subject, 
+                                @Valid @ModelAttribute SubjectDto subject, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("subject", subject);

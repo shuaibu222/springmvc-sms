@@ -1,7 +1,6 @@
 package com.shuaibu.service.impl;
 
 import com.shuaibu.mapper.SectionMapper;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.SectionDto;

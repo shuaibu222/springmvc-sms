@@ -15,7 +15,6 @@ import com.shuaibu.service.ClassTeacherService;
 import com.shuaibu.service.SchoolClassService;
 import com.shuaibu.service.StaffService;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,7 +75,7 @@ public class ClassTeacherImpl implements ClassTeacherService {
             staffRepository.save(StaffMapper.mapToModel(existingStaffDto));
 
             // delete all comments for that teacher
-            classTeacherCommentRepository.deleteClassTeacherCommentModelByTeacherId(existingClassTeacher.getTeacherId());
+            classTeacherCommentRepository.deleteByTeacherId(existingClassTeacher.getTeacherId());
         }
 
         // Link the class with the teacher ID as class teacher
@@ -89,7 +88,7 @@ public class ClassTeacherImpl implements ClassTeacherService {
 
         // Set the teacher name and class name in the DTO
         classTeacherDto.setTeacherName(staffDto.getFirstName() + " " + staffDto.getLastName());
-        classTeacherDto.setClassName(schoolClassDto.getSectionId() + " " + schoolClassDto.getClassName());
+        classTeacherDto.setClassName(schoolClassDto.getClassName());
 
         // Save the class teacher model
         classTeacherRepository.save(mapToModel(classTeacherDto));
@@ -101,7 +100,7 @@ public class ClassTeacherImpl implements ClassTeacherService {
     public void deleteClassTeacher(Long id) {
         ClassTeacherModel classTeacher = classTeacherRepository.findById(id).orElseThrow();
         // delete all comments for that teacher
-        classTeacherCommentRepository.deleteClassTeacherCommentModelByTeacherId(classTeacher.getTeacherId());
+        classTeacherCommentRepository.deleteByTeacherId(classTeacher.getTeacherId());
 
         classTeacherRepository.deleteById(id);
     }

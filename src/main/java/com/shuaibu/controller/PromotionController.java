@@ -2,7 +2,6 @@ package com.shuaibu.controller;
 
 import com.shuaibu.dto.PromotionDto;
 import com.shuaibu.dto.StudentDto;
-import com.shuaibu.model.StudentModel;
 import com.shuaibu.repository.StudentRepository;
 import com.shuaibu.service.SchoolClassService;
 import com.shuaibu.service.SectionService;
@@ -44,7 +43,7 @@ public class PromotionController {
     }
 
     @PostMapping("/promote")
-    public String promoteStudents(@RequestParam("studentIds") List<Long> studentIds, @RequestParam Long toClassId) {
+    public String promoteStudents(@RequestParam List<Long> studentIds, @RequestParam Long toClassId) {
         if (studentIds == null || studentIds.isEmpty()) {
             throw new IllegalArgumentException("Student IDs cannot be null or empty");
         }

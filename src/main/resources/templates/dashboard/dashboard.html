@@ -2,15 +2,49 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+        layout:decorate="~{layout}" 
+        lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <script>
+        // Function to format numbers
+    function formatNumber(num) {
+        let absoluteNumber = Math.abs(num);
+        let formattedNumber = absoluteNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    
+        if (num < 0) {
+            return `<b>- </b>₦${formattedNumber}`;
+        } else {
+            return `<b>+ </b>₦${formattedNumber}`;
+        }
+    }
+
+    function updateFormattedNumbers() {
+        const totalFeesCollected = parseFloat(document.getElementById('totalFeesCollected').textContent);
+        const totalDebts = parseFloat(document.getElementById('totalDebts').textContent);
+    
+        document.getElementById('totalFeesCollected').innerHTML = formatNumber(totalFeesCollected);
+        document.getElementById('totalDebts').innerHTML = formatNumber(totalDebts);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateFormattedNumbers();
+    });
+
+    </script>
 </head>
 <body>
     <section layout:fragment="body">
-        <h1>Dashboard</h1>
-        <p>My beautiful dashboard</p>
+            <h2 style="margin-bottom: 1rem" th:text="${'Welcome, ' + loggedUser}"></h2>
+            <div class="dash-container">
+                <p class="dash-cards">Total Staffs: <br><span th:text="${staffs}"></span></p>
+                <p class="dash-cards">Total Students: <br><span th:text="${students}"></span></p>
+                <p class="dash-cards">Total Classes: <br><span th:text="${allClasses}"></span></p>
+                <!-- <p class="dash-cards">Total Fees Collected: <br><span id="totalFeesCollected" th:text="${totalFeesCollected}"></span></p> -->
+                <!-- <p class="dash-cards">Total Debts: <br><span id="totalDebts" th:text="${totalDebts}"></span></p> -->
+                <p class="dash-cards">Total Pending Students: <br><span th:text="${notPaidStudents}"></span></p>
+            </div>
     </section>
 </body>
 </html>

@@ -39,12 +39,12 @@ public class HeadTeacherCommentImpl implements HeadTeacherCommentService {
 
     @Override
     public void saveOrUpdateHeadTeacherComment(HeadTeacherCommentDto headTeacherCommentDto) {
-        // TODO: handle update
         HeadTeacherDto headTeacherModel = headTeacherService.getHeadTeacherById(Long.valueOf(headTeacherCommentDto.getTeacherId()));
 
         headTeacherCommentDto.setSectionName(headTeacherModel.getSectionName());
         headTeacherCommentDto.setSectionId(headTeacherModel.getSectionId());
         headTeacherCommentDto.setTeacherName(headTeacherModel.getTeacherName());
+        headTeacherCommentDto.setTeacherId(headTeacherModel.getTeacherId());
 
         headTeacherCommentRepository.save(mapToModel(headTeacherCommentDto));
     }

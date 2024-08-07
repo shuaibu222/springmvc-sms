@@ -4,8 +4,6 @@ import com.shuaibu.dto.*;
 import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
 import com.shuaibu.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -58,7 +56,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public String saveListStudent(@Valid @ModelAttribute("student") StudentDto student, BindingResult result, Model model) {
+    public String saveListStudent(@Valid @ModelAttribute StudentDto student, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("studentClassIds", schoolClassService.getAllSchoolClass());
             model.addAttribute("termIds", termService.getAllTerms());
@@ -90,7 +88,7 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public String saveStudent(@Valid @ModelAttribute("student") StudentDto student, BindingResult result, Model model) {
+    public String saveStudent(@Valid @ModelAttribute StudentDto student, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("studentClassIds", schoolClassService.getAllSchoolClass());
             model.addAttribute("termIds", termService.getAllTerms());
@@ -136,12 +134,9 @@ public class StudentController {
 
     @PostMapping("/update/{id}")
     public String updateStudent(@PathVariable Long id,
-                                @Valid @ModelAttribute("student") StudentDto student,
+                                @Valid @ModelAttribute StudentDto student,
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
-            StudentDto studentFromRepo = studentService.getStudentById(id);
-
-            model.addAttribute("student", student);
 
             // Add other data required for the dropdowns
             model.addAttribute("allClasses", schoolClassService.getAllSchoolClass());

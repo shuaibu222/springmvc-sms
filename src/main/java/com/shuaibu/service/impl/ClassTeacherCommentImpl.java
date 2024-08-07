@@ -2,12 +2,8 @@ package com.shuaibu.service.impl;
 
 import com.shuaibu.dto.ClassTeacherDto;
 import com.shuaibu.mapper.ClassTeacherCommentMapper;
-import com.shuaibu.model.ClassTeacherModel;
-import com.shuaibu.model.SchoolClassModel;
 import com.shuaibu.repository.ClassTeacherRepository;
-import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.service.ClassTeacherService;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.ClassTeacherCommentDto;
@@ -25,12 +21,10 @@ public class ClassTeacherCommentImpl implements ClassTeacherCommentService {
     
     private final ClassTeacherCommentRepository classTeacherCommentRepository;
     private final ClassTeacherService classTeacherService;
-    private final SchoolClassRepository schoolClassRepository;
 
-    public ClassTeacherCommentImpl(ClassTeacherCommentRepository classTeachercommentRepository, ClassTeacherRepository classTeacherRepository, ClassTeacherService classTeacherService, SchoolClassRepository schoolClassRepository) {
+    public ClassTeacherCommentImpl(ClassTeacherCommentRepository classTeachercommentRepository, ClassTeacherRepository classTeacherRepository, ClassTeacherService classTeacherService) {
         this.classTeacherCommentRepository = classTeachercommentRepository;
         this.classTeacherService = classTeacherService;
-        this.schoolClassRepository = schoolClassRepository;
     }
 
     @Override
@@ -52,10 +46,10 @@ public class ClassTeacherCommentImpl implements ClassTeacherCommentService {
             classTeacherCommentDto.setClassName(classTeacherModel.getClassName());
             classTeacherCommentDto.setClassId(classTeacherModel.getClassId());
             classTeacherCommentDto.setTeacherName(classTeacherModel.getTeacherName());
+            classTeacherCommentDto.setTeacherId(classTeacherModel.getTeacherId());
 
-        classTeacherCommentRepository.save(mapToModel(classTeacherCommentDto));
+            classTeacherCommentRepository.save(mapToModel(classTeacherCommentDto));
     }
-
     
     @Override
     public void deleteClassTeacherComment(Long id) {

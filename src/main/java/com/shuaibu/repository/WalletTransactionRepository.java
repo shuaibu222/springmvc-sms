@@ -8,4 +8,6 @@ public interface WalletTransactionRepository extends JpaRepository<WalletTransac
     List<WalletTransactionModel> findByWalletIdAndTermName(Long walletId, String termName);
 
     List<WalletTransactionModel> findByTermName(String termName);
+
+    List<WalletTransactionModel> findByWalletId(Long id);
 }

@@ -38,7 +38,7 @@ public class HeadTeacherController {
     }
 
     @PostMapping
-    public String saveHeadTeacher(@Valid @ModelAttribute("headTeacherDto") HeadTeacherDto headTeacherDto, BindingResult result, Model model) {
+    public String saveHeadTeacher(@Valid @ModelAttribute HeadTeacherDto headTeacherDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("staffs", staffService.getAllStaffs());
             model.addAttribute("sections", sectionService.getAllSections());

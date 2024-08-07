@@ -1,12 +1,17 @@
 package com.shuaibu.service.impl;
 
 import com.shuaibu.dto.ResultDto;
+import com.shuaibu.dto.SessionDto;
+import com.shuaibu.dto.TermDto;
 import com.shuaibu.dto.ResultCheckingDto;
 import com.shuaibu.mapper.ResultMapper;
 import com.shuaibu.model.StudentModel;
 import com.shuaibu.repository.ResultRepository;
 import com.shuaibu.repository.StudentRepository;
 import com.shuaibu.service.ResultCheckingService;
+import com.shuaibu.service.SessionService;
+import com.shuaibu.service.TermService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,17 +21,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResultCheckingImpl implements ResultCheckingService {
 
+    private final TermService termService;
+    private final SessionService sessionService;
     private final ResultRepository resultRepository;
     private final StudentRepository studentRepository;
     private static final Logger logger = LoggerFactory.getLogger(ResultCheckingImpl.class);
 
-    public ResultCheckingImpl(ResultRepository resultRepository, StudentRepository studentRepository) {
+    public ResultCheckingImpl(ResultRepository resultRepository, StudentRepository studentRepository, SessionService sessionService, TermService termService) {
+        this.termService = termService;
+        this.sessionService = sessionService;
         this.resultRepository = resultRepository;
         this.studentRepository = studentRepository;
     }
 
     @Override
     public ResultDto searchResult(ResultCheckingDto resultCheckingDto) {
+
+        String activeSessionName = sessionService.getAllSessions().stream()
+                .filter(s -> s.getIsActive().equals("True"))
+                .findFirst()
+                .map(SessionDto::getSessionName)
+                .orElseThrow(() -> new IllegalStateException("No active session found"));
+
+        String activeTermName = termService.getAllTerms().stream()
+                .filter(t -> t.getIsActive().equals("True"))
+                .findFirst()
+                .map(TermDto::getTermName)
+                .orElseThrow(() -> new IllegalStateException("No active term found"));
 
         StudentModel authenticatedStudent = getAuthenticatedStudent();
         if (authenticatedStudent == null) {
@@ -39,7 +60,7 @@ public class ResultCheckingImpl implements ResultCheckingService {
             throw new IllegalArgumentException("Invalid registration number or password.");
         }
 
-        return ResultMapper.mapToDto(resultRepository.findByRegNo(studentModel.getRegNo()));
+        return ResultMapper.mapToDto(resultRepository.findOneByRegNoAndTermIdAndAcademicSessionId(studentModel.getRegNo(), activeTermName, activeSessionName));
     }
 
     private StudentModel getAuthenticatedStudent() {

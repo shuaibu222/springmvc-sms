@@ -38,7 +38,7 @@ public class ClassTeacherController {
     }
 
     @PostMapping
-    public String saveClassTeacher(@Valid @ModelAttribute("classTeacherDto") ClassTeacherDto classTeacherDto, BindingResult result, Model model) {
+    public String saveClassTeacher(@Valid @ModelAttribute ClassTeacherDto classTeacherDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("staffs", staffService.getAllStaffs());
             model.addAttribute("classes", schoolClassService.getAllSchoolClass());

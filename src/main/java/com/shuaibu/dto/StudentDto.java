@@ -3,10 +3,6 @@ package com.shuaibu.dto;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Builder

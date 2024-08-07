@@ -39,7 +39,7 @@
                     <span class="value" th:text="${staff.dateOfBirth}"></span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Admission Type:</span>
+                    <span class="label">Admission Date:</span>
                     <span class="value" th:text="${staff.employedDate}"></span>
                 </div>
                 <div class="detail-item">
@@ -77,6 +77,18 @@
                 <div class="detail-item">
                     <span class="label">Phone Number:</span>
                     <span class="value" th:text="${staff.phoneNumber}"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Subjects:</span>
+                    <ul class="value" th:each="subject : ${subjects}">
+                        <li th:text="${subject.subjectName}"></li>
+                    </ul>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Classes:</span>
+                    <ul class="value" th:each="oneClass : ${classes}">
+                        <li th:text="${oneClass.className}"></li>
+                    </ul>
                 </div>
             </div>
         </div>

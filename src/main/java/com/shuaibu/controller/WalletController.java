@@ -125,6 +125,29 @@ public class WalletController {
         return "wallets/transactions";
     }
 
+    @GetMapping("/transactions")
+    public String searchTransactionsForm(Model model) {
+        
+        model.addAttribute("wallet", new WalletModel());
+
+        return "wallets/allTransactions";
+    }
+
+    @PostMapping("/allTransactions")
+    public String searchTransactions(@RequestParam String regNo, Model model) {
+        WalletModel wallet = walletRepository.findByRegNo(regNo);
+
+        if (wallet == null) {
+            throw new IllegalArgumentException("Wallet not found.");
+        }
+
+        List<WalletTransactionModel> transactions = walletTransactionRepository.findByWalletId(wallet.getId());
+
+        model.addAttribute("wallet", wallet);
+        model.addAttribute("transactions", transactions);
+        return "wallets/allTransactions";
+    }
+
     @GetMapping("/edit/{id}")
     public String editBalance(@PathVariable Long id, Model model) {
         WalletModel wallet = walletRepository.findById(id)

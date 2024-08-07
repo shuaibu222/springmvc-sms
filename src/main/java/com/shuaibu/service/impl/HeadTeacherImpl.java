@@ -2,12 +2,10 @@ package com.shuaibu.service.impl;
 
 import com.shuaibu.dto.*;
 import com.shuaibu.mapper.*;
-import com.shuaibu.model.ClassTeacherModel;
 import com.shuaibu.model.HeadTeacherModel;
 import com.shuaibu.repository.*;
 import com.shuaibu.service.*;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,15 +21,15 @@ public class HeadTeacherImpl implements HeadTeacherService {
     private final SectionService sectionService;
     private final StaffRepository staffRepository;
     private final HeadTeacherRepository headTeacherRepository;
-    private final ClassTeacherCommentRepository classTeacherCommentRepository;
+    private final HeadTeacherCommentRepository headTeacherCommentRepository;
     private final SectionRepository sectionRepository;
 
-    public HeadTeacherImpl(HeadTeacherRepository headTeacherRepository, StaffService staffService, SectionService sectionService, StaffRepository staffRepository, ClassTeacherCommentRepository classTeacherCommentRepository, SectionRepository sectionRepository) {
+    public HeadTeacherImpl(HeadTeacherRepository headTeacherRepository, StaffService staffService, SectionService sectionService, StaffRepository staffRepository, HeadTeacherCommentRepository headTeacherCommentRepository, SectionRepository sectionRepository) {
         this.staffService = staffService;
         this.sectionService = sectionService;
         this.staffRepository = staffRepository;
         this.headTeacherRepository = headTeacherRepository;
-        this.classTeacherCommentRepository = classTeacherCommentRepository;
+        this.headTeacherCommentRepository = headTeacherCommentRepository;
         this.sectionRepository = sectionRepository;
     }
 
@@ -68,7 +66,7 @@ public class HeadTeacherImpl implements HeadTeacherService {
             staffRepository.save(StaffMapper.mapToModel(existingStaffDto));
 
             // delete all comments for that teacher
-            classTeacherCommentRepository.deleteClassTeacherCommentModelByTeacherId(existingHeadTeacher.getTeacherId());
+            headTeacherCommentRepository.deleteByTeacherId(existingHeadTeacher.getTeacherId());
         }
 
         // Link the class with the teacher ID as class teacher
@@ -94,7 +92,7 @@ public class HeadTeacherImpl implements HeadTeacherService {
     public void deleteHeadTeacher(Long id) {
         HeadTeacherModel headTeacher = headTeacherRepository.findById(id).orElseThrow();
         // delete all comments for that teacher
-        classTeacherCommentRepository.deleteClassTeacherCommentModelByTeacherId(headTeacher.getTeacherId());
+        headTeacherCommentRepository.deleteByTeacherId(headTeacher.getTeacherId());
 
         headTeacherRepository.deleteById(id);
     }

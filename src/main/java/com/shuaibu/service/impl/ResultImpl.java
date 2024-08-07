@@ -1,23 +1,30 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.controller.GlobalControllerAdvice;
 import com.shuaibu.dto.ResultSettingsDto;
+import com.shuaibu.dto.SessionDto;
+import com.shuaibu.dto.TermDto;
 import com.shuaibu.mapper.ResultMapper;
 import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
 import com.shuaibu.service.ResultSettingsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.shuaibu.service.SessionService;
+import com.shuaibu.service.TermService;
+
 import org.springframework.stereotype.Service;
 
+import com.shuaibu.dto.ClassTeacherCommentDto;
 import com.shuaibu.dto.GradeDto;
+import com.shuaibu.dto.HeadTeacherCommentDto;
 import com.shuaibu.dto.ResultDto;
+import com.shuaibu.service.ClassTeacherCommentService;
 import com.shuaibu.service.GradeService;
+import com.shuaibu.service.HeadTeacherCommentService;
 import com.shuaibu.service.ResultService;
 
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.shuaibu.mapper.ResultMapper.*;
@@ -25,7 +32,6 @@ import static com.shuaibu.mapper.ResultMapper.*;
 @Service
 public class ResultImpl implements ResultService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResultImpl.class);
     private final ResultRepository resultRepository;
     private final SectionRepository sectionRepository;
     private final SessionRepository sessionRepository;
@@ -35,11 +41,16 @@ public class ResultImpl implements ResultService {
     private final GradeService gradeService;
     private final ResultSettingsService resultSettingsService;
     private final StudentRepository studentRepository;
+    private final ReportSheetRepository reportSheetRepository;
+    private final TermService termService;
+    private final SessionService sessionService;
+    private final ClassTeacherCommentService classTeacherCommentService;
+    private final HeadTeacherCommentService headTeacherCommentService;
 
 
     public ResultImpl(ResultRepository resultRepository, SectionRepository sectionRepository,
-                      SessionRepository sessionRepository, SchoolClassRepository schoolClassRepository,
-                      TermRepository termRepository, SubjectRepository subjectRepository, GradeService gradeService, ResultSettingsService resultSettingsService, StudentRepository studentRepository) {
+                    SessionRepository sessionRepository, SchoolClassRepository schoolClassRepository,
+                    TermRepository termRepository, SubjectRepository subjectRepository, GradeService gradeService, ResultSettingsService resultSettingsService, StudentRepository studentRepository, ReportSheetRepository reportSheetRepository, SessionService sessionService, TermService termService, ClassTeacherCommentService classTeacherCommentService, HeadTeacherCommentService headTeacherCommentService) {
         this.resultRepository = resultRepository;
         this.sectionRepository = sectionRepository;
         this.sessionRepository = sessionRepository;
@@ -49,6 +60,11 @@ public class ResultImpl implements ResultService {
         this.gradeService = gradeService;
         this.resultSettingsService = resultSettingsService;
         this.studentRepository = studentRepository;
+        this.reportSheetRepository = reportSheetRepository;
+        this.termService = termService;
+        this.sessionService = sessionService;
+        this.classTeacherCommentService = classTeacherCommentService;
+        this.headTeacherCommentService = headTeacherCommentService;
     }
 
     @Override
@@ -131,7 +147,10 @@ public class ResultImpl implements ResultService {
         resultModel.setRemark(matchingGrade.getRemark());
 
         // Save the result model
-        resultRepository.save(resultModel);
+        ResultModel result = resultRepository.save(resultModel);
+
+        // pass the regNo
+        generateReportSheet(result.getRegNo());
     }
 
     @Override
@@ -141,7 +160,91 @@ public class ResultImpl implements ResultService {
 
 
     @Override
-    public List<ResultModel> getResultModelsByStudentClassId(String classId) {
-        return resultRepository.findResultModelsByStudentClassId(classId);
+    public List<ResultModel> getResultModelsByStudentClassIdAndTermIdAndAcademicSessionId(String classId, String termId, String academicSessionId) {
+        return resultRepository.findResultModelsByStudentClassIdAndTermIdAndAcademicSessionId(classId, termId, academicSessionId);
+    }
+
+    private synchronized void generateReportSheet(String regNo) {
+
+        String activeSessionName = sessionService.getAllSessions().stream()
+                .filter(s -> s.getIsActive().equals("True"))
+                .findFirst()
+                .map(SessionDto::getSessionName)
+                .orElseThrow(() -> new IllegalStateException("No active session found"));
+
+        String activeTermName = termService.getAllTerms().stream()
+                .filter(t -> t.getIsActive().equals("True"))
+                .findFirst()
+                .map(TermDto::getTermName)
+                .orElseThrow(() -> new IllegalStateException("No active term found"));
+
+        ReportSheetModel reportSheetModel = reportSheetRepository.findByRegNoAndTermAndAcademicSession(regNo, activeTermName, activeSessionName);
+
+        // for new report sheet model
+        if (reportSheetModel == null) {
+            ResultModel resultModel = resultRepository.findOneByRegNoAndTermIdAndAcademicSessionId(regNo, activeTermName, activeSessionName);
+
+            // count number of students in class
+            List<StudentModel> students = studentRepository.findByStudentClassNameAndIsActive(resultModel.getStudentClassId(), "True");
+            Long noOfStudents = students.stream().count();
+
+            // generate new report sheet
+            ReportSheetModel reportSheet = new ReportSheetModel();
+            reportSheet.setName(resultModel.getName());
+            reportSheet.setAcademicSession(resultModel.getAcademicSessionId());
+            reportSheet.setRegNo(resultModel.getRegNo());
+            reportSheet.setStudentClass(resultModel.getStudentClassId());
+            reportSheet.setTerm(resultModel.getTermId());
+            reportSheet.setSectionName(resultModel.getSectionId());
+            reportSheet.setNoOfStudents(String.valueOf(noOfStudents));
+            reportSheet.setSignature("signature");
+            reportSheet.setTermEnding("2024-01-01");
+            reportSheet.setNextTermBegins("2025-01-01");
+            reportSheet.setTotalMarks(resultModel.getTotal() + 0);
+            reportSheet.setResults(Set.of(resultModel.getId()));
+
+            reportSheetRepository.save(reportSheet);
+
+        } else {
+
+            // for existing report sheet
+            List<ResultModel> resultModels = resultRepository.findAllByRegNoAndTermIdAndAcademicSessionId(regNo, activeTermName, activeSessionName);
+            System.out.println(resultModels);
+
+            int trackRes = 0; // track total of individual student results
+
+            // add with the new balance
+            for (ResultModel rModel : resultModels) {
+                trackRes = trackRes + rModel.getTotal();
+                // add result id to report sheet
+                reportSheetModel.getResults().add(rModel.getId());
+            }
+
+            reportSheetModel.setTotalMarks(trackRes);
+
+            // for commenting purposes only
+            ReportSheetModel savedReportSheet = reportSheetRepository.save(reportSheetModel);
+
+            // teacher commenting
+            List<ClassTeacherCommentDto> classTeacherComments = classTeacherCommentService.getAllClassTeacherComments();
+            ClassTeacherCommentDto classTeacherComment = classTeacherComments.stream()
+                                .filter(ctc -> ctc.getClassName().equals(savedReportSheet.getStudentClass()) && savedReportSheet.getTotalMarks() >= ctc.getRangeFrom()  && savedReportSheet.getTotalMarks() <= ctc.getRangeTo())
+                                .findFirst()
+                                .orElseThrow();
+
+            savedReportSheet.setClassTeacherComment(classTeacherComment.getRemark());
+
+            // head teacher commenting
+            List<HeadTeacherCommentDto> headTeacherComments = headTeacherCommentService.getAllHeadTeacherComments();
+            HeadTeacherCommentDto headTeacherComment = headTeacherComments.stream()
+                                .filter(ctc -> ctc.getSectionName().equals(savedReportSheet.getSectionName()) && savedReportSheet.getTotalMarks() >= ctc.getRangeFrom()  && savedReportSheet.getTotalMarks() <= ctc.getRangeTo())
+                                .findFirst()
+                                .orElseThrow();
+
+            savedReportSheet.setHeadTeacherComment(headTeacherComment.getRemark());
+
+            // save it again after commenting is done!
+            reportSheetRepository.save(reportSheetModel);
+        }
     }
 }

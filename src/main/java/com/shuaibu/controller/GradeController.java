@@ -34,7 +34,7 @@ public class GradeController {
     }
 
     @PostMapping
-    public String listGradesSave(@Valid @ModelAttribute("grade") GradeDto grade, BindingResult result, Model model) {
+    public String listGradesSave(@Valid @ModelAttribute GradeDto grade, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sections", sectionService.getAllSections());
             model.addAttribute("grades", gradeService.getAllGrades());
@@ -52,7 +52,7 @@ public class GradeController {
     }
 
     @PostMapping("/create")
-    public String saveGrade(@Valid @ModelAttribute("grade") GradeDto grade, BindingResult result, Model model) {
+    public String saveGrade(@Valid @ModelAttribute GradeDto grade, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("grade", grade);
             model.addAttribute("sections", sectionService.getAllSections());
@@ -71,7 +71,7 @@ public class GradeController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateGrade(@PathVariable Long id, @Valid @ModelAttribute("grade") GradeDto grade, BindingResult result, Model model) {
+    public String updateGrade(@PathVariable Long id, @Valid @ModelAttribute GradeDto grade, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("grade", grade);
             model.addAttribute("sections", sectionService.getAllSections());

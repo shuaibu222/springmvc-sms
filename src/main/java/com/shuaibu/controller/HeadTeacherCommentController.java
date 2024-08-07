@@ -55,7 +55,7 @@ public class HeadTeacherCommentController {
 
     @PostMapping("/update/{id}")
     public String updateHeadTeacherComment(@PathVariable Long id,
-                                @Valid @ModelAttribute("headTeacherComment") HeadTeacherCommentDto headTeacherComment,
+                                @Valid @ModelAttribute HeadTeacherCommentDto headTeacherComment,
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("headTeachers", headTeacherRepository.findAll());

@@ -1,18 +1,6 @@
 package com.shuaibu.controller;
 
-import com.shuaibu.dto.ClassTeacherDto;
-import com.shuaibu.dto.SchoolClassDto;
-import com.shuaibu.dto.StaffDto;
-import com.shuaibu.mapper.SchoolClassMapper;
-import com.shuaibu.mapper.StaffMapper;
-import com.shuaibu.model.ClassTeacherModel;
-import com.shuaibu.repository.ClassTeacherCommentRepository;
 import com.shuaibu.repository.ClassTeacherRepository;
-import com.shuaibu.repository.SchoolClassRepository;
-import com.shuaibu.repository.StaffRepository;
-import com.shuaibu.service.SchoolClassService;
-import com.shuaibu.service.StaffService;
-import com.shuaibu.service.impl.StaffImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,7 +57,7 @@ public class ClassTeacherCommentController {
 
     @PostMapping("/update/{id}")
     public String updateClassTeacherComment(@PathVariable Long id,
-                                @Valid @ModelAttribute("classTeacherComment") ClassTeacherCommentDto classTeacherComment, 
+                                @Valid @ModelAttribute ClassTeacherCommentDto classTeacherComment, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("classTeachers", classTeacherRepository.findAll());

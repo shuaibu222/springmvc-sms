@@ -1,9 +1,7 @@
 package com.shuaibu.mapper;
 
 import com.shuaibu.dto.HeadTeacherCommentDto;
-import com.shuaibu.dto.HeadTeacherDto;
 import com.shuaibu.model.HeadTeacherCommentModel;
-import com.shuaibu.model.HeadTeacherModel;
 
 public class HeadTeacherCommentMapper {
     

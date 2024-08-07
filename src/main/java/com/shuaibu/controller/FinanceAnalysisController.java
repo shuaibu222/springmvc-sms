@@ -1,13 +1,12 @@
 package com.shuaibu.controller;
 
+import com.shuaibu.dto.SessionDto;
 import com.shuaibu.model.TermModel;
-import com.shuaibu.model.WalletModel;
+import com.shuaibu.repository.ExpectedTermFeesRepository;
 import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.TermRepository;
-import com.shuaibu.repository.WalletRepository;
+import com.shuaibu.service.SessionService;
 import com.shuaibu.service.impl.FinanceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,19 +20,28 @@ import java.util.List;
 @RequestMapping("/finances")
 public class FinanceAnalysisController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FinanceAnalysisController.class);
     private final FinanceService financeService;
     private final TermRepository termRepository;
     private final SchoolClassRepository schoolClassRepository;
+    private final ExpectedTermFeesRepository expectedTermFeesRepository;
+    private final SessionService sessionService;
 
-    public FinanceAnalysisController(FinanceService financeService, TermRepository termRepository, SchoolClassRepository schoolClassRepository) {
+    public FinanceAnalysisController(FinanceService financeService, TermRepository termRepository, SchoolClassRepository schoolClassRepository, ExpectedTermFeesRepository expectedTermFeesRepository, SessionService sessionService) {
         this.financeService = financeService;
         this.termRepository = termRepository;
         this.schoolClassRepository = schoolClassRepository;
+        this.expectedTermFeesRepository = expectedTermFeesRepository;
+        this.sessionService = sessionService;
     }
 
     @GetMapping
     public String financeAnalysis(Model model) {
+
+        String activeSessionName = sessionService.getAllSessions().stream()
+                .filter(s -> s.getIsActive().equals("True"))
+                .findFirst()
+                .map(SessionDto::getSessionName)
+                .orElseThrow(() -> new IllegalStateException("No active session found"));
 
         List<TermModel> termModel = termRepository.findAll();
         String termName = termModel.stream()
@@ -44,11 +52,12 @@ public class FinanceAnalysisController {
 
         model.addAttribute("totalFeesCollected", financeService.getTotalFeesCollected(termName));
         model.addAttribute("totalDebts", financeService.getTotalDebt(termName));
-        model.addAttribute("total", financeService.getTotalRevenue(termName));
+        model.addAttribute("total", financeService.getTotalRevenue(termName));  // expectedTermFeesRepository.findBySessionNameAndTermName(activeSessionName, termName).getTotalExpectedTermFee()
         model.addAttribute("paidStudent", financeService.getTotalStudentsWhoPaid());
         model.addAttribute("notPaidStudent", financeService.getTotalStudentsWhoDidNotPay());
         model.addAttribute("records", financeService.getStudentsWhoDidNotPay());
         model.addAttribute("classes", schoolClassRepository.findAll());
+        
         return "finances/financeAnalysis";
     }
 }

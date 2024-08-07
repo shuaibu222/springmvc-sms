@@ -1,7 +1,6 @@
 package com.shuaibu.repository;
 
 import com.shuaibu.dto.StudentDto;
-import com.shuaibu.model.StaffModel;
 import com.shuaibu.model.StudentModel;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +14,8 @@ public interface StudentRepository extends JpaRepository<StudentModel, Long> {
 
     StudentModel findByUserName(String username);
     List<StudentDto> findByStudentClassIdAndIsActive(String classId, String isActive);
+
+    List<StudentModel> findByStudentClassNameAndIsActive(String studentClassId, String string);
 
 }
 

@@ -1,6 +1,5 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.mapper.TermMapper;
 import org.springframework.stereotype.Service;
 
 import com.shuaibu.dto.TermDto;

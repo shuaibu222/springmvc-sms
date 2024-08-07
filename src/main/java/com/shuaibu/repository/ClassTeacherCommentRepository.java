@@ -7,6 +7,8 @@ import com.shuaibu.model.ClassTeacherCommentModel;
 
 @Repository
 public interface ClassTeacherCommentRepository extends JpaRepository<ClassTeacherCommentModel, Long> {
-    void deleteClassTeacherCommentModelByTeacherId(String classTeacherId);
+    void findByTeacherId(String classTeacher);
+
+    void deleteByTeacherId(String teacherId);
 }
 

@@ -1,10 +1,6 @@
 package com.shuaibu.controller;
 
 import com.shuaibu.dto.ResultDto;
-import com.shuaibu.repository.ResultCheckingRepository;
-import com.shuaibu.service.impl.ResultCheckingImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +20,10 @@ import jakarta.validation.Valid;
 public class ResultCheckingController {
 
     private ResultDto printedResult;
-    private static final Logger logger = LoggerFactory.getLogger(ResultCheckingController.class);
     private final ResultCheckingService resultCheckingService;
-    private final ResultCheckingRepository resultCheckingRepository;
 
-    public ResultCheckingController(ResultCheckingService resultCheckingService, ResultCheckingRepository resultCheckingRepository) {
+    public ResultCheckingController(ResultCheckingService resultCheckingService) {
         this.resultCheckingService = resultCheckingService;
-        this.resultCheckingRepository = resultCheckingRepository;
     }
 
     @GetMapping
@@ -40,7 +33,7 @@ public class ResultCheckingController {
     }
 
     @PostMapping
-    public String printedResultChecking(@Valid @ModelAttribute("resultChecking") ResultCheckingDto resultChecking, BindingResult result, Model model) {
+    public String printedResultChecking(@Valid @ModelAttribute ResultCheckingDto resultChecking, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "resultCheckings/resultForm";
         }

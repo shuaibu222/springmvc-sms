@@ -138,38 +138,14 @@
                 <table>
                     <tr>
                         <th>S/N</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                        <th>Date of Birth</th>
-                        <th>Employed Date</th>
-                        <th>Home Address</th>
-                        <th>State</th>
-                        <th>L.G.A</th>
-                        <th>Religion</th>
-                        <th>Tribe</th>
-                        <th>Gender</th>
-                        <th>Profile Picture</th>
+                        <th>Full Name</th>
                         <th>Phone Number</th>
-                        <th>Is Teacher Active</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="staff : ${staffs}">
                         <td th:text="${staff.id}"></td>
-                        <td th:text="${staff.firstName}"></td>
-                        <td th:text="${staff.lastName}"></td>
-                        <td th:text="${staff.userName}"></td>
-                        <td th:text="${staff.dateOfBirth}"></td>
-                        <td th:text="${staff.employedDate}"></td>
-                        <td th:text="${staff.homeAddress}"></td>
-                        <td th:text="${staff.state}"></td>
-                        <td th:text="${staff.LGA}"></td>
-                        <td th:text="${staff.religion}"></td>
-                        <td th:text="${staff.tribe}"></td>
-                        <td th:text="${staff.gender}"></td>
-                        <td th:text="${staff.profilePicture}"></td>
+                        <td th:text="${staff.firstName + ' ' + staff.lastName}"></td>
                         <td th:text="${staff.phoneNumber}"></td>
-                        <td th:text="${staff.isActive}"></td>
                         <td>
                             <a class="dynamic-link green-details" th:href="@{'/staffs/details/' + ${staff.id}}">Details</a>
                             <a class="dynamic-link blue-details" th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>

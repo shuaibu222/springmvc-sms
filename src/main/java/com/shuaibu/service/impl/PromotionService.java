@@ -1,16 +1,9 @@
 package com.shuaibu.service.impl;
 
-import com.shuaibu.model.SchoolClassModel;
-import com.shuaibu.model.SectionModel;
-import com.shuaibu.model.StudentIdCounter;
-import com.shuaibu.model.StudentModel;
-import com.shuaibu.repository.SchoolClassRepository;
-import com.shuaibu.repository.SectionRepository;
-import com.shuaibu.repository.StudentIdCounterRepository;
-import com.shuaibu.repository.StudentRepository;
+import com.shuaibu.model.*;
+import com.shuaibu.repository.*;
 import org.springframework.stereotype.Service;
 
-import java.time.Year;
 import java.util.List;
 
 @Service
@@ -18,11 +11,13 @@ public class PromotionService {
     private final StudentRepository studentRepository;
     private final SchoolClassRepository classRepository;
     private final SectionRepository sectionRepository;
+    private final WalletRepository walletRepository;
 
-    public PromotionService(StudentRepository studentRepository, SchoolClassRepository classRepository, SectionRepository sectionRepository) {
+    public PromotionService(StudentRepository studentRepository, SchoolClassRepository classRepository, SectionRepository sectionRepository, WalletRepository walletRepository) {
         this.studentRepository = studentRepository;
         this.classRepository = classRepository;
         this.sectionRepository = sectionRepository;
+        this.walletRepository = walletRepository;
     }
 
     public void promoteStudents(List<Long> studentIds, Long toClassId) {
@@ -41,6 +36,11 @@ public class PromotionService {
                 student.setIsActive("False");
                 studentRepository.save(student);
             } else {
+                // updating his wallet class reference
+                WalletModel walletModel = walletRepository.findByRegNo(student.getRegNo());
+                walletModel.setStudentClass(toClass.getClassName());
+                walletRepository.save(walletModel);
+
                 student.setStudentClassId(String.valueOf(toClass.getId()));
                 student.setStudentClassName(toClass.getClassName());
                 student.setSectionId(String.valueOf(toSection.getId()));

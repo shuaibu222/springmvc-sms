@@ -1,6 +1,5 @@
 package com.shuaibu.dto;
 
-import java.util.List;
 import java.util.Set;
 
 import jakarta.validation.constraints.NotEmpty;

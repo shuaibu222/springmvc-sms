@@ -5,10 +5,7 @@ import com.shuaibu.model.SectionModel;
 import com.shuaibu.repository.SchoolClassRepository;
 import com.shuaibu.repository.SectionRepository;
 import com.shuaibu.service.SectionService;
-import com.shuaibu.service.StaffService;
 import com.shuaibu.service.SubjectService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +24,6 @@ import jakarta.validation.Valid;
 @PreAuthorize("hasRole('ADMIN')")
 public class SchoolClassController {
 
-    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
     private final SchoolClassService schoolClassService;
     private final SubjectService subjectService;
     private final SectionService sectionService;
@@ -52,7 +48,7 @@ public class SchoolClassController {
     }
 
     @PostMapping
-    public String listClassFormSave(@Valid @ModelAttribute("schoolClass") SchoolClassDto schoolClass,
+    public String listClassFormSave(@Valid @ModelAttribute SchoolClassDto schoolClass,
                                     BindingResult result, Model model) {
         if (result.hasErrors()) {
             // Repopulate necessary model attributes for the form
@@ -79,7 +75,7 @@ public class SchoolClassController {
     }
 
     @PostMapping("/create")
-    public String saveSchoolClass(@Valid @ModelAttribute("schoolClass") SchoolClassDto schoolClass, BindingResult result, Model model) {
+    public String saveSchoolClass(@Valid @ModelAttribute SchoolClassDto schoolClass, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sections", sectionService.getAllSections());
             model.addAttribute("subjects", subjectService.getAllSubjects());
@@ -96,7 +92,6 @@ public class SchoolClassController {
     public String updateSchoolClassForm(@PathVariable Long id, Model model) {
         SchoolClassDto schoolClass = schoolClassService.getSchoolClassById(id);
         SectionModel sectionDto = sectionRepository.findBySectionName(schoolClass.getSectionId());
-        logger.info(sectionDto.toString());
 
         model.addAttribute("sections", sectionService.getAllSections());
         model.addAttribute("defaultSection", sectionDto);
@@ -108,7 +103,7 @@ public class SchoolClassController {
 
     @PostMapping("/update/{id}")
     public String updateSchoolClass(@PathVariable Long id,
-                                @Valid @ModelAttribute("schoolClass") SchoolClassDto schoolClass, 
+                                @Valid @ModelAttribute SchoolClassDto schoolClass, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             SectionModel sectionDto = sectionRepository.findBySectionName(schoolClass.getSectionId());

@@ -32,8 +32,8 @@ public class SportHouseController {
     }
 
     @PostMapping
-    public String saveListSportHouse(@Valid @ModelAttribute("sportHouse") SportHouseDto sportHouse,
-                                 BindingResult result, Model model) {
+    public String saveListSportHouse(@Valid @ModelAttribute SportHouseDto sportHouse,
+                                    BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sportHouses", sportHouseService.getAllSportHouses());
             return "sportHouses/list";
@@ -49,7 +49,7 @@ public class SportHouseController {
     }
 
     @PostMapping("/create")
-    public String saveSportHouse(@Valid @ModelAttribute("sportHouse") SportHouseDto sportHouse, 
+    public String saveSportHouse(@Valid @ModelAttribute SportHouseDto sportHouse, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sportHouse", sportHouse);
@@ -68,7 +68,7 @@ public class SportHouseController {
 
     @PostMapping("/update/{id}")
     public String updateSportHouse(@PathVariable Long id,
-                                @Valid @ModelAttribute("sportHouse") SportHouseDto sportHouse, 
+                                @Valid @ModelAttribute SportHouseDto sportHouse, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sportHouse", sportHouse);

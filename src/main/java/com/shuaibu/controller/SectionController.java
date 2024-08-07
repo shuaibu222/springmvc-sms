@@ -37,7 +37,7 @@ public class SectionController {
 
 
     @PostMapping
-    public String listSections(@Valid @ModelAttribute("section") SectionDto section, BindingResult result, Model model) {
+    public String listSections(@Valid @ModelAttribute SectionDto section, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("sections", sectionService.getAllSections());
             return "sections/list";
@@ -54,7 +54,7 @@ public class SectionController {
     }
 
     @PostMapping("/create")
-    public String saveSection(@Valid @ModelAttribute("section") SectionDto section, BindingResult result, Model model) {
+    public String saveSection(@Valid @ModelAttribute SectionDto section, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("section", section);
             return "sections/new";
@@ -73,7 +73,7 @@ public class SectionController {
 
     @PostMapping("/update/{id}")
     public String updateSection(@PathVariable Long id,
-                                @Valid @ModelAttribute("section") SectionDto section, 
+                                @Valid @ModelAttribute SectionDto section, 
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("section", section);
@@ -88,11 +88,11 @@ public class SectionController {
 
 //        // TODO
 //        // Update associated school classes (optional, see note below)
-        if (existingSection.getClassIds() != null && !existingSection.getClassIds().isEmpty()) {
-                SchoolClassModel classModel = classRepository.findById(Long.valueOf(existingSection.getId())).get();
-                classModel.setSectionId(existingSection.getSectionName()); // Update reference to updated section
-                classRepository.save(classModel);
-        }
+        // if (existingSection.getClassIds() != null && !existingSection.getClassIds().isEmpty()) {
+        //         SchoolClassModel classModel = classRepository.findById(Long.valueOf(existingSection.getId())).get();
+        //         classModel.setSectionId(existingSection.getSectionName()); // Update reference to updated section
+        //         classRepository.save(classModel);
+        // }
 
         sectionService.saveOrUpdateSection(section);
         return "redirect:/sections";

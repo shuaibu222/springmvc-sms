@@ -7,6 +7,20 @@
 >
 <head>
     <title>Results</title>
+    <script>
+        // Function to handle class selection
+        function filterSubjects() {
+            let selectedSubjectId = document.getElementById("subjectIdFilter").value;
+            let allSubjects = document.querySelectorAll(".subject-row");
+            allSubjects.forEach(row => {
+                if (selectedSubjectId === "All Subjects" || row.getAttribute("data-class-id") === selectedSubjectId) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <section layout:fragment="body">
@@ -23,7 +37,7 @@
                 Entering result failed.
             </div>
 
-                <form th:action="@{'/results/' + ${sectionName} + '/' + ${className}}" th:object="${result}" class="list-form-layout" method="post">
+            <form th:action="@{'/results/' + ${sectionName} + '/' + ${className}}" th:object="${result}" class="list-form-layout" method="post">
                     <div class="list-form">
                         <div class="form-group">
                             <label for="student">Student Name:</label>
@@ -77,7 +91,14 @@
                     <div class="form-group-btn">
                         <button type="submit">Save</button>
                     </div>
-                </form>
+            </form>
+
+            <div class="filter-container">
+                <select id="subjectIdFilter" onchange="filterSubjects()">
+                    <option value="All Subjects">All Subjects</option>
+                    <option th:each="subject : ${subjects}" th:value="${subject.subjectName}" th:text="${subject.subjectName}"></option>
+                </select>
+            </div>
 
             <div class="table-container">
                 <table>
@@ -98,7 +119,7 @@
                         <th>Remark</th>
                         <th>Actions</th>
                     </tr>
-                    <tr th:each="result : ${results}">
+                    <tr th:each="result : ${results}" class="subject-row" th:data-class-id="${result.subjectId}">
                         <td th:text="${result.id}"></td>
                         <td th:text="${result.name}"></td>
                         <td th:text="${result.sectionId}"></td>

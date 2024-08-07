@@ -1,6 +1,5 @@
 package com.shuaibu.dto;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;

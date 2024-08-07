@@ -10,5 +10,6 @@ public interface ResultService {
     ResultDto getResultById(Long id);
     void saveOrUpdateResult(ResultDto resultDto);
     void deleteResult(Long id);
-    List<ResultModel> getResultModelsByStudentClassId(String className);
+    List<ResultModel> getResultModelsByStudentClassIdAndTermIdAndAcademicSessionId(String className,
+            String activeTermName, String activeSessionName);
 }

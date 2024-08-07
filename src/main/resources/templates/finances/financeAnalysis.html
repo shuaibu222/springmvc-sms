@@ -58,20 +58,20 @@
 <body>
 <section layout:fragment="body">
   <h2 style="margin-bottom: 1rem">Dashboard</h2>
-  <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 1rem">
-    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: green; color: white">Total Fees Collected: <br><span style="font-size: 2rem; font-weight: bold" id="totalFeesCollected" th:text="${totalFeesCollected}"></span></p>
-    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: darkred; color: white">Total Debts: <br><span style="font-size: 2rem; font-weight: bold" id="totalDebts" th:text="${totalDebts}"></span></p>
-    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: black; color: white">Total Term Revenue: <br><span style="font-size: 2rem; font-weight: bold" id="total" th:text="${total}"></span></p>
-    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: midnightblue; color: white">Total Paid Students: <br><span style="font-size: 2rem; font-weight: bold" th:text="${paidStudent}"></span></p>
-    <p style="padding: 2.5rem 1.5rem; border-radius: 1rem; background: yellow;">Total Pending Students: <br><span style="font-size: 2rem; font-weight: bold" th:text="${notPaidStudent}"></span></p>
+  <div class="dash-container">
+    <p class="dash-cards">Total Fees Collected: <br><span id="totalFeesCollected" th:text="${totalFeesCollected}"></span></p>
+    <p class="dash-cards">Total Debts: <br><span id="totalDebts" th:text="${totalDebts}"></span></p>
+    <p class="dash-cards">Total Term Revenue: <br><span id="total" th:text="${total}"></span></p>
+    <p class="dash-cards">Total Paid Students: <br><span th:text="${paidStudent}"></span></p>
+    <p class="dash-cards">Total Pending Students: <br><span th:text="${notPaidStudent}"></span></p>
   </div>
 
   <div sec:authorize="hasRole('ADMIN')" class="table-container">
     <h2 class="title">Pending Students</h2>
 
     <!-- Dropdown for selecting class -->
-    <div class="options">
-      <label for="classId">Select Class:</label>
+    <div class="options filter-container">
+      <!-- <label for="classId">Select Class:</label> -->
       <select id="classId" onchange="filterStudents()">
         <option value="all">All Classes</option>
         <option th:each="c : ${classes}" th:value="${c.className}" th:text="${c.className}"></option>

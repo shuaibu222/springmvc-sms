@@ -28,7 +28,7 @@
                     let table = document.getElementById("walletsTable");
                     table.innerHTML = `
                         <tr>
-                            <th>ID</th>
+                            <th>S/N</th>
                             <th>Balance</th>
                             <th>Student Name</th>
                             <th>Phone Number</th>
@@ -123,7 +123,7 @@
     <article class="list-page">
         <div class="list-header">
             <h1>Wallets List</h1>
-            <a href="fees">Search Transactions</a>
+            <a href="/fees/transactions">Search Transactions</a>
         </div>
 
         <form class="list-form-layout" method="post" th:action="@{/fees/setTermDebt}" onsubmit="submitDebtForm(event)">

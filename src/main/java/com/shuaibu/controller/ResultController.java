@@ -1,7 +1,9 @@
 package com.shuaibu.controller;
 
 import com.shuaibu.dto.*;
-import com.shuaibu.mapper.*;
+import com.shuaibu.mapper.SchoolClassMapper;
+import com.shuaibu.mapper.SectionMapper;
+import com.shuaibu.mapper.SubjectMapper;
 import com.shuaibu.model.*;
 import com.shuaibu.repository.*;
 import com.shuaibu.service.*;
@@ -20,7 +22,6 @@ import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
@@ -32,18 +33,13 @@ public class ResultController {
 
     private final StudentService studentService;
     private final ResultService resultService;
-    private final SectionService sectionService;
     private final SessionService sessionService;
-    private final SchoolClassService schoolClassService;
     private final TermService termService;
     private final SubjectService subjectService;
     private final StaffRepository staffRepository;
-    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(ResultController.class);
     private final SectionRepository sectionRepository;
     private final SchoolClassRepository schoolClassRepository;
-    private final SessionRepository sessionRepository;
-    private final TermRepository termRepository;
     private final SubjectRepository subjectRepository;
 
 
@@ -51,24 +47,19 @@ public class ResultController {
                             SchoolClassService schoolClassService, TermService termService, SubjectService subjectService, StaffRepository staffRepository, UserRepository userRepository, SectionRepository sectionRepository, SchoolClassRepository schoolClassRepository, SessionRepository sessionRepository, TermRepository termRepository, SubjectRepository subjectRepository) {
         this.studentService = studentService;
         this.resultService = resultService;
-        this.sectionService = sectionService;
         this.sessionService = sessionService;
-        this.schoolClassService = schoolClassService;
         this.termService = termService;
         this.subjectService = subjectService;
         this.staffRepository = staffRepository;
-        this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
         this.schoolClassRepository = schoolClassRepository;
-        this.sessionRepository = sessionRepository;
-        this.termRepository = termRepository;
         this.subjectRepository = subjectRepository;
     }
 
     @GetMapping("/{sectionName}/{className}")
-    public String listResults(@PathVariable("sectionName") String sectionName,
-                              @PathVariable("className") String className,
-                              Model model) {
+    public String listResults(@PathVariable String sectionName,
+                                @PathVariable String className,
+                                Model model) {
 
         // Fetch subject based on teacher id
         List<SubjectModel> subjectModelList = new ArrayList<>();
@@ -93,6 +84,18 @@ public class ResultController {
             logger.warn("Authentication is null or not authenticated");
         }
 
+        String activeSessionName = sessionService.getAllSessions().stream()
+                .filter(s -> s.getIsActive().equals("True"))
+                .findFirst()
+                .map(SessionDto::getSessionName)
+                .orElseThrow(() -> new IllegalStateException("No active session found"));
+
+        String activeTermName = termService.getAllTerms().stream()
+                .filter(t -> t.getIsActive().equals("True"))
+                .findFirst()
+                .map(TermDto::getTermName)
+                .orElseThrow(() -> new IllegalStateException("No active term found"));
+
         // Get the specific section and class based on the path variables
         SectionModel filteredSections = sectionRepository.findBySectionName(sectionName);
         SchoolClassModel filteredClasses = schoolClassRepository.findByClassName(className);
@@ -102,7 +105,7 @@ public class ResultController {
                 .filter(cts -> cts.getStudentClassName().equals(className))
                 .collect(Collectors.toList());
 
-        List<ResultModel> filteredResults = resultService.getResultModelsByStudentClassId(className);
+        List<ResultModel> filteredResults = resultService.getResultModelsByStudentClassIdAndTermIdAndAcademicSessionId(className, activeTermName, activeSessionName);
 
         // Filter subjects based on the class subjects
         List<SubjectModel> filteredSubjectModelList = null;
@@ -209,9 +212,9 @@ public class ResultController {
 
     @PostMapping("/{sectionName}/{className}")
     public String saveResult(@Valid @ModelAttribute("result") ResultDto resultDto,
-                             @PathVariable("sectionName") String sectionName,
-                             @PathVariable("className") String className,
-                             BindingResult result, Model model) {
+                                @PathVariable String sectionName,
+                                @PathVariable String className,
+                                BindingResult result, Model model) {
         if (result.hasErrors()){
             // fetch subject based on teacher id
             List<SubjectDto> subjectDtoList = new ArrayList<>();
@@ -290,9 +293,9 @@ public class ResultController {
 
     @GetMapping("/{sectionName}/{className}/edit/{id}")
     public String updateResultForm(@PathVariable Long id,
-                                   @PathVariable("sectionName") String sectionName,
-                                   @PathVariable("className") String className,
-                                   Model model) {
+                                @PathVariable String sectionName,
+                                @PathVariable String className,
+                                Model model) {
 
         // fetch subject based on teacher id
         List<SubjectDto> subjectDtoList = new ArrayList<>();
@@ -363,8 +366,8 @@ public class ResultController {
     @PostMapping("/{sectionName}/{className}/update/{id}")
     public String updateResult(@PathVariable Long id,
                                 @Valid @ModelAttribute("result") ResultDto resultDto,
-                               @PathVariable("sectionName") String sectionName,
-                               @PathVariable("className") String className,
+                                @PathVariable String sectionName,
+                                @PathVariable String className,
                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             // fetch subject based on teacher id
@@ -438,8 +441,8 @@ public class ResultController {
 
     @GetMapping("/{sectionName}/{className}/delete/{id}")
     public String deleteResult(@PathVariable Long id,
-                               @PathVariable("sectionName") String sectionName,
-                               @PathVariable("className") String className) {
+                            @PathVariable String sectionName,
+                            @PathVariable String className) {
         resultService.deleteResult(id);
         return "redirect:/results/" + sectionName + "/" + className;
     }

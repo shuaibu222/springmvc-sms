@@ -2,7 +2,6 @@ package com.shuaibu.mapper;
 
 import com.shuaibu.dto.StaffDto;
 import com.shuaibu.model.StaffModel;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class StaffMapper {
 

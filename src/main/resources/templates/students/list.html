@@ -171,7 +171,7 @@
 
             <!-- Class Filter Dropdown -->
             <div class="filter-container">
-                <label for="studentClassIdFilter">Filter by Class:</label>
+                <!-- <label for="studentClassIdFilter">Filter by Class:</label> -->
                 <select id="studentClassIdFilter" onchange="filterStudents()">
                     <option value="All Students">All Students</option>
                     <option th:each="studentClass : ${studentClassIds}" th:value="${studentClass.className}" th:text="${studentClass.className}"></option>
@@ -183,48 +183,18 @@
                     <tr>
                         <th>S/N</th>
                         <th>Full Name</th>
-                        <th>Username</th>
                         <th>Registration No.</th>
-                        <th>Date of Birth</th>
-                        <th>Admission Date</th>
                         <th>Admission Type</th>
-                        <th>Home Address</th>
-                        <th>Term</th>
-                        <th>Session</th>
-                        <th>Is Student Active</th>
-                        <th>State</th>
-                        <th>L.G.A</th>
-                        <th>Religion</th>
-                        <th>Section</th>
                         <th>Class</th>
-                        <th>Sport House</th>
-                        <th>Tribe</th>
-                        <th>Gender</th>
-                        <th>Profile Picture</th>
                         <th>Phone Number</th>
                         <th>Actions</th>
                     </tr>
                     <tr th:each="student : ${students}" class="student-row" th:data-class-id="${student.studentClassName}">
                         <td th:text="${student.id}"></td>
                         <td th:text="${student.firstName + ' ' + student.lastName}"></td>
-                        <td th:text="${student.userName}"></td>
                         <td th:text="${student.regNo}"></td>
-                        <td th:text="${student.dateOfBirth}"></td>
-                        <td th:text="${student.admissionDate}"></td>
                         <td th:text="${student.admissionType}"></td>
-                        <td th:text="${student.homeAddress}"></td>
-                        <td th:text="${student.termId}"></td>
-                        <td th:text="${student.sessionId}"></td>
-                        <td th:text="${student.isActive}"></td>
-                        <td th:text="${student.state}"></td>
-                        <td th:text="${student.LGA}"></td>
-                        <td th:text="${student.religion}"></td>
-                        <td th:text="${student.sectionName}"></td>
                         <td th:text="${student.studentClassName}"></td>
-                        <td th:text="${student.sportHouseId}"></td>
-                        <td th:text="${student.tribe}"></td>
-                        <td th:text="${student.gender}"></td>
-                        <td th:text="${student.profilePicture}"></td>
                         <td th:text="${student.phoneNumber}"></td>
                         <td>
                             <a class="dynamic-link green-details" th:href="@{'/students/details/' + ${student.id}}">Details</a>

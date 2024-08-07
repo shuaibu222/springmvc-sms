@@ -1,6 +1,5 @@
 package com.shuaibu.controller;
 
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,7 @@ public class EventController {
     }
 
     @PostMapping
-    public String saveListEvent(@Valid @ModelAttribute("event") EventDto event, BindingResult result, Model model) {
+    public String saveListEvent(@Valid @ModelAttribute EventDto event, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("event", event);
             model.addAttribute("events", eventService.getAllEvent());
@@ -54,14 +53,13 @@ public class EventController {
     }
 
     @PostMapping("/create")
-    public String saveEvent(@Valid @ModelAttribute("event") EventDto event, BindingResult result, Model model) {
+    public String saveEvent(@Valid @ModelAttribute EventDto event, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("event", event);
             return "events/new";
         }
 
         eventService.saveOrUpdateEvent(event);
-
 
         return "redirect:/events";
     }

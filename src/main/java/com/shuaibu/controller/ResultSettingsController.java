@@ -1,9 +1,5 @@
 package com.shuaibu.controller;
 
-
-import com.shuaibu.dto.SectionDto;
-import com.shuaibu.mapper.SectionMapper;
-import com.shuaibu.repository.SectionRepository;
 import com.shuaibu.service.SectionService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

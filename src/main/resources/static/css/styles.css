@@ -494,7 +494,7 @@ form select:focus {
 
 .list-form-layout {
     display: grid;
-    margin-top: 0.8rem;
+    margin-top: 2rem;
     padding: 1rem;
     box-shadow: var(--shadow);
     border-radius: 0.7rem;
@@ -787,7 +787,7 @@ td a:nth-child(3):hover {
     padding: 1rem;
     box-shadow: var(--shadow);
     border-radius: 0.5rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0rem;
 }
 
 .wallet-info h2 {
@@ -876,4 +876,38 @@ td a:nth-child(3):hover {
         width: 100%;
     }
 
+}
+
+/* Filters style */
+
+.filter-container {
+    margin: 0.8rem 0rem;
+    display: flex;
+    justify-content: baseline;
+    gap: 0.5rem;
+}
+
+.filter-container select {
+    padding: 0.5rem;
+}
+
+/* Dashboard cards */
+
+.dash-container {
+    display: grid; 
+    gap: 1rem; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    margin-bottom: 1rem
+}
+
+.dash-cards {
+    padding: 2.5rem 1.5rem; 
+    border-radius: 1rem; 
+    background: black; 
+    color: white
+}
+
+.dash-cards span {
+    font-size: 2.3rem; 
+    font-weight: bold
 }
