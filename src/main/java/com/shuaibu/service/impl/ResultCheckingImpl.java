@@ -5,7 +5,9 @@ import com.shuaibu.dto.SessionDto;
 import com.shuaibu.dto.TermDto;
 import com.shuaibu.dto.ResultCheckingDto;
 import com.shuaibu.mapper.ResultMapper;
+import com.shuaibu.model.ReportSheetModel;
 import com.shuaibu.model.StudentModel;
+import com.shuaibu.repository.ReportSheetRepository;
 import com.shuaibu.repository.ResultRepository;
 import com.shuaibu.repository.StudentRepository;
 import com.shuaibu.service.ResultCheckingService;
@@ -23,19 +25,19 @@ public class ResultCheckingImpl implements ResultCheckingService {
 
     private final TermService termService;
     private final SessionService sessionService;
-    private final ResultRepository resultRepository;
+    private final ReportSheetRepository reportSheetRepository;
     private final StudentRepository studentRepository;
     private static final Logger logger = LoggerFactory.getLogger(ResultCheckingImpl.class);
 
-    public ResultCheckingImpl(ResultRepository resultRepository, StudentRepository studentRepository, SessionService sessionService, TermService termService) {
+    public ResultCheckingImpl(ResultRepository resultRepository, StudentRepository studentRepository, SessionService sessionService, TermService termService, ReportSheetRepository reportSheetRepository) {
         this.termService = termService;
         this.sessionService = sessionService;
-        this.resultRepository = resultRepository;
+        this.reportSheetRepository = reportSheetRepository;
         this.studentRepository = studentRepository;
     }
 
     @Override
-    public ResultDto searchResult(ResultCheckingDto resultCheckingDto) {
+    public ReportSheetModel searchResult(ResultCheckingDto resultCheckingDto) {
 
         String activeSessionName = sessionService.getAllSessions().stream()
                 .filter(s -> s.getIsActive().equals("True"))
@@ -60,7 +62,7 @@ public class ResultCheckingImpl implements ResultCheckingService {
             throw new IllegalArgumentException("Invalid registration number or password.");
         }
 
-        return ResultMapper.mapToDto(resultRepository.findOneByRegNoAndTermIdAndAcademicSessionId(studentModel.getRegNo(), activeTermName, activeSessionName));
+        return reportSheetRepository.findByRegNoAndTermAndAcademicSession(studentModel.getRegNo(), activeTermName, activeSessionName);
     }
 
     private StudentModel getAuthenticatedStudent() {

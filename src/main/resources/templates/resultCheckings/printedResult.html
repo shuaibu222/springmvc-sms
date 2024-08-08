@@ -6,14 +6,250 @@
     lang="en"
 >
 <head>
-    <title>Create New Subject</title>
+    <title>Report Sheet</title>
 </head>
 <body>
     <section layout:fragment="body">
-        <section class="form-container">
-            <h1>SA'ADATU MEMORIAL SCHOOL, LADANAI</h1>
-            <p th:text="*{printedResult.total}"></p>
-        </section>
+        <div class="report-sheet">
+            <div class="background-overlay"></div>
+            <div class="header">
+                <img th:src="@{/images/sa_adatu-removebg-preview.png}" alt="School Logo" class="school-logo">
+                <div class="school-info">
+                    <h2 style="font-weight: bolder; font-size: 3.2rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">SA'ADATU MEMORIAL SCHOOL</h2>
+                    <p style="font-weight: bolder; font-size: 1.5rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">NURSERY, PRIMARY, SECONDARY & ISLAMIYYA SCHOOL</p>
+                    <p><b>ADDRESS:</b> No 95 Ladanai Layout Hotoro, Kano State</p>
+                    <p><b>MOTTO:</b> Knowledge is the key to Success</p>
+                    <p><b>GSM:</b> 08022198050, 08058416825, 09099190059</p>
+                </div>
+                <div class="student-photo">
+                    <img th:src="@{/images/sa_adatu-removebg-preview.png}" alt="Student Photo">
+                </div>
+            </div>
+            
+            <h3 class="report-title">TERMINAL REPORT SHEET</h3>
+
+            <table class="details-table">
+                    <tr>
+                        <td><b>Name:</b></td>
+                        <td>UMMAKULSUM BASHIR</td>
+                        <td><b>Final Grade:</b></td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td><b>Class:</b></td>
+                        <td>JSS 3</td>
+                        <td><b>Total Score:</b></td>
+                        <td>717</td>
+                    </tr>
+                    <tr>
+                        <td><b>Session:</b></td>
+                        <td>2023/2024 ACADEMIC SESSION</td>
+                        <td><b>Final Average:</b></td>
+                        <td>79.67</td>
+                    </tr>
+                    <tr>
+                        <td><b>Term:</b></td>
+                        <td>FIRST TERM</td>
+                        <td><b>No. in Class:</b></td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td><b>Position:</b></td>
+                        <td>2</td>
+                    </tr>
+            </table>
+            
+
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>Subjects</th>
+                        <th>CA (40)</th>
+                        <th>Exam (60)</th>
+                        <th>Total (100)</th>
+                        <th>Grade</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>English Language</td>
+                        <td>50</td>
+                        <td>30</td>
+                        <td>80</td>
+                        <td>A+</td>
+                        <td>Distinction</td>
+                    </tr>
+                    <tr>
+                        <td>Mathematics</td>
+                        <td>13</td>
+                        <td>25</td>
+                        <td>38</td>
+                        <td>F</td>
+                        <td>Very Poor</td>
+                    </tr>
+                    <tr>
+                        <td>Basic Science & Technology</td>
+                        <td>35</td>
+                        <td>35</td>
+                        <td>70</td>
+                        <td>A</td>
+                        <td>Distinction</td>
+                    </tr>
+                    <tr>
+                        <td>Pre Vocational Studies</td>
+                        <td>42</td>
+                        <td>37</td>
+                        <td>79</td>
+                        <td>A</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>National Values</td>
+                        <td>36</td>
+                        <td>43</td>
+                        <td>79</td>
+                        <td>A</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>Religious</td>
+                        <td>35</td>
+                        <td>35</td>
+                        <td>70</td>
+                        <td>A+</td>
+                        <td>Distinction</td>
+                    </tr>
+                    <tr>
+                        <td>Hausa Language</td>
+                        <td>31</td>
+                        <td>42</td>
+                        <td>73</td>
+                        <td>A</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>Business Studies</td>
+                        <td>34</td>
+                        <td>34</td>
+                        <td>68</td>
+                        <td>C</td>
+                        <td>Very Good</td>
+                    </tr>
+                    <tr>
+                        <td>Cultural & Creative Art</td>
+                        <td>34</td>
+                        <td>54</td>
+                        <td>88</td>
+                        <td>A+</td>
+                        <td>Distinction</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <th>291</th>
+                        <th>426</th>
+                        <th>717</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </tbody>
+            </table>
+            <table border="1" class="comments">
+                <tr>
+                    <td><b>Class Teacher's Comment:</b></td>
+                    <td>Brilliant! and Excellent Performance, Keep it up</td>
+                </tr>
+                <tr>
+                    <td><b>Head Teacher's Comment:</b></td>
+                    <td>An Excellent Performance, keep it up</td>
+                </tr>
+                <tr>
+                    <td><b>Term Ending:</b></td>
+                    <td>Friday 15th December, 2023</td>
+                </tr>
+                <tr>
+                    <td><b>Next Term Begins:</b></td>
+                    <td>Monday 8th January, 2024</td>
+                </tr>
+            </table>
+
+            <div class="observations">
+                <table class="observation-table">
+                    <thead>
+                        <tr>
+                            <th>General Observation</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fluency</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>Adjustment to Class</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>Responsiveness</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>Sense of Responsibility</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship with other pupils</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>Hand Writing</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>Application to Work</td>
+                            <td>A</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="scale-table">
+                    <thead>
+                        <tr>
+                            <th>Scale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A - Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>B - Very Good</td>
+                        </tr>
+                        <tr>
+                            <td>C - Good</td>
+                        </tr>
+                        <tr>
+                            <td>D - Fair</td>
+                        </tr>
+                        <tr>
+                            <td>E - Poor</td>
+                        </tr>
+                        <tr>
+                            <td>F - Very Poor</td>
+                        </tr>
+                    </tbody>
+                </table>                
+                <div class="footer">
+                    <div class="sign-back"></div>
+                    <div class="signature">
+                        <h2>SA'ADATU MEMORIAL SCHOOL</h2>
+                        <p>DIRECTOR'S SIGNATURE</p>
+                        <div class="line">--------------------</div>
+                        <!-- <img th:src="@{/images/CamScanner_08-07-2024_10.19-removebg-preview.png}" alt="Director's Signature"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </body>
 </html>

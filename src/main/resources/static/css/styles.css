@@ -913,13 +913,6 @@ td a:nth-child(3):hover {
 }
 
 /* Matching color for each nav item */
-.sidebar-menu li a {
-    color: #000; /* Default text color */
-}
-
-.sidebar-menu li a:hover {
-    color: #fff; /* Text color on hover */
-}
 
 .sidebar-menu li a .fa-tachometer-alt {
     color: #4CAF50;
@@ -1015,4 +1008,189 @@ td a:nth-child(3):hover {
 
 .sidebar-menu li a .fa-sign-out-alt {
     color: #f44336;
+}
+
+/* Report sheet css */
+
+.report-sheet {
+    width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    border: 2px solid #0f6c33;
+    overflow: hidden; /* Ensure the overlay doesn't exceed the report sheet bounds */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        url('../images/sa_adatu-removebg-preview.png') no-repeat center center;
+    background-size: 80%;
+    opacity: 0.1; /* Adjust the opacity for the background image */
+    z-index: 1; /* Place the background behind the content */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.school-logo {
+    width: 100px;
+    height: auto;
+}
+
+.school-info {
+    text-align: center;
+    width: 72%;
+}
+
+.school-info h2 {
+    margin: 0;
+    color: #0f6c33;
+}
+
+.school-info p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+.student-photo img {
+    width: 100px;
+    height: 120px;
+    border: 2px solid #0f6c33;
+}
+
+.report-title {
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 2rem 0;
+    padding: 0.8rem 1.5rem;
+    align-self: center;
+    border-radius: 0.5rem;
+    color: red;
+    box-shadow: 0 8px 10px 8px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.3);
+    font-weight: bolder;
+}
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.details-table td {
+    padding: 0.2rem 0.8rem;
+    vertical-align: top;
+}
+
+.details-table b {
+    text-transform: uppercase;
+}
+
+
+.grades-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.grades-table th, .grades-table td {
+    padding: 0.2rem 0.8rem;
+    /* text-align: center; */
+}
+
+.grades-table th {
+    background-color: #0f6c33;
+    color: white;
+}
+
+.comments {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.comments td, .comments th {
+    padding: 0.2rem 0.8rem;
+}
+
+.comments b {
+    text-transform: uppercase;
+}
+
+.observations {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.observation-table, .scale-table {
+    width: fit-content;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.observation-table th, .observation-table td {
+    border: 2px solid black;
+    padding: 0.2rem;
+}
+
+.scale-table th, .scale-table td {
+    border: 2px solid black;
+    padding: 0.34rem;
+}
+
+.observation-table th, .scale-table th {    
+    text-transform: capitalize;
+    font-weight: bolder;
+}
+
+.footer {
+    border: 4px solid black;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem 2rem 1rem;
+    position: relative;
+}
+
+.footer .signature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signature h2 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.sign-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/CamScanner_08-07-2024_10.19-removebg-preview.png') no-repeat center top;
+    background-size: 80%;
+    opacity: 0.8;
+    z-index: 1; /* Place the background behind the content */
+}
+
+.line {
+    margin-top: 3rem;
 }

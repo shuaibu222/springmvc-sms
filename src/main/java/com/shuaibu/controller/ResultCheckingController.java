@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.shuaibu.dto.ResultCheckingDto;
+import com.shuaibu.model.ReportSheetModel;
 import com.shuaibu.model.ResultCheckingModel;
 import com.shuaibu.service.ResultCheckingService;
 
@@ -16,10 +17,10 @@ import jakarta.validation.Valid;
 @SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/resultCheckings")
-@PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
+@PreAuthorize("hasRole('STUDENT')")
 public class ResultCheckingController {
 
-    private ResultDto printedResult;
+    private ReportSheetModel printedResult;
     private final ResultCheckingService resultCheckingService;
 
     public ResultCheckingController(ResultCheckingService resultCheckingService) {
